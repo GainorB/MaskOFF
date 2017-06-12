@@ -42,37 +42,45 @@ MaskOFF is a web application designed to trade your most sought after items. Hav
 
 ### WIREFRAMES
 **Landing Page**
+
 The page EVERY user is greeted with.
 From here, you can either Login, Register, Learn More, or Browse items.
 ![Wireframe](./readme-assets/MaskOffLandingPage.png)
 
 **Account Registration**
+
 If a user doesn't have an account, they will have to navigate to this page to register.
 You need to have an account to be able to "ACCEPT" listings.
 ![Wireframe](./readme-assets/MaskOFFRegistration.png)
 
 **Learn More**
+
 A thorough explanation of the service MaskOFF provides.
 ![Wireframe](./readme-assets/MaskOFFLearnMore.png)
 
 **Profile**
+
 An overview of an users profile, where they can update or delete their account.
 There's also a section to view Accepted Listings.
 ![Wireframe](./readme-assets/MaskOFFProfile.png)
 
 **Create a Listing**
+
 The page you navigate to when creating a new listing.
 ![Wireframe](./readme-assets/MaskOFFCreateListing.png)
 
 **Browse Items**
+
 This page displays all the listings created by our members, on here you can filter to see less results. This page doesn't list ALL the information, you need to click the image or listing title to be directed to the Single Item Page.
 ![Wireframe](./readme-assets/MaskOFFBrowse.png)
 
 **Single Item Page**
+
 After browsing items, you will be directed here to view detailed information about the listing, where you will be able to "ACCEPT" a listing. After accepting a listing, you are obligated to follow through. You need to be logged in to view this page.
 ![Wireframe](./readme-assets/MaskOFFSingleItem.png)
 
 **Accepted Listings**
+
 This is a subpage inside of your profile, where you can view all the listings you accepted.
 ![Wireframe](./readme-assets/MaskOFFAccept.png)
 
