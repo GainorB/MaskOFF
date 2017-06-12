@@ -1,5 +1,5 @@
 # MaskOFF
-MaskOFF is a desktop application built with Electron.js. An application designed to trade your most sought after items. Have a pair of Yeezies or a Supreme Box Logo that doesn't fit you? Well... see what other users are looking for, if someone has the size you are looking for, then you can trade. We will be the middle man, and connect you with someone else that has what you need. From there, you will get in contact with them and set up your trade.
+MaskOFF is a web application designed to trade your most sought after items. Have a pair of Yeezies or a Supreme Box Logo that doesn't fit you? Well... see what other users are looking for, if someone has the size you are looking for, then you can trade. We will be the middle man, and connect you with someone else that has what you need. From there, you will get in contact with them and set up your trade.
 
 ### LIVE
 
@@ -8,8 +8,9 @@ MaskOFF is a desktop application built with Electron.js. An application designed
 1. Guest: A user that is not signed into the platform.
 2. Member: A user that is signed into the platform.
 3. System: The set of business logic that defines the platform.
+
 **Stories**
-1. As a **GUEST**, I can learn more about the application by going to Learn More.
+1. As a **GUEST**, I can learn more about the application by going to "Learn More".
 2. As a **GUEST**, I can browse the application and see other members listings.
     * Can use filters to narrow down their search for a specific item
     * Filter Categories
@@ -23,8 +24,6 @@ MaskOFF is a desktop application built with Electron.js. An application designed
     * Age
     * Location
     * Email
-    * Favorite Clothing Brand
-    * Favorite Sneaker Brand
 4. As a **USER**, once I find an item I am interested in, I can immediately message the other user.
 5. As a **USER**, once I accept a listing, it is saved to both profiles.
 6. As the **SYSTEM**, I will render error messages.
@@ -33,7 +32,7 @@ MaskOFF is a desktop application built with Electron.js. An application designed
 9. As the **SYSTEM**, I can register accounts for guests.
 10. As a **USER**, I can make a listing.
     * Upload 5 images (or link image files)
-    * Condition of item (New, Used)
+    * Condition of item (New or Used)
     * Size of item
         * if its a sneaker (input shoe size)
         * if its clothing (input clothing size)
@@ -41,28 +40,69 @@ MaskOFF is a desktop application built with Electron.js. An application designed
     * Willing to ship? (Yes or No)
     * Willing to meetup? (Yes or No)
 
+### WIREFRAMES
+**Landing Page**
+The page EVERY user is greeted with.
+From here, you can either Login, Register, Learn More, or Browse items.
+![Wireframe](./readme-assets/MaskOffLandingPage.png)
+
+**Account Registration**
+If a user doesn't have an account, they will have to navigate to this page to register.
+You need to have an account to be able to "ACCEPT" listings.
+![Wireframe](./readme-assets/MaskOFFRegistration.png)
+
+**Learn More**
+A thorough explanation of the service MaskOFF provides.
+![Wireframe](./readme-assets/MaskOFFLearnMore.png)
+
+**Profile**
+An overview of an users profile, where they can update or delete their account.
+There's also a section to view Accepted Listings.
+![Wireframe](./readme-assets/MaskOFFProfile.png)
+
+**Create a Listing**
+The page you navigate to when creating a new listing.
+![Wireframe](./readme-assets/MaskOFFCreateListing.png)
+
+**Browse Items**
+This page displays all the listings created by our members, on here you can filter to see less results. This page doesn't list ALL the information, you need to click the image or listing title to be directed to the Single Item Page.
+![Wireframe](./readme-assets/MaskOFFBrowse.png)
+
+**Single Item Page**
+After browsing items, you will be directed here to view detailed information about the listing, where you will be able to "ACCEPT" a listing. After accepting a listing, you are obligated to follow through. You need to be logged in to view this page.
+![Wireframe](./readme-assets/MaskOFFSingleItem.png)
+
+**Accepted Listings**
+This is a subpage inside of your profile, where you can view all the listings you accepted.
+![Wireframe](./readme-assets/MaskOFFAccept.png)
+
 ### GIT PROJECTS
 
 ### MVP
 1. Theme
 2. Database Schema
 3. Matching Users
+4. CRUD Functionality
+5. Registering Users
 
 ### POST MVP
 1. AuthO
+2. Restrict Guests from accessing certain parts
+3. Reputation
 
 ### TECHNOLOGIES USED
-1. HTML/CSS/Javascript
-2. Node.js
-3. Express.js
-4. PostgreSQL Databases
-5. Postman for Endpoint testing
+1. HTML/CSS
+2. Javascript
+3. Node.js
+4. Express.js
+5. PostgreSQL Databases
+6. Postman for Endpoint testing
 
 ### DATABASE SCHEMA
-1. Users
-2. Listings
-3. Accepted Listings
-    * Once a listing is accepted, its moved to this table and deleted from Listings table
+1. Users Table
+2. Listings Table
+3. Accepted Listings Table
+    * Once a listing is accepted, its moved to this table and deleted from Listings Table
         * Display User who accepted
         * Display User who posted the listing
         * Item
@@ -94,9 +134,6 @@ MaskOFF is a desktop application built with Electron.js. An application designed
     * Used to enable sessions, to track users activity and to keep users logged in.
 12. CORS
     * Used to manage Cross Origin issues
-
-### WIREFRAMES
-
 
 ### DOWNLOAD PROJECT & INSTALL
 1. Git clone or download this project
