@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Account Login</title>
+</head>
+<body>
+<h2>Account Login</h2>
+<p><%- messages('message', locals) %></p>
+<form method='POST' action='/auth/login' >
+    <p>Username: <input type="text" name="username"></p>
+    <p>Password: <input type="password" name="password"></p>
+    <p>Don't have an account? <a href="/auth/register">Register Now</a></p>
+    <input type="submit" value="LOGIN"> <input type="reset" value="RESET">
+</form>
+</body>
+</html>

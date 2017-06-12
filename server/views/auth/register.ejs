@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Register an Account</title>
+</head>
+<body>
+<p><%- messages('message', locals) %></p>
+<ul>
+    <% if(errors){ %>
+        <% for(const error of errors){ %>
+            <li id="errors"><%= error.msg %></li>
+        <% } %>
+    <% } %>
+</ul>
+<form method='POST' action='/auth/register'>
+    <p>Username: <input type="text" name="username"></p>
+    <p>Password: <input type="text" name="password"></p>
+    <p>Confirm Password: <input type="text" name="password2"></p>
+    <p>Email: <input type="email" name="email"></p>
+    <p>State: <input type="text" name="state"></p>
+    <p>City: <input type="text" name="city"></p>
+    <p>Gender:
+        <select name="gender">
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+        </select>
+    </p>
+    <p>Age: <input type="number" name="age"></p>
+    <p>Already have an account? <a href="/auth/login">Log In</a></p>
+    <input type="submit" value="REGISTER">
+    </form>
+</body>
+</html>
