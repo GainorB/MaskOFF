@@ -4,6 +4,13 @@ var db = require('../models/config');
 * GET ROUTES
 */
 
+// RETURN ALL LISTINGS
+function getAllListings(req, res, next){
+    db.any('SELECT * FROM listings')
+      .then(function(data){
+        res.render('Browse', {data: data})
+    }).catch(function(e) { return next(e); });
+}
 
 
 
@@ -43,9 +50,9 @@ function createListing(req, res, next){
         image5 = req.body.image5;
     }
 
-    db.none('INSERT into listings(belongs_to, category, brand, title, size, condition, image1, image2, image3, image4, image5, ship, meetup, cash)'
-                + 'VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)', 
-                [req.user.username, req.body.category, req.body.brand, req.body.title, req.body.size, req.body.condition, 
+    db.none('INSERT into listings(posted_by, state, city, category, brand, title, size, whatsize, condition, image1, image2, image3, image4, image5, ship, meetup, cash)'
+                + 'VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17)', 
+                [req.user.username, req.user.state, req.user.city, req.body.category, req.body.brand, req.body.title, req.body.size, req.body.whatsize, req.body.condition, 
                 req.body.image1, image2, image3, image4, image5, req.body.ship,
                 req.body.meetup, req.body.cash])
       .then((data) => { res.redirect('/dashboard/create'); })
@@ -87,5 +94,5 @@ function deleteAccount(req, res, next){
 
 
 module.exports = {
-    updateProfile, deleteAccount, createListing
+    updateProfile, deleteAccount, createListing, getAllListings
 };

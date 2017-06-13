@@ -16,10 +16,8 @@ router.get('/LearnMore', function(req, res, next) {
   res.render('LearnMore');
 });
 
-// BROWSE
-router.get('/Browse', function(req, res, next) {
-  res.render('Browse');
-});
+// RETURN ALL LISTINGS AND RENDER DATA ON BROWSE PAGE
+router.get('/browse', db.getAllListings);
 
 router.put('/updateProfile', db.updateProfile);
 router.delete('/deleteAccount', db.deleteAccount);
