@@ -1,12 +1,20 @@
 <%- include('../partials/header') %>
+<div class="container login">
+    <div class="row center-xs center-sm center-md center-lg middle-xs middle-sm middle-md middle-lg">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+
 <h2>Account Login</h2>
 <p><%- messages('message', locals) %></p>
 <form method='POST' action='/auth/login' >
-    <p>Username: <input type="text" name="username"></p>
-    <p>Password: <input type="password" name="password"></p>
+    <p><input type="text" name="username" placeholder="Username"></p>
+    <p><input type="password" name="password" placeholder="Password"></p>
     <p>Don't have an account? <a href="/auth/register">Register Now</a></p>
     <button type="submit">Login</button> <button type="reset">Reset</button> 
 </form>
 <a href="/LearnMore">Learn More</a>
 <a href="/Browse">Browse Listings</a>
+
+        </div>
+    </div>
+</div>
 <%- include('../partials/footer') %>

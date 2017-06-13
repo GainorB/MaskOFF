@@ -48,7 +48,6 @@ router.post('/register', (req, res, next)  => {
     req.flash('error', "There was a problem during registration, please fix the errors below:");
     res.render('auth/register', { errors });
   } else {
-    req.flash('success', "You have successfully registered, enjoy!");
     authHelpers.createNewUser(req, res).then((user) => {
         req.login(user, (err) => {
       

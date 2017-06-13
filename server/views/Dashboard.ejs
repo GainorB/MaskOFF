@@ -1,5 +1,7 @@
 <%- include('partials/header') %>
-<div id="dashboard">
+<div class="container dashboard">
+    <div class="row center-xs center-sm center-md center-lg middle-xs middle-sm middle-md middle-lg">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
 <h2>Welcome to your profile <%= user.username %>!</h2>
 <h5>Below you will find a summary of your account information.</h5>
@@ -11,8 +13,13 @@
 <p><input class="gender" type="text" name="gender" value="<%= user.gender %>" readonly> <i id="pencil_<%= user.id %>" class="fa fa-pencil" aria-hidden="true"></i></p>
 <p><input class="age" type="text" name="age" value="<%= user.age %>" readonly> <i id="pencil_<%= user.id %>" class="fa fa-pencil" aria-hidden="true"></i></p>
 <button class="update_account">Update Account</button> <button class="delete_account">Delete Account</button>
+<a href="/dashboard/accepted">Accepted Listings</a>
+<a href="/dashboard/create">Create a Listing</a>
 
+        </div>
+    </div>
 </div>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="/javascripts/dashboard.js"></script>
 <%- include('partials/footer') %>

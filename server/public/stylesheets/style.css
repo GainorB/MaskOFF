@@ -7,18 +7,24 @@ body {
     line-height: 2em;
     color: #272a33;
     font-size: 16px;
+    margin: 0;
+    padding: 0;
 }
 
-body a {
+.container {
+    margin: auto;
+}
+
+.container a {
     color: #272a33;
     text-decoration: none;
 }
 
-body a:active, a:link, a:visited {
+.container a:active, a:link, a:visited {
     color: #272a33;
 }
 
-body a:hover {
+.container a:hover {
     color: #337ab7;
 }
 
@@ -50,7 +56,7 @@ button:hover {
     background-color: #337ab7;
 }
 
-input[type=text] {
+input[type=text], input[type=password] {
     width: 450px;
     height: 50px;
     font-size: 20px;
@@ -60,6 +66,20 @@ input[type=text] {
     font-weight: lighter;
     letter-spacing: 2px;
     color: #337ab7;
+    border-radius: 4px;
+}
+
+input[type=number], select {
+    width: 300px;
+    height: 50px;
+    font-size: 20px;
+    padding-left: 5px;
+    font-weight: lighter;
+    letter-spacing: 2px;
+    color: #337ab7;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px; 
 }
 
 /*
@@ -93,11 +113,57 @@ FLASH MESSAGES
 * DASHBOARD
 */
 
-#dashboard i {
+.dashboard i {
     font-size: 23px;
     margin-left: 5px;
 }
 
-#dashboard i:hover {
+.dashboard i:hover {
     color: #337ab7;
+}
+
+/*
+* Create Listing
+*/
+
+.createlisting i {
+    font-size: 23px;
+    margin-left: 5px;
+}
+
+.createlisting i:hover {
+    color: #337ab7;
+}
+
+.createlisting .fa-minus:hover {
+    color: red;
+}
+
+.createlisting .fa-question:hover {
+    color: #4f9754;
+}
+
+.createlisting #tooltip {
+    font-size: 12px;
+    letter-spacing: 1px;
+    font-weight: 700;
+}
+
+/*
+* FOOTER
+*/
+
+footer {
+    margin-top: 200px;
+    font-size: 13px;
+    line-height: 20px;
+    letter-spacing: 2px;
+}
+
+/*
+* MEDIA QUERIES
+*/
+
+@media (max-width: 800px){ 
+
 }

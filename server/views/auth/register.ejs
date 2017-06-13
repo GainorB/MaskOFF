@@ -1,27 +1,39 @@
 <%- include('../partials/header') %>
-<p><%- messages('message', locals) %></p>
-<ul>
-    <% if(errors){ %>
-        <% for(const error of errors){ %>
-            <li id="errors"><%= error.msg %></li>
+<div class="container register">
+    <div class="row center-xs center-sm center-md center-lg middle-xs middle-sm middle-md middle-lg">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                
+<h2>Account Registration</h2>
+<p>Please take some time to register. A profile gives you access to accepting listings!</p>
+    <p><%- messages('message', locals) %></p>
+    <ul>
+        <% if(errors){ %>
+            <% for(const error of errors){ %>
+                <li id="errors"><%= error.msg %></li>
+            <% } %>
         <% } %>
-    <% } %>
-</ul>
-<form method='POST' action='/auth/register'>
-    <p>Username: <input type="text" name="username" required></p>
-    <p>Password: <input type="text" name="password" required></p>
-    <p>Confirm Password: <input type="text" name="password2" required></p>
-    <p>Email: <input type="email" name="email" required></p>
-    <p>State: <input type="text" name="state" required></p>
-    <p>City: <input type="text" name="city" required></p>
-    <p>Gender:
-        <select name="gender" required>
-        <option value="Male">Male</option>
-        <option value="Female">Female</option>
-        </select>
-    </p>
-    <p>Age: <input type="number" name="age" required></p>
-    <p>Already have an account? <a href="/auth/login">Log In</a></p>
-    <button type="submit">REGISTER</button>
+    </ul>
+
+    <form method='POST' action='/auth/register'>
+        <p><input type="text" name="username" placeholder="Username"></p>
+        <p><input type="text" name="password" placeholder="Password"></p>
+        <p><input type="text" name="password2" placeholder="Confirm Password"></p>
+        <p><input type="text" name="email" placeholder="Email"></p>
+        <p><input type="text" name="state" placeholder="State"></p>
+        <p><input type="text" name="city" placeholder="City"></p>
+        <p>
+            <select name="gender">
+            <option value="Gender" selected>Gender</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            </select>
+        </p>
+        <p><input type="number" name="age" placeholder="Age"></p>
+        <p>Already have an account? <a href="/auth/login">Log In</a></p>
+        <button type="submit">REGISTER</button> <button type="reset">RESET</button>
     </form>
+
+        </div>
+    </div>
+</div>
 <%- include('../partials/footer') %>

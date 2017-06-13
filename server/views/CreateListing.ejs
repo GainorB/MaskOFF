@@ -1,0 +1,82 @@
+<%- include('partials/header') %>
+<div class="container createlisting">
+    <div class="row center-xs center-sm center-md center-lg middle-xs middle-sm middle-md middle-lg">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+
+<h2>Would you like to create a listing <%= user.username %>?</h2>
+<p><%- messages('message', locals) %></p>
+<form method='POST' action='/dashboard/create'>
+<p> 
+<p id="tooltip">Select a category for your listing.</p>
+    <select name="category" required>
+        <option value="Sneakers" selected>Sneakers</option>
+        <option value="Clothing">Clothing</option>
+        <option value="Accessories">Accessories</option>
+    </select>
+</p> 
+
+<p>
+<p id="tooltip">Select a brand to list your item under.</p>
+    <select name="brand" required>
+        <option value="Adidas" selected>Adidas</option>
+        <option value="Nike">Nike</option>
+        <option value="Supreme">Supreme</option>
+        <option value="Palace">Palace</option>
+        <option value="John Elliot">John Elliot</option>
+    </select>
+</p>
+
+<p>
+<p id="tooltip">Create a title for your listing.</p> 
+<input type="text" name="title" placeholder="Title" required>
+</p>
+
+<p>
+<p id="tooltip">Enter an appropriate size based on the category you selected.</p>
+<input type="text" name="size" placeholder="Size" required>
+</p>
+
+<p>
+<p id="tooltip">What condition is your item in?</p>
+    <select name="condition" required>
+    <option value="New" selected>New</option>
+    <option value="Used">Used</option>
+    </select>
+</p>
+ 
+<p>
+<p id="tooltip">You must include 1 image.<br/>You can only insert 5 images.</p>
+<p><input type="text" name="image1" placeholder="Image1" required>  <i class="fa fa-plus" aria-hidden="true"></i></p> 
+<p id="insertImages"></p>
+</p>
+
+<p>
+<p id="tooltip">Are you willing to ship your item?</p>
+    <select name="ship" required>
+    <option value="Yes" selected>Yes</option>
+    <option value="No">No</option>
+    </select>
+</p>
+
+<p>
+<p id="tooltip">Are you willing to meetup and exchange your item in person?</p>
+    <select name="meetup" required>
+    <option value="Yes" selected>Yes</option>
+    <option value="No">No</option>
+    </select>
+</p>
+
+<p>
+<p id="tooltip">Throwing in cash sweetens up the deal, but isn't neccessary.<br/>How much you want to throw?</p>
+    <input type="number" name="cash" value="0">
+</p>
+
+<button type="submit">Create Listing</button> <button type="reset">Reset Listing</button>
+</form>
+
+        </div>
+    </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="/javascripts/createlisting.js"></script>
+<%- include('partials/footer') %>
