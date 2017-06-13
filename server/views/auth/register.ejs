@@ -1,12 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Register an Account</title>
-</head>
-<body>
+<%- include('../partials/header') %>
 <p><%- messages('message', locals) %></p>
 <ul>
     <% if(errors){ %>
@@ -16,21 +8,20 @@
     <% } %>
 </ul>
 <form method='POST' action='/auth/register'>
-    <p>Username: <input type="text" name="username"></p>
-    <p>Password: <input type="text" name="password"></p>
-    <p>Confirm Password: <input type="text" name="password2"></p>
-    <p>Email: <input type="email" name="email"></p>
-    <p>State: <input type="text" name="state"></p>
-    <p>City: <input type="text" name="city"></p>
+    <p>Username: <input type="text" name="username" required></p>
+    <p>Password: <input type="text" name="password" required></p>
+    <p>Confirm Password: <input type="text" name="password2" required></p>
+    <p>Email: <input type="email" name="email" required></p>
+    <p>State: <input type="text" name="state" required></p>
+    <p>City: <input type="text" name="city" required></p>
     <p>Gender:
-        <select name="gender">
+        <select name="gender" required>
         <option value="Male">Male</option>
         <option value="Female">Female</option>
         </select>
     </p>
-    <p>Age: <input type="number" name="age"></p>
+    <p>Age: <input type="number" name="age" required></p>
     <p>Already have an account? <a href="/auth/login">Log In</a></p>
-    <input type="submit" value="REGISTER">
+    <button type="submit">REGISTER</button>
     </form>
-</body>
-</html>
+<%- include('../partials/footer') %>

@@ -3,7 +3,7 @@ const router = express.Router();
 
 const passport = require('../services/auth/local');
 const authHelpers = require('../services/auth/auth-helpers');
-var errors;
+let errors;
 
 router.get('/login', authHelpers.loginRedirect, (req, res) => {
   res.render('auth/login');
@@ -16,18 +16,17 @@ router.get('/register', authHelpers.loginRedirect, (req, res) => {
 router.post('/register', (req, res, next)  => {
    
   // IDENTITY
-  var username = req.body.username;
-  var email = req.body.email;
-  var gender = req.body.gender;
-  var age = req.body.age;
+  const username = req.body.username;
+  const email = req.body.email;
+  const gender = req.body.gender;
+  const age = req.body.age;
 
   // PASSWORD
-  var password = req.body.password;
-  var password2 = req.body.password2;
+  const password = req.body.password;
 
   // ADDRESS
-  var location = req.body.state;
-  var city = req.body.city;
+  const location = req.body.state;
+  const city = req.body.city;
 
   // VALIDATION
   req.checkBody('username', 'User Name is required.').notEmpty();
@@ -41,11 +40,13 @@ router.post('/register', (req, res, next)  => {
   req.checkBody('city', 'City is required.').notEmpty();
   req.checkBody('state', 'State is required.').notEmpty();
 
-  var errors = req.validationErrors();
+  // VALIDATION ERRORS
+  let errors = req.validationErrors();
 
+  // HANDLE VALIDATION ERRORS
   if(errors){
-    req.flash('error', "There was a problem during Registration, please fix the errors below:");
-    res.render('auth/register', { errors: errors });
+    req.flash('error', "There was a problem during registration, please fix the errors below:");
+    res.render('auth/register', { errors });
   } else {
     req.flash('success', "You have successfully registered, enjoy!");
     authHelpers.createNewUser(req, res).then((user) => {

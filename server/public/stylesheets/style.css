@@ -1,0 +1,103 @@
+/* 
+MAIN
+*/
+body {
+    font-family: 'Open Sans', sans-serif;
+    background-color: #f4f4f4;
+    line-height: 2em;
+    color: #272a33;
+    font-size: 16px;
+}
+
+body a {
+    color: #272a33;
+    text-decoration: none;
+}
+
+body a:active, a:link, a:visited {
+    color: #272a33;
+}
+
+body a:hover {
+    color: #337ab7;
+}
+
+ul {
+    list-style: none;
+}
+
+a:active, a:link, a:visited {
+   transition: all 0.3s linear;
+   -webkit-transition: all 0.3s linear;
+   -moz-transition: all 0.3s linear;
+}
+
+/*
+* FORMS
+*/
+
+button {
+    font-size: 12px;
+    border: 0px;
+    padding: 6px 20px;
+    background-color: #272a33;
+    color: #fff;
+    font-weight: 700;
+    border-radius: 4px;
+}
+
+button:hover {
+    background-color: #337ab7;
+}
+
+input[type=text] {
+    width: 450px;
+    height: 50px;
+    font-size: 20px;
+    padding: 10px 10px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    font-weight: lighter;
+    letter-spacing: 2px;
+    color: #337ab7;
+}
+
+/*
+FLASH MESSAGES
+*/
+.error {
+  padding: 5px;
+  width: 100%;
+  border: 1px solid red;
+  background-color: #ffa5a5;
+  margin: 5px;
+}
+
+.error:hover {
+  background-color: #ff4747;
+}
+
+.success {
+  padding: 5px;
+  width: 100%;
+  border: 1px solid green;
+  background-color: #93e099;
+  margin: 5px;
+}
+
+.success:hover {
+  background-color: #4f9754;
+}
+
+/*
+* DASHBOARD
+*/
+
+#dashboard i {
+    font-size: 23px;
+    margin-left: 5px;
+}
+
+#dashboard i:hover {
+    color: #337ab7;
+}

@@ -1,0 +1,18 @@
+<%- include('partials/header') %>
+<div id="dashboard">
+
+<h2>Welcome to your profile <%= user.username %>!</h2>
+<h5>Below you will find a summary of your account information.</h5>
+
+<p><input class="username" type="text" name="username" value="<%= user.username %>" readonly> <i id="pencil_<%= user.id %>" class="fa fa-pencil" aria-hidden="true"></i></p>
+<p><input class="email" type="text" name="email" value="<%= user.email %>" readonly> <i id="pencil_<%= user.id %>" class="fa fa-pencil" aria-hidden="true"></i></p>
+<p><input class="state" type="text" name="state" value="<%= user.state %>" readonly> <i id="pencil_<%= user.id %>" class="fa fa-pencil" aria-hidden="true"></i></p>
+<p><input class="city" type="text" name="city" value="<%= user.city %>" readonly> <i id="pencil_<%= user.id %>" class="fa fa-pencil" aria-hidden="true"></i></p>
+<p><input class="gender" type="text" name="gender" value="<%= user.gender %>" readonly> <i id="pencil_<%= user.id %>" class="fa fa-pencil" aria-hidden="true"></i></p>
+<p><input class="age" type="text" name="age" value="<%= user.age %>" readonly> <i id="pencil_<%= user.id %>" class="fa fa-pencil" aria-hidden="true"></i></p>
+<button class="update_account">Update Account</button> <button class="delete_account">Delete Account</button>
+
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="/javascripts/dashboard.js"></script>
+<%- include('partials/footer') %>
