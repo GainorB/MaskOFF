@@ -8,7 +8,18 @@ var db = require('../models/config');
 function getAllListings(req, res, next){
     db.any('SELECT * FROM listings')
       .then(function(data){
-        res.render('Browse', {data: data})
+        res.render('Browse', { data: data, title: "Browse" })
+    }).catch(function(e) { return next(e); });
+}
+
+// GET A SINGLE LISTING
+function getAListing(id, req, res, next){
+    
+    let ID = parseInt(id);
+
+    db.any(`SELECT * FROM listings WHERE id = ${ID}`)
+      .then(function(data){
+        res.render('aListing', { data: data, title: data.title })
     }).catch(function(e) { return next(e); });
 }
 
@@ -94,5 +105,5 @@ function deleteAccount(req, res, next){
 
 
 module.exports = {
-    updateProfile, deleteAccount, createListing, getAllListings
+    updateProfile, deleteAccount, createListing, getAllListings, getAListing
 };

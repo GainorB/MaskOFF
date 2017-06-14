@@ -2,19 +2,21 @@ var express = require('express');
 var router = express.Router();
 var db = require('../models/queries');
 
-router.get('/', function(req, res, next) {
-  res.render('Dashboard', { user_profile: req.user });
+const authHelpers = require('../services/auth/auth-helpers');
+
+router.get('/', authHelpers.loginRequired, function(req, res, next) {
+  res.render('Dashboard', { user_profile: req.user, title: "Dashboard" });
 });
 
-router.get('/accepted', function(req, res, next) {
-  res.render('AcceptedListings');
+router.get('/accepted', authHelpers.loginRequired, function(req, res, next) {
+  res.render('AcceptedListings', { title: "Accepted Listings" });
 });
 
-router.get('/create', function(req, res, next) {
-  res.render('CreateListing');
+router.get('/create', authHelpers.loginRequired, function(req, res, next) {
+  res.render('CreateListing', { title: "Create A Listing" });
 });
 
-router.post('/create', function(req, res, next) {
+router.post('/create', authHelpers.loginRequired, function(req, res, next) {
   db.createListing(req, res, next);
   req.flash('success', 'Your item has successfully been created.');
 });

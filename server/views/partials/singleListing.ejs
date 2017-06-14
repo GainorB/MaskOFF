@@ -1,0 +1,18 @@
+<% data.forEach(function(d) { %>
+
+<p class="singleListingTitle"><%= d.title %></p>
+<p><img src="<%= d.image1 %>"></p>
+<p><img src="<%= d.image2 %>"></p>
+<p><img src="<%= d.image3 %>"></p>
+<p><img src="<%= d.image4 %>"></p>
+<p><img src="<%= d.image5 %>"></p>
+<p class="listingBy">Posted by <%= d.posted_by %></p>
+<p>Condition: <%= d.condition %></p>
+<p>Trading a <%= d.size %></p>
+<p>Looking for a <%= d.whatsize %></p>
+<p>Located in <%= d.state %>, <%= d.city %></p>
+<p>Willing to ship? <%= d.ship %></p>
+<p>Willing to meetup? <%= d.meetup %></p>
+<p>Willing to throw cash? $<%= d.cash %></p>
+
+<% }) %>

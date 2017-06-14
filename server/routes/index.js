@@ -13,7 +13,7 @@ router.get('/', function(req, res, next) {
 
 // LEARN MORE
 router.get('/learnmore', function(req, res, next) {
-  res.render('LearnMore');
+  res.render('LearnMore', { title: "Learn More" });
 });
 
 // RETURN ALL LISTINGS AND RENDER DATA ON BROWSE PAGE
@@ -21,5 +21,12 @@ router.get('/browse', db.getAllListings);
 
 router.put('/updateProfile', db.updateProfile);
 router.delete('/deleteAccount', db.deleteAccount);
+
+// A SINGLE ITEM
+router.get('/browse/:id', authHelpers.loginRequired, function(req, res, next) {
+  let id = req.params.id;
+
+  db.getAListing(id, req, res, next);
+});
 
 module.exports = router;

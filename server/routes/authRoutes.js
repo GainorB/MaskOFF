@@ -6,11 +6,11 @@ const authHelpers = require('../services/auth/auth-helpers');
 let errors;
 
 router.get('/login', authHelpers.loginRedirect, (req, res) => {
-  res.render('auth/login');
+  res.render('auth/login', { title: "Login" });
 });
 
 router.get('/register', authHelpers.loginRedirect, (req, res) => {
-  res.render('auth/register', { errors: errors });
+  res.render('auth/register', { errors, title: "Registration" });
 });
 
 router.post('/register', (req, res, next)  => {
@@ -46,7 +46,7 @@ router.post('/register', (req, res, next)  => {
   // HANDLE VALIDATION ERRORS
   if(errors){
     req.flash('error', "There was a problem during registration, please fix the errors below:");
-    res.render('auth/register', { errors });
+    res.render('auth/register', { errors, title: "Registration" });
   } else {
     authHelpers.createNewUser(req, res).then((user) => {
         req.login(user, (err) => {

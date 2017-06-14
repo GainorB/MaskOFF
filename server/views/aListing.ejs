@@ -1,5 +1,5 @@
 <%- include('partials/header') %>
-<div class="container browse">
+<div class="container singleListing">
     <div class="row center-xs center-sm center-md center-lg middle-xs middle-sm middle-md middle-lg">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
@@ -18,22 +18,15 @@
     <% } %>
 </nav>
 
-<% if(user) { %>
-<h2><%= user.username %> check out the listings!</h2>
-<h4>Click View Listing to be taken to the listing page to see detailed information.</h4>
-<% } else { %>
-<h2>Browse our listings.</h2>
-<h4><a href="/">Login</a> to view detailed information about each listing.</h4>
-<% } %>
-
+<div id="boxbox">
 <!-- DISPLAY LISTINGS -->
     <% if(data != undefined) { %>
-        <%- include('partials/AllListings') %>
+        <%- include('partials/singleListing') %>
     <% } else { %>
     <h1>No current listings, be the first to <a href="/dashboard/create">create one!</a></h1>
     <% } %>
 <!-- END DISPLAY LISTINGS -->
-
+</div>
         </div>
     </div>
 </div>
