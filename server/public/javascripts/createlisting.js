@@ -30,7 +30,7 @@ $('.fa-question').on('click', function () {
 // RENDER HTML
 function sneakerSelect(size){
     return `
-                <select id="${size}" name="${size}" required>
+                <select name=${size} required>
                 <option value="Size 5" selected>Size 5</option>
                 <option value="Size 6">Size 6</option>
                 <option value="Size 7">Size 7</option>
@@ -46,7 +46,7 @@ function sneakerSelect(size){
 
 function clothingSelect(size){
     return `
-                <select id="${size}" name="${size}" required>
+                <select name=${size} required>
                 <option value="Extra Small" selected>Extra Small</option>
                 <option value="Small">Small</option>
                 <option value="Medium">Medium</option>
@@ -62,25 +62,28 @@ $('#category').change(function(){
     if($('#category').val() === "Sneakers"){
         $('#size').hide();
         $('#whatsize').hide();
+
         $('.changeSize').html(sneakerSelect("size"));
         $('.changeWhatSize').html(sneakerSelect("whatsize"));
 
     } else if ($('#category').val() === "Clothing"){
         $('#size').hide();
         $('#whatsize').hide();
+
         $('.changeSize').html(clothingSelect("size"));
         $('.changeWhatSize').html(clothingSelect("whatsize"));
 
     } else if ($('#category').val() === "Accessories"){
         $('#size').hide();
         $('#whatsize').hide();
+        
         $('.changeSize').html(
             `
-                <input type="text" id="size" name="size" value="One Size" readonly>
+                <input type="text" name="size" value="One Size" readonly>
             `);
         $('.changeWhatSize').html(
              `
-                <input type="text" id="whatsize" name="whatsize" value="One Size" readonly>
+                <input type="text" name="whatsize" value="One Size" readonly>
             `);
     }
 });

@@ -280,6 +280,35 @@ FLASH MESSAGES
     font-weight: 700;
 }
 
+.singleListing p {
+    font-size: 30px;
+}
+
+.singleListing .listingBy {
+    font-style: italic;
+    font-size: 20px;
+    font-weight: 300;
+}
+
+.singleListing .money {
+    color: green;
+}
+
+.singleListing .noMoney {
+    color: red;
+}
+
+.singleListing .contactOwner {
+    font-size: 20px;
+}
+
+.singleListing button {
+    text-transform: uppercase;
+    font-size: 17px;
+    width: 400px;
+    height: 50px;
+}
+
 /*
 * FOOTER
 */

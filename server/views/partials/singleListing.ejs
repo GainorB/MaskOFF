@@ -1,18 +1,41 @@
 <% data.forEach(function(d) { %>
 
-<p class="singleListingTitle"><%= d.title %></p>
-<p><img src="<%= d.image1 %>"></p>
-<p><img src="<%= d.image2 %>"></p>
-<p><img src="<%= d.image3 %>"></p>
-<p><img src="<%= d.image4 %>"></p>
-<p><img src="<%= d.image5 %>"></p>
-<p class="listingBy">Posted by <%= d.posted_by %></p>
-<p>Condition: <%= d.condition %></p>
-<p>Trading a <%= d.size %></p>
-<p>Looking for a <%= d.whatsize %></p>
-<p>Located in <%= d.state %>, <%= d.city %></p>
-<p>Willing to ship? <%= d.ship %></p>
-<p>Willing to meetup? <%= d.meetup %></p>
-<p>Willing to throw cash? $<%= d.cash %></p>
+<p class="singleListingTitle"><%= d.title %><br>
+<span class="listingBy">Posted by <%= d.posted_by %>
+</p>
+<p>
+<img src="<%= d.image1 %>"><br>
+<% if(d.image2 != "http://via.placeholder.com/400x400") { %>
+<img src="<%= d.image2 %>"><br>
+<% } %>
+
+<% if(d.image3 != "http://via.placeholder.com/400x400") { %>
+<img src="<%= d.image3 %>"><br>
+<% } %>
+
+<% if(d.image4 != "http://via.placeholder.com/400x400") { %>
+<img src="<%= d.image4 %>"><br>
+<% } %>
+
+<% if(d.image5 != "http://via.placeholder.com/400x400") { %>
+<img src="<%= d.image5 %>">
+<% } %>
+</p>
+
+<p class="contactOwner"><b>Located in</b> <%= d.state %>, <%= d.city %><br>
+<b>Email the owner at</b> [email address]</p>
+<p><b>Condition:</b> <%= d.condition %></p>
+<p><b>Trading a</b> <%= d.size %></p>
+<p><b>Looking for a</b> <%= d.whatsize %></p>
+<p><b>Willing to ship?</b> <%= d.ship %></p>
+<p><b>Willing to meetup?</b> <%= d.meetup %></p>
+<p><b>Willing to throw cash?</b> 
+<% if(d.cash === 0) { %>
+<span class="noMoney">No</span>
+<% } else { %>
+<span class="money">$<%= d.cash %></span>
+<% } %>
+</p>
+<p><button>Accept Listing</button></p>
 
 <% }) %>
