@@ -3,7 +3,25 @@
     <div class="row center-xs center-sm center-md center-lg middle-xs middle-sm middle-md middle-lg">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
-<h2>Welcome to your Accepted Listings <%= user.username %>!</h2>
+<nav class="navbar">
+    <% if(!user) { %>
+    <li><a href="/">Login</a></li>
+    <li><a href="/auth/register">Register</a></li>
+    <li><a href="/browse">Browse</a></li>
+    <li><a href="/learnmore">Learn More</a></li>
+    <% } else { %>
+    <li><a href="/dashboard/">Dashboard</a></li>
+    <li><a href="/learnmore">Learn More</a></li><br>
+    <li><a href="/browse">Browse</a></li>
+    <li><a href="/dashboard/accepted">My Trades</a></li>
+    <li><a href="/dashboard/create">Create a Listing</a></li>
+    <% } %>
+</nav>
+
+<div id="boxbox">
+<h1>Hey <%= user.username %>,<br/>below you will find listings you accepted.</h1>
+<h4>Please remember by accepting a listing you agree to follow through with the trade.</h4>
+</div>
 
         </div>
     </div>

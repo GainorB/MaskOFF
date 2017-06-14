@@ -1,3 +1,4 @@
+<h4>Filtering</h4>
 <% data.forEach(function(d) { %>
 <div class="container aListing">
     <div class="row center-xs center-sm center-md start-lg middle-xs middle-sm middle-md middle-lg">
@@ -11,7 +12,11 @@
             <p>Trading a <%= d.size %></p>
             <p>Looking for a <%= d.whatsize %></p>
             <p>Located in <%= d.state %>, <%= d.city %></p>
+            <% if(user) { %>
             <button>View Listing</button>
+            <% } else { %>
+            <button>Login to view detailed information</button>
+            <% } %>
         </div>
     </div>
 </div>

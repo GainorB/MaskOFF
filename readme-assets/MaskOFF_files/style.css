@@ -3,21 +3,12 @@ MAIN
 */
 body {
     font-family: 'Open Sans', sans-serif;
-    background-color: #e0e1dd;
+    background-color: #f4f4f4;
     line-height: 3em;
-    color: #222222;
+    color: #333d3d;
     font-size: 16px;
     margin: 0;
     padding: 0;
-}
-
-a:link, a:visited, a:active {
-    color: #222222;
-}
-
-/* mouse over link */
-a:hover {
-    color: hotpink;
 }
 
 ul {
@@ -26,6 +17,12 @@ ul {
 
 .container {
     margin: auto;
+}
+
+a:active, a:link, a:visited {
+   transition: all 0.3s linear;
+   -webkit-transition: all 0.3s linear;
+   -moz-transition: all 0.3s linear;
 }
 
 #boxbox {
@@ -42,28 +39,28 @@ ul {
 * NAV LINKS
 */
 
-.navbar {
+#navbar {
     margin-top: 30px;
     margin-bottom: 50px;
     text-transform: uppercase;
     font-size: 25px;
 }
 
-.navbar li {
+#navbar li {
     display: inline;
     padding: 6px 20px;
     list-style: none;
-    background-color: #490a0a;
+    background-color: #733d3d;
     color: white;
     border-radius: 4px;
 }
 
-.navbar li.current a, a:active, a:link, a:visited {
+#navbar li.current a, a:active, a:link, a:visited {
     text-decoration: none;
     color: white;
 }
 
-.navbar a:hover {
+#navbar a:hover {
     text-decoration: underline;
 }
 
@@ -74,15 +71,15 @@ ul {
 button {
     font-size: 12px;
     border: 0px;
-    padding: 6px 30px;
-    background-color: #433d3d;
+    padding: 6px 20px;
+    background-color: #333d3d;
     color: #fff;
     font-weight: 700;
     border-radius: 4px;
 }
 
 button:hover {
-    background-color: #490a0a;
+    background-color: #733d3d;
 }
 
 input[type=text], input[type=password] {
@@ -94,7 +91,7 @@ input[type=text], input[type=password] {
     border: 2px solid #ccc;
     /*font-weight: lighter;*/
     letter-spacing: 2px;
-    color: #490a0a;
+    color: #733d3d;
     border-radius: 4px;
 }
 
@@ -105,7 +102,7 @@ input[type=number], select {
     padding-left: 5px;
     /*font-weight: lighter;*/
     letter-spacing: 2px;
-    color: #490a0a;
+    color: #733d3d;
     box-sizing: border-box;
     border: 2px solid #ccc;
     border-radius: 4px; 
@@ -116,19 +113,26 @@ FLASH MESSAGES
 */
 .error {
   padding: 5px;
-  width: 95%;
+  width: 100%;
   border: 1px solid red;
   background-color: #ffa5a5;
-  margin: auto;
-  
+  margin: 5px;
+}
+
+.error:hover {
+  background-color: #ff4747;
 }
 
 .success {
   padding: 5px;
-  width: 95%;
+  width: 100%;
   border: 1px solid green;
   background-color: #93e099;
-  margin: auto;
+  margin: 5px;
+}
+
+.success:hover {
+  background-color: #4f9754;
 }
 
 /*
@@ -141,7 +145,7 @@ FLASH MESSAGES
 }
 
 .dashboard i:hover {
-    color: #490a0a;
+    color: #733d3d;
 }
 
 /*
@@ -154,7 +158,7 @@ FLASH MESSAGES
 }
 
 .createlisting i:hover {
-    color: #490a0a;
+    color: #733d3d;
 }
 
 .createlisting .fa-minus:hover {

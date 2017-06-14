@@ -3,13 +3,29 @@
     <div class="row center-xs center-sm center-md center-lg middle-xs middle-sm middle-md middle-lg">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
+<nav class="navbar">
+    <% if(!user) { %>
+    <li><a href="/">Login</a></li>
+    <li><a href="/auth/register">Register</a></li>
+    <li><a href="/browse">Browse</a></li>
+    <li><a href="/learnmore">Learn More</a></li>
+    <% } else { %>
+    <li><a href="/dashboard/">Dashboard</a></li>
+    <li><a href="/learnmore">Learn More</a></li><br>
+    <li><a href="/browse">Browse</a></li>
+    <li><a href="/dashboard/accepted">My Trades</a></li>
+    <li><a href="/dashboard/create">Create a Listing</a></li>
+    <% } %>
+</nav>
+
 <% if(user) { %>
 <h2><%= user.username %> check out the listings!</h2>
-<h4>Click the image to be taken to the listing page to see detailed information.</h4>
+<h4>Click View Listing to be taken to the listing page to see detailed information.</h4>
 <% } else { %>
-<h2>Browse!</h2>
+<h2>Browse our listings.</h2>
 <h4><a href="/">Login</a> to view detailed information about each listing.</h4>
 <% } %>
+
 <!-- DISPLAY LISTINGS -->
     <% if(data != undefined) { %>
         <%- include('partials/listings') %>
@@ -17,10 +33,6 @@
     <h1>No current listings, be the first to <a href="/dashboard/create">create one!</a></h1>
     <% } %>
 <!-- END DISPLAY LISTINGS -->
-
-<a href="/">Login</a>
-<a href="/auth/register">Register</a>
-<a href="/LearnMore">Learn More</a>
 
         </div>
     </div>

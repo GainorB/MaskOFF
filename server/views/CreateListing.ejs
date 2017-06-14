@@ -3,7 +3,24 @@
     <div class="row center-xs center-sm center-md center-lg middle-xs middle-sm middle-md middle-lg">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
-<h2>Would you like to create a listing <%= user.username %>?</h2>
+<nav class="navbar">
+    <% if(!user) { %>
+    <li><a href="/">Login</a></li>
+    <li><a href="/auth/register">Register</a></li>
+    <li><a href="/browse">Browse</a></li>
+    <li><a href="/learnmore">Learn More</a></li>
+    <% } else { %>
+    <li><a href="/dashboard/">Dashboard</a></li>
+    <li><a href="/learnmore">Learn More</a></li><br>
+    <li><a href="/browse">Browse</a></li>
+    <li><a href="/dashboard/accepted">My Trades</a></li>
+    <li><a href="/dashboard/create">Create a Listing</a></li>
+    <% } %>
+</nav>
+
+<div id="boxbox">
+<h1>Tell us what you're trading</h1>
+<h4>Please take your time and fill out this form completely.</h4>
 <p><%- messages('message', locals) %></p>
 <form method='POST' action='/dashboard/create'>
 <p> 
@@ -50,7 +67,7 @@
 </p>
  
 <p>
-<p id="tooltip">You must include 1 image.<br/>You can only insert 5 images.</p>
+<p id="tooltip">You must include 1 image. You can insert up to 5 images.</p>
 <p><input type="text" name="image1" placeholder="Image1" required>  <i class="fa fa-plus" aria-hidden="true"></i></p> 
 <p id="insertImages"></p>
 </p>
@@ -79,9 +96,11 @@
 <button type="submit">Create Listing</button> <button type="reset">Reset Listing</button>
 </form>
 
+</div>
         </div>
     </div>
 </div>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="/javascripts/createlisting.js"></script>
 <%- include('partials/footer') %>

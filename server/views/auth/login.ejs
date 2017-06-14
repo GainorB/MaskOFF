@@ -3,6 +3,22 @@
     <div class="row center-xs center-sm center-md center-lg middle-xs middle-sm middle-md middle-lg">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
+<nav class="navbar">
+    <% if(!user) { %>
+    <li><a href="/">Login</a></li>
+    <li><a href="/auth/register">Register</a></li>
+    <li><a href="/browse">Browse</a></li>
+    <li><a href="/learnmore">Learn More</a></li>
+    <% } else { %>
+    <li><a href="/dashboard/">Dashboard</a></li>
+    <li><a href="/learnmore">Learn More</a></li><br>
+    <li><a href="/browse">Browse</a></li>
+    <li><a href="/dashboard/accepted">My Trades</a></li>
+    <li><a href="/dashboard/create">Create a Listing</a></li>
+    <% } %>
+</nav>
+
+<div id="boxbox">
 <h2>Account Login</h2>
 <p><%- messages('message', locals) %></p>
 <form method='POST' action='/auth/login' >
@@ -11,9 +27,7 @@
     <p>Don't have an account? <a href="/auth/register">Register Now</a></p>
     <button type="submit">Login</button> <button type="reset">Reset</button> 
 </form>
-<a href="/LearnMore">Learn More</a>
-<a href="/Browse">Browse Listings</a>
-
+</div>
         </div>
     </div>
 </div>

@@ -3,8 +3,25 @@
     <div class="row center-xs center-sm center-md center-lg middle-xs middle-sm middle-md middle-lg">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
-<h2>Welcome to your profile <%= user.username %>!</h2>
-<h5>Below you will find a summary of your account information.</h5>
+<nav class="navbar">
+    <% if(!user) { %>
+    <li><a href="/">Login</a></li>
+    <li><a href="/auth/register">Register</a></li>
+    <li><a href="/browse">Browse</a></li>
+    <li><a href="/learnmore">Learn More</a></li>
+    <% } else { %>
+    <li><a href="/dashboard/">Dashboard</a></li>
+    <li><a href="/learnmore">Learn More</a></li><br>
+    <li><a href="/browse">Browse</a></li>
+    <li><a href="/dashboard/accepted">My Trades</a></li>
+    <li><a href="/dashboard/create">Create a Listing</a></li>
+    <% } %>
+</nav>
+
+<div id="boxbox">
+<h1>Welcome to your profile <%= user.username %>!</h1>
+<h5><p>Below you will find a summary of your account information.</br>
+You can click the pencil to modify your account information.</p></h5>
 
 <p><input class="username" type="text" name="username" value="<%= user.username %>" readonly> <i id="pencil_<%= user.id %>" class="fa fa-pencil" aria-hidden="true"></i></p>
 <p><input class="email" type="text" name="email" value="<%= user.email %>" readonly> <i id="pencil_<%= user.id %>" class="fa fa-pencil" aria-hidden="true"></i></p>
@@ -13,9 +30,8 @@
 <p><input class="gender" type="text" name="gender" value="<%= user.gender %>" readonly> <i id="pencil_<%= user.id %>" class="fa fa-pencil" aria-hidden="true"></i></p>
 <p><input class="age" type="text" name="age" value="<%= user.age %>" readonly> <i id="pencil_<%= user.id %>" class="fa fa-pencil" aria-hidden="true"></i></p>
 <button class="update_account">Update Account</button> <button class="delete_account">Delete Account</button>
-<a href="/dashboard/accepted">Accepted Listings</a>
-<a href="/dashboard/create">Create a Listing</a>
 
+</div>
         </div>
     </div>
 </div>

@@ -12,7 +12,7 @@ router.get('/', function(req, res, next) {
 });
 
 // LEARN MORE
-router.get('/LearnMore', function(req, res, next) {
+router.get('/learnmore', function(req, res, next) {
   res.render('LearnMore');
 });
 
