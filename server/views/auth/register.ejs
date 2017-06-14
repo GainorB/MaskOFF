@@ -19,7 +19,7 @@
 </nav>
 
 <div id="boxbox">          
-<h2>Account Registration</h2>
+<h1>Account Registration</h1>
 <p>Please take some time to register. A profile gives you access to accepting listings!</p>
     <p><%- messages('message', locals) %></p>
     <ul>
@@ -32,9 +32,9 @@
 
     <form method='POST' action='/auth/register'>
         <p><input type="text" name="username" placeholder="Username"></p>
-        <p><input type="text" name="password" placeholder="Password"></p>
-        <p><input type="text" name="password2" placeholder="Confirm Password"></p>
-        <p><input type="text" name="email" placeholder="Email"></p>
+        <p><input type="password" name="password" placeholder="Password"></p>
+        <p><input type="password" name="password2" placeholder="Confirm Password"></p>
+        <p><input type="email" name="email" placeholder="Email"></p>
         <p><input type="text" name="state" placeholder="State"></p>
         <p><input type="text" name="city" placeholder="City"></p>
         <p>
@@ -44,7 +44,7 @@
             <option value="Female">Female</option>
             </select>
         </p>
-        <p><input type="number" name="age" placeholder="Age"></p>
+        <p><input id="number" type="number" name="age" placeholder="Age" min="18"></p>
         <p>Already have an account? <a href="/auth/login">Log In</a></p>
         <button type="submit">REGISTER</button> <button type="reset">RESET</button>
     </form>
@@ -52,4 +52,7 @@
         </div>
     </div>
 </div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="/javascripts/register.js"></script>
 <%- include('../partials/footer') %>

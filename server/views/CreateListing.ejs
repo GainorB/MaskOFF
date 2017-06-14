@@ -25,8 +25,9 @@
 <form method='POST' action='/dashboard/create'>
 <p> 
 <p id="tooltip">Select a category for your listing.</p>
-    <select name="category" required>
-        <option value="Sneakers" selected>Sneakers</option>
+    <select id="category" name="category" required>
+        <option value="change" selected>Change Me</option>
+        <option value="Sneakers">Sneakers</option>
         <option value="Clothing">Clothing</option>
         <option value="Accessories">Accessories</option>
     </select>
@@ -49,13 +50,15 @@
 </p>
 
 <p>
-<p id="tooltip">Enter an appropriate size based on the category you selected.</p>
-<input type="text" name="size" placeholder="Size" required>
+<p id="tooltip">What size are you trading?</p>
+<input type="text" id="size" name="size" placeholder="Please choose a category first" required readonly>
+<p class="changeSize"></p>
 </p>
 
 <p>
 <p id="tooltip">What size are you looking for?</p>
-<input type="text" name="whatsize" placeholder="Size" required>
+<input type="text" id="whatsize" name="whatsize" placeholder="Please choose a category first" required readonly>
+<p class="changeWhatSize"></p>
 </p>
 
 <p>
@@ -90,7 +93,7 @@
 
 <p>
 <p id="tooltip">Throwing in cash sweetens up the deal, but isn't neccessary.<br/>How much you want to throw?</p>
-    <input type="number" name="cash" value="0">
+    <input id="number" type="number" name="cash" value="0" min="0">
 </p>
 
 <button type="submit">Create Listing</button> <button type="reset">Reset Listing</button>
