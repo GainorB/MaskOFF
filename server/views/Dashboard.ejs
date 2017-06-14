@@ -7,15 +7,15 @@
 
 <div id="boxbox">
 <h1>Welcome to your profile <%= user.username %>!</h1>
-<h5><p>Below you will find a summary of your account information.</br>
-You can click the pencil to modify your account information.</p></h5>
+<h5><p>Below you will find a summary of your account information.<br>
+Keep in mind, if you're in the middle of a trade, the accepting user won't see your updated profile information.
+</p></h5>
 
 <p><input class="username" type="text" name="username" value="<%= user.username %>" readonly> <i id="pencil_<%= user.id %>" class="fa fa-pencil" aria-hidden="true"></i></p>
 <p><input class="email" type="text" name="email" value="<%= user.email %>" readonly> <i id="pencil_<%= user.id %>" class="fa fa-pencil" aria-hidden="true"></i></p>
 <p><input class="state" type="text" name="state" value="<%= user.state %>" readonly> <i id="pencil_<%= user.id %>" class="fa fa-pencil" aria-hidden="true"></i></p>
 <p><input class="city" type="text" name="city" value="<%= user.city %>" readonly> <i id="pencil_<%= user.id %>" class="fa fa-pencil" aria-hidden="true"></i></p>
-<p><input class="gender" type="text" name="gender" value="<%= user.gender %>" readonly> <i id="pencil_<%= user.id %>" class="fa fa-pencil" aria-hidden="true"></i></p>
-<p><input class="age" type="text" name="age" value="<%= user.age %>" readonly> <i id="pencil_<%= user.id %>" class="fa fa-pencil" aria-hidden="true"></i></p>
+<p><input id="number" class="age" type="number" name="age" value="<%= user.age %>" min="18" max="100" readonly> <i id="pencil_<%= user.id %>" class="fa fa-pencil" aria-hidden="true"></i></p>
 <button class="update_account">Update Account</button> <button class="delete_account">Delete Account</button>
 
 </div>

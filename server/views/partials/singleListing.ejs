@@ -23,7 +23,6 @@
 </p>
 
 <p class="contactOwner"><b>Located in</b> <%= d.state %>, <%= d.city %><br>
-<b>Email the owner at</b> [email address]</p>
 <p><b>Condition:</b> <%= d.condition %></p>
 <p><b>Trading a</b> <%= d.size %></p>
 <p><b>Looking for a</b> <%= d.whatsize %></p>
@@ -36,6 +35,9 @@
 <span class="money">$<%= d.cash %></span>
 <% } %>
 </p>
-<p><button>Accept Listing</button></p>
+<p>
+<a href="/browse/accept/<%= d.id %>"><button>Accept Listing</button></a><br>
+<span class="acceptThisListing">Accept this listing, to view the owners contact information.</span>
+</p>
 
 <% }) %>

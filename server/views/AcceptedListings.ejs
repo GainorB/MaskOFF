@@ -10,6 +10,14 @@
 <h4>Please remember by accepting a listing you agree to follow through with the trade.</h4>
 </div>
 
+<!-- DISPLAY ACCEPTED LISTINGS -->
+    <% if(data != undefined) { %>
+        <%- include('partials/accepted') %>
+    <% } else { %>
+    <h1>You haven't, accepted any listings. Go here to <a href="/browse/">browse</a> then accept one.</h1>
+    <% } %>
+<!-- END DISPLAY ACCEPTED LISTINGS -->
+
         </div>
     </div>
 </div>

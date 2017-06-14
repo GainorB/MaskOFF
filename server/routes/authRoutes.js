@@ -15,30 +15,16 @@ router.get('/register', authHelpers.loginRedirect, (req, res) => {
 
 router.post('/register', (req, res, next)  => {
    
-  // IDENTITY
-  const username = req.body.username;
-  const email = req.body.email;
-  const gender = req.body.gender;
-  const age = req.body.age;
-
-  // PASSWORD
-  const password = req.body.password;
-
-  // ADDRESS
-  const location = req.body.state;
-  const city = req.body.city;
+  const { username, password, email, state, city, age } = req.body;
 
   // VALIDATION
   req.checkBody('username', 'User Name is required.').notEmpty();
-  req.checkBody('email', 'Email is required.').isEmail();
-  req.checkBody('age', 'Age is required').isInt();
-  req.checkBody('gender', 'Gender is required').notEmpty();
-
   req.checkBody('password', 'Password is required.').notEmpty();
   req.checkBody('password2', 'Passwords do not match.').equals(password);
-
-  req.checkBody('city', 'City is required.').notEmpty();
+  req.checkBody('email', 'Email is required.').isEmail();
   req.checkBody('state', 'State is required.').notEmpty();
+  req.checkBody('city', 'City is required.').notEmpty();
+  req.checkBody('age', 'Age is required').isInt();
 
   // VALIDATION ERRORS
   let errors = req.validationErrors();

@@ -20,7 +20,6 @@ function createNewUser(req, res) {
     email: req.body.email,
     state: req.body.state,
     city: req.body.city,
-    gender: req.body.gender,
     age: req.body.age
   });
 }

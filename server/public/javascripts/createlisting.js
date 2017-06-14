@@ -16,22 +16,17 @@ $('body').on('click', '.fa-minus', function(){
     $(this).parent('p').remove();
 });
 
-// TOOLTIP
-$('.fa-question').on('click', function () {
-    console.log("clicked")
-    $(this).find('#tooltip').append(`test`);
-    //$('#tooltip', $(this)).append(`test`);
-    //$('#tooltip').$(this).append(`test`);
-    //$(this).prev().append('test');
-    //$('#tooltip').append(`test`);
-    //$(this).prev().focus();
+// TOGGLE TOOLTIP
+$('#tooltip').on('click', function () {
+    console.log("clicked");
 });
 
-// RENDER HTML
+// RENDER HTML SELECT INPUTS
 function sneakerSelect(size){
     return `
                 <select name=${size} required>
-                <option value="Size 5" selected>Size 5</option>
+                <option value="Size 4" selected>Size 5</option>
+                <option value="Size 5">Size 5</option>
                 <option value="Size 6">Size 6</option>
                 <option value="Size 7">Size 7</option>
                 <option value="Size 8">Size 8</option>
@@ -76,7 +71,7 @@ $('#category').change(function(){
     } else if ($('#category').val() === "Accessories"){
         $('#size').hide();
         $('#whatsize').hide();
-        
+
         $('.changeSize').html(
             `
                 <input type="text" name="size" value="One Size" readonly>

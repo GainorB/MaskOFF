@@ -5,19 +5,16 @@
 
 <%- include('partials/navbar') %>
 
-<% if(user) { %>
-<h3>Click View Listing to be taken to the listing page to see detailed information.</h3>
-<% } else { %>
-<h1>Browse our listings.</h1>
-<h3><a class="inlineLinks" href="/">Login</a> to view detailed information about each listing.</h3>
+<% if(data.id != undefined) { %>
+<h1>Listings currently available</h1>
+<% } %>
+
+<% if(!user) { %>
+<h3><a class="inlineLinks" href="/">Login</a> to view detailed information about each item.</h3>
 <% } %>
 
 <!-- DISPLAY LISTINGS -->
-    <% if(data != undefined) { %>
-        <%- include('partials/AllListings') %>
-    <% } else { %>
-    <h1>No current listings, be the first to <a href="/dashboard/create">create one!</a></h1>
-    <% } %>
+<%- include('partials/AllListings') %>
 <!-- END DISPLAY LISTINGS -->
 
         </div>

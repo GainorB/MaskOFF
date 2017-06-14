@@ -19,7 +19,7 @@ function getAListing(id, req, res, next){
 
     db.any(`SELECT * FROM listings WHERE id = ${ID}`)
       .then(function(data){
-        res.render('aListing', { data: data, title: "data.title" })
+        res.render('aListing', { data: data, title: data.title })
     }).catch(function(e) { return next(e); });
 }
 
@@ -35,7 +35,8 @@ function createListing(req, res, next){
     res.setHeader('Content-Type', 'application/json');
 
     let image2, image3, image4, image5;
-    let { category, brand, title, size, whatsize, condition, image1, ship, meetup, cash } = req.body;
+    const { username, email, city, state } = req.user;
+    const { category, brand, title, size, whatsize, condition, image1, ship, meetup, cash } = req.body;
 
     // IF THESE IMAGES ARE LEFT OUT
     if(req.body.image2 === undefined){
@@ -62,15 +63,32 @@ function createListing(req, res, next){
         image5 = req.body.image5;
     }
 
-    db.none('INSERT into listings(posted_by, state, city, category, brand, title, size, whatsize, condition, image1, image2, image3, image4, image5, ship, meetup, cash)'
-                + 'VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17)', 
-                [req.user.username, req.user.state, req.user.city, category, brand, title, size[1], whatsize[1], condition, 
-                image1, image2, image3, image4, image5, ship,
-                meetup, cash])
+    db.none('INSERT into listings(posted_by, state, city, email, category, brand, title, size, whatsize, condition, image1, image2, image3, image4, image5, ship, meetup, cash)'
+                + 'VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18)', 
+                [username, state, city, email, category, brand, title, size[1], whatsize[1], condition, 
+                image1, image2, image3, image4, image5, ship, meetup, cash])
       .then((data) => { res.redirect('/dashboard/create'); })
       .catch((err) => { return next(err); });
 }
 
+// ACCEPT A LISTING
+// 1. INSERT INTO A NEW TABLE
+// 2. DELETE FROM LISTINGS TABLE
+function acceptListing(id, req, res, next){
+
+    let itemID = parseInt(id);
+
+    db.none('INSERT into acceptedListings(title, condition, state, city, email)'
+                + 'VALUES($1, $2, $3, $4, $5)', 
+                [username, state, city, category, brand])
+      .then(
+            // 2nd Statement to be ran after insertion into AcceptedListings table
+            db.none(`DELETE FROM listings WHERE id=${itemID}`)
+            .then((data) => { res.status(200).json({ message: "Success" }); })
+            .catch((e) => { return next(e); })
+
+      ).catch((err) => { return next(err); });
+}
 
 
 /*
@@ -79,16 +97,14 @@ function createListing(req, res, next){
 
 // THIS FUNCTION UPDATE A USERS PROFILE
 function updateProfile(req, res, next){
-    let userID = parseInt(req.user.id);
+    const userID = parseInt(req.user.id);
+    const { username, email, state, city, age } = req.body;
 
-    let { username, email, state, city, gender, age } = req.body;
-
-    db.none('UPDATE users SET username=$1, email=$2, state=$3, city=$4, gender=$5, age=$6 WHERE id=$7', 
-            [username, email, state, city, gender, age, userID])
+    db.none('UPDATE users SET username=$1, email=$2, state=$3, city=$4, age=$5 WHERE id=$6', 
+            [username, email, state, city, age, userID])
       .then((data) => { res.status(200).json({ message: "Success" }); })
       .catch((e) => { return next(e); });
 }
-
 
 
 /*
@@ -108,5 +124,5 @@ function deleteAccount(req, res, next){
 
 
 module.exports = {
-    updateProfile, deleteAccount, createListing, getAllListings, getAListing
+    updateProfile, deleteAccount, createListing, getAllListings, getAListing, acceptListing
 };
