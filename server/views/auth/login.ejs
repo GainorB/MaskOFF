@@ -3,20 +3,7 @@
     <div class="row center-xs center-sm center-md center-lg middle-xs middle-sm middle-md middle-lg">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
-<nav class="navbar">
-    <% if(!user) { %>
-    <li><a href="/">Login</a></li>
-    <li><a href="/auth/register">Register</a></li>
-    <li><a href="/browse">Browse</a></li>
-    <li><a href="/learnmore">Learn More</a></li>
-    <% } else { %>
-    <li><a href="/dashboard/">Dashboard</a></li>
-    <li><a href="/learnmore">Learn More</a></li><br>
-    <li><a href="/browse">Browse</a></li>
-    <li><a href="/dashboard/accepted">My Trades</a></li>
-    <li><a href="/dashboard/create">Create a Listing</a></li>
-    <% } %>
-</nav>
+<%- include('partials/navbar') %>
 
 <div id="boxbox">
 <h1>Account Login</h1>
@@ -24,7 +11,7 @@
 <form method='POST' action='/auth/login' >
     <p><input type="text" name="username" placeholder="Username"></p>
     <p><input type="password" name="password" placeholder="Password"></p>
-    <p>Don't have an account? <a href="/auth/register">Register Now</a></p>
+    <p>Don't have an account? <a class="inlineLinks" href="/auth/register">Register Now</a></p>
     <button type="submit">Login</button> <button type="reset">Reset</button> 
 </form>
 </div>

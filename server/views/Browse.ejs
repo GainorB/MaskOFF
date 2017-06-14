@@ -3,27 +3,13 @@
     <div class="row center-xs center-sm center-md center-lg middle-xs middle-sm middle-md middle-lg">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
-<nav class="navbar">
-    <% if(!user) { %>
-    <li><a href="/">Login</a></li>
-    <li><a href="/auth/register">Register</a></li>
-    <li><a href="/browse">Browse</a></li>
-    <li><a href="/learnmore">Learn More</a></li>
-    <% } else { %>
-    <li><a href="/dashboard/">Dashboard</a></li>
-    <li><a href="/learnmore">Learn More</a></li><br>
-    <li><a href="/browse">Browse</a></li>
-    <li><a href="/dashboard/accepted">My Trades</a></li>
-    <li><a href="/dashboard/create">Create a Listing</a></li>
-    <% } %>
-</nav>
+<%- include('partials/navbar') %>
 
 <% if(user) { %>
-<h2><%= user.username %> check out the listings!</h2>
-<h4>Click View Listing to be taken to the listing page to see detailed information.</h4>
+<h3>Click View Listing to be taken to the listing page to see detailed information.</h3>
 <% } else { %>
-<h2>Browse our listings.</h2>
-<h4><a href="/">Login</a> to view detailed information about each listing.</h4>
+<h1>Browse our listings.</h1>
+<h3><a class="inlineLinks" href="/">Login</a> to view detailed information about each listing.</h3>
 <% } %>
 
 <!-- DISPLAY LISTINGS -->
