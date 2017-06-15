@@ -12,7 +12,7 @@ $('.update_account').on('click', function () {
 
     var x = window.confirm("Are you sure you want to update your account? You'll need to re login.");
     if (x) {
-        axios.put("http://localhost:3000/updateProfile", { username, email, state, city, age }).catch(e => { console.log(e); });
+        axios.put("http://maskoff.herokuapp.com/updateProfile", { username, email, state, city, age }).catch(e => { console.log(e); });
     }
     window.location.href = "/";
 });
@@ -21,7 +21,7 @@ $('.delete_account').on('click', function () {
 
     var x = window.confirm("Are you sure you want to delete your account?");
     if (x) {
-        axios.delete("http://localhost:3000/deleteAccount").catch(e => { console.log(e); });
+        axios.delete("http://maskoff.herokuapp.com/deleteAccount").catch(e => { console.log(e); });
     }
     window.location.href = "/";
 });
