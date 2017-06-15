@@ -29,8 +29,9 @@ router.get('/browse/:id', authHelpers.loginRequired, function (req, res, next) {
 });
 
 // ACCEPT A LISTING
-router.post('/browse/accept/:id', authHelpers.loginRequired, function (req, res, next) {
+router.get('/browse/accept/:id', authHelpers.loginRequired, function (req, res, next) {
   let id = req.params.id;
+  req.flash('success', 'You successfully accepted a listing. View it below.');
   db.acceptListing(id, req, res, next);
 });
 

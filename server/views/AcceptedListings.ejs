@@ -6,17 +6,12 @@
 <%- include('partials/navbar') %>
 
 <div id="boxbox">
-<h1>Hey <%= user.username %>,<br/>below you will find listings you accepted.</h1>
-<h4>Please remember by accepting a listing you agree to follow through with the trade.</h4>
+<h2><%= user.username %>, below you will find listings you accepted.</h2>
+<h3>Please remember by accepting a listing you agree to follow through with the trade.</h3>
+<h4>Not following through can result in bad feedback without a good explanation.</h4>
+<p><%- messages('message', locals) %></p>
+<%- include('partials/Accepted') %>
 </div>
-
-<!-- DISPLAY ACCEPTED LISTINGS -->
-    <% if(data != undefined) { %>
-        <%- include('partials/accepted') %>
-    <% } else { %>
-    <h1>You haven't, accepted any listings. Go here to <a href="/browse/">browse</a> then accept one.</h1>
-    <% } %>
-<!-- END DISPLAY ACCEPTED LISTINGS -->
 
         </div>
     </div>

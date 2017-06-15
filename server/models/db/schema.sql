@@ -25,6 +25,7 @@ CREATE TABLE IF NOT EXISTS users(
 
 CREATE TABLE IF NOT EXISTS listings(
     id BIGSERIAL PRIMARY KEY NOT NULL,
+    date_created TEXT DEFAULT now(),
     posted_by VARCHAR(30) NOT NULL,
     state VARCHAR(20) NOT NULL,
     city VARCHAR(20) NOT NULL,
@@ -52,10 +53,19 @@ CREATE TABLE IF NOT EXISTS listings(
 
 CREATE TABLE IF NOT EXISTS acceptedListings(
     id BIGSERIAL PRIMARY KEY NOT NULL,
+    date_accepted TEXT DEFAULT now(),
+    who_accepted VARCHAR(30) NOT NULL,
+    trading_with VARCHAR(30) NOT NULL,
     title VARCHAR(200) NOT NULL,
     condition VARCHAR(5) NOT NULL,
-    trading_with VARCHAR(30) NOT NULL,
     state VARCHAR(20) NOT NULL,
     city VARCHAR(20) NOT NULL,
-    email VARCHAR(100) UNIQUE NOT NULL
+    email VARCHAR(100) NOT NULL,
+    image1 VARCHAR(255) NOT NULL,
+    cash INTEGER NOT NULL,
+    ship VARCHAR(4) NOT NULL,
+    meetup VARCHAR(4) NOT NULL,
+    completed BOOLEAN NOT NULL DEFAULT FALSE,
+    CHECK (ship = 'Yes' OR ship = 'No'),
+    CHECK (meetup = 'Yes' OR meetup = 'No')
 );

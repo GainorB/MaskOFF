@@ -8,7 +8,7 @@ router.get('/', authHelpers.loginRequired, function(req, res, next) {
   res.render('Dashboard', { user_profile: req.user, title: "Dashboard" });
 });
 
-router.get('/accepted', authHelpers.loginRequired, function(req, res, next) {
+router.get('/accepted', authHelpers.loginRequired, db.getAcceptedListings, function(req, res, next) {
   res.render('AcceptedListings', { title: "Accepted Listings" });
 });
 
