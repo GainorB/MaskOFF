@@ -5,14 +5,6 @@
 
 <%- include('partials/navbar') %>
 
-<% if(data.id != undefined) { %>
-<h1>Listings currently available</h1>
-<% } %>
-
-<% if(!user) { %>
-<h3><a class="inlineLinks" href="/">Login</a> to view detailed information about each item.</h3>
-<% } %>
-
 <!-- DISPLAY LISTINGS -->
 <%- include('partials/AllListings') %>
 <!-- END DISPLAY LISTINGS -->

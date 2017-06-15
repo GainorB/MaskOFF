@@ -4,7 +4,7 @@
 
 <nav class="sub_navbar">
     <% if(user) { %>
-    <li><a href="/auth/logout">logout</a></li>
+    <li><a href="/auth/logout">logout <%= user.username %>?</a></li>
     <li><a href="/learnmore">Learn More</a></li>
     <% } else { %>
     <li><a href="/learnmore">Learn More</a></li>

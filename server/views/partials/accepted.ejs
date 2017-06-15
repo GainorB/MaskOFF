@@ -1,42 +1,42 @@
 <% data.forEach(function(d) { %>
 <div class="container wrapAccepted">
+
         <div class="row center-xs center-sm center-md start-lg middle-xs middle-sm middle-md middle-lg">
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
-            <p>
-            <p class="title"><%= d.title %> (<%= d.condition %>)</p>
-            <img src="<%= d.image1 %>">
-            </p>
-        </div>
+                <p>
+                <p class="title"><%= d.title %> (<%= d.condition %>)</p>
+                <img src="<%= d.image1 %>">
+                </p>
+            </div>
 
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
-            <p>
-            <b>Contact Information</b><br>
-            Trading with <%= d.trading_with %><br>
-            <i class="fa fa-envelope-o" aria-hidden="true"></i> <%= d.email %><br>
-            <i class="fa fa-home" aria-hidden="true"></i> <%= d.city %>, <%= d.state %>
-            </p>
-            <p>
-            <b>Trade Information</b><br>
-            Willing to ship? <b><%= d.ship %></b><br>
-            Willing to meetup? <b><%= d.meetup %></b><br>
-            Willing to throw cash?
-            <% if(d.cash === 0) { %>
-            <span class="noMoney">No</span>
-            <% } else { %>
-            <span class="money">$<%= d.cash %></span>
-            <% } %>
-            </p>
-        </div>
-    </div>
-
-        <div class="row center-xs center-sm center-md center-lg middle-xs middle-sm middle-md middle-lg">
-            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            <button>Completed?</button>
-            <button>Cancel Trade</button>
-            <button>Report Abuse</button>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
+                <p>
+                <b>Contact Information</b><br>
+                Trade between <%= d.posted_by %> & <%= d.who_accepted %><br>
+                <i class="fa fa-envelope-o" aria-hidden="true"></i> <%= d.email %><br>
+                <i class="fa fa-home" aria-hidden="true"></i> <%= d.city %>, <%= d.state %>
+                </p>
+                <p>
+                <b>Trade Information</b><br>
+                Willing to ship? <b><%= d.ship %></b><br>
+                Willing to meetup? <b><%= d.meetup %></b><br>
+                Willing to throw cash?
+                <% if(d.cash === 0) { %>
+                <span class="noMoney">No</span>
+                <% } else { %>
+                <span class="money">$<%= d.cash %></span>
+                <% } %>
+                </p>
             </div>
         </div>
 
-    </div>
+        <div class="row center-xs center-sm center-md center-lg middle-xs middle-sm middle-md middle-lg">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <button>Completed?</button>
+                <button>Cancel Trade</button>
+                <button>Report Abuse</button>
+            </div>
+        </div>
+
 </div>
 <% }) %>

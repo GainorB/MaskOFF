@@ -1,41 +1,61 @@
-<% if(user) { %>
-    <% if(!data.title) { %>
+<% if(data.title != "") { %>
+    <h1>Listings currently available</h1>
 
-        <h4>Filtering</h4>
-        <h3>Click View Listing to see detailed information regarding that item.</h3>
-        <% data.forEach(function(d) { %>
-        <div class="container aListing">
-            <div class="row center-xs center-sm center-md start-lg middle-xs middle-sm middle-md middle-lg">
-                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
-                    <p class="listingTitle"><%= d.title %></p>
-                    <p><a href="/browse/<%= d.id %>"><img src="<%= d.image1 %>"></a></p>
-                    <p class="listingBy">Posted by <%= d.posted_by %></p>
-                </div>
-                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-5">
-                    <p>Condition: <%= d.condition %></p>
-                    <p>Trading a <%= d.size %></p>
-                    <p>Looking for a <%= d.whatsize %></p>
-                    <p>Willing to throw cash?
-                    <% if(d.cash === 0) { %>
-                    <span class="noMoney">No</span>
-                    <% } else { %>
-                    <span class="money">$<%= d.cash %></span>
-                    <% } %>
-                    </p>
-                    <p>Located in <%= d.state %>, <%= d.city %></p>
-                    <% if(user) { %>
-                    <a href="/browse/<%= d.id %>"><button>View Listing</button></a>
-                    <% } else { %>
-                    <a href="/browse/<%= d.id %>"><button>Login to view detailed information</button></a>
-                    <% } %>
-                </div>
+    <% if(!user) { %>
+        <h3><a class="inlineLinks" href="/">Login</a> to view detailed information about each item.</h3>
+    <% } %>
+    <p>
+    <b>Filter by</b><br>
+    <select name="category">
+        <option value="Category" selected>Category</option>
+        <option value="Sneakers">Sneakers</option>
+        <option value="Clothing">Clothing</option>
+        <option value="Accessories">Accessories</option>
+    </select>
+
+    <select name="brand">
+        <option value="Brand" selected>Brand</option>
+        <option value="Adidas">Adidas</option>
+        <option value="Nike">Nike</option>
+        <option value="Supreme">Supreme</option>
+        <option value="Palace">Palace</option>
+        <option value="John Elliot">John Elliot</option>
+    </select>
+    </p>
+
+    <h3>Click View Listing to see detailed information regarding that item.</h3>
+    <% data.forEach(function(d) { %>
+    <div class="container aListing">
+        <div class="row center-xs center-sm center-md start-lg middle-xs middle-sm middle-md middle-lg">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
+                <p class="listingTitle"><%= d.title %></p>
+                <p><a href="/browse/<%= d.id %>"><img src="<%= d.image1 %>"></a></p>
+                <p class="listingBy">Posted by <%= d.posted_by %></p>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-5">
+                <p>Condition: <%= d.condition %></p>
+                <p>Trading a <%= d.size %></p>
+                <p>Looking for a <%= d.whatsize %></p>
+                <p>Willing to throw cash?
+                <% if(d.cash === 0) { %>
+                <span class="noMoney">No</span>
+                <% } else { %>
+                <span class="money">$<%= d.cash %></span>
+                <% } %>
+                </p>
+                <p>Located in <%= d.state %>, <%= d.city %></p>
+                <% if(user) { %>
+                <a href="/browse/<%= d.id %>"><button>View Listing</button></a>
+                <% } else { %>
+                <a href="/browse/<%= d.id %>"><button>Login to view detailed information</button></a>
+                <% } %>
             </div>
         </div>
-        <% }) %>
+    </div>
+    <% }) %>
 
-    <% } else { %>
+<% } else { %>
 
-    <h1>No current listings, be the first to <a class="inlineLinks" href="/dashboard/create">create one!</a></h1>
+<h1>No current listings, be the first to <a class="inlineLinks" href="/dashboard/create">create one!</a></h1>
 
-    <% } %>
 <% } %>

@@ -6,7 +6,8 @@ var db = require('../models/config');
 
 // RETURN ALL LISTINGS
 function getAllListings(req, res, next){
-    db.any('SELECT * FROM listings ORDER BY date_created DESC')
+    db.any(`SELECT * FROM listings WHERE accepted = FALSE
+            ORDER BY date_created DESC`)
       .then(data => {
         res.render('Browse', { data: data, title: "Browse" })
     }).catch(e => { return next(e); });
@@ -26,7 +27,7 @@ function getAListing(id, req, res, next){
 // GET ACCEPTED LISTINGS
 function getAcceptedListings(req, res, next){
 
-    db.any(`SELECT * FROM acceptedListings WHERE who_accepted = $1 ORDER BY date_accepted DESC`, req.user.username)
+    db.any(`SELECT * FROM listings WHERE who_accepted = $1 ORDER BY date_accepted DESC`, req.user.username)
         .then(data => { 
             
             res.render('AcceptedListings', { data: data, title: "Accepted Listings" })
@@ -34,7 +35,15 @@ function getAcceptedListings(req, res, next){
         }).catch(e => { return next(e); });
 }
 
+/*function getAcceptedListings(req, res, next){
 
+    db.any(`SELECT * FROM acceptedListings WHERE who_accepted = $1 ORDER BY date_accepted DESC`, req.user.username)
+        .then(data => { 
+            
+            res.render('AcceptedListings', { data: data, title: "Accepted Listings" })
+
+        }).catch(e => { return next(e); });
+}*/
 
 
 /*
@@ -86,6 +95,16 @@ function createListing(req, res, next){
 
 // ACCEPT A LISTING
 function acceptListing(id, req, res, next){
+    let itemID = parseInt(id);
+
+    db.none(`UPDATE listings
+             SET accepted = true, date_accepted = now(), who_accepted = $1
+             WHERE id = $2`, [req.user.username, itemID])
+      .then(data => { res.redirect('/dashboard/accepted'); })
+      .catch(e => { return next(e); });
+}
+
+/*function acceptListing(id, req, res, next){
 
     let itemID = parseInt(id);
 
@@ -109,7 +128,7 @@ function acceptListing(id, req, res, next){
                                 }).catch(e => { return next(e); });
                     }).catch(e => { return next(e); });
       }).catch(e => { return next(e); });
-}
+}*/
 
 
 /*
