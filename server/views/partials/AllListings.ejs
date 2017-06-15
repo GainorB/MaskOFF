@@ -28,22 +28,21 @@
     <div class="container aListing">
         <div class="row center-xs center-sm center-md start-lg middle-xs middle-sm middle-md middle-lg">
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
-                <p class="listingTitle"><%= d.title %></p>
+                <p class="listingTitle"><%= d.title %> (<%= d.condition %>)</p>
                 <p><a href="/browse/<%= d.id %>"><img src="<%= d.image1 %>"></a></p>
                 <p class="listingBy">Posted by <%= d.posted_by %></p>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-5">
-                <p>Condition: <%= d.condition %></p>
-                <p>Trading a <%= d.size %></p>
-                <p>Looking for a <%= d.whatsize %></p>
+                <p>Trading a <b><%= d.size %></b></p>
+                <p>Looking for a <b><%= d.whatsize %></b></p>
                 <p>Willing to throw cash?
                 <% if(d.cash === 0) { %>
-                <span class="noMoney">No</span>
+                <span class="noMoney"><b>No</b></span>
                 <% } else { %>
-                <span class="money">$<%= d.cash %></span>
+                <span class="money"><b>$<%= d.cash %></b></span>
                 <% } %>
                 </p>
-                <p>Located in <%= d.state %>, <%= d.city %></p>
+                <p>Located in <b><%= d.city %>, <%= d.state %></b></p>
                 <% if(user) { %>
                 <a href="/browse/<%= d.id %>"><button>View Listing</button></a>
                 <% } else { %>

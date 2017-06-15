@@ -25,6 +25,7 @@ CREATE TABLE IF NOT EXISTS users(
 
 CREATE TABLE IF NOT EXISTS listings(
     id BIGSERIAL PRIMARY KEY NOT NULL,
+    completed BOOLEAN DEFAULT FALSE,
     accepted BOOLEAN DEFAULT FALSE,
     date_created TEXT DEFAULT now(),
     date_accepted TEXT DEFAULT now(),

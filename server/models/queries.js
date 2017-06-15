@@ -27,7 +27,7 @@ function getAListing(id, req, res, next){
 // GET ACCEPTED LISTINGS
 function getAcceptedListings(req, res, next){
 
-    db.any(`SELECT * FROM listings WHERE who_accepted = $1 ORDER BY date_accepted DESC`, req.user.username)
+    db.any(`SELECT * FROM listings WHERE who_accepted = $1 AND accepted = true AND NOT completed = true ORDER BY date_accepted DESC`, req.user.username)
         .then(data => { 
             
             res.render('AcceptedListings', { data: data, title: "Accepted Listings" })
@@ -95,13 +95,26 @@ function createListing(req, res, next){
 
 // ACCEPT A LISTING
 function acceptListing(id, req, res, next){
+
     let itemID = parseInt(id);
 
-    db.none(`UPDATE listings
-             SET accepted = true, date_accepted = now(), who_accepted = $1
-             WHERE id = $2`, [req.user.username, itemID])
-      .then(data => { res.redirect('/dashboard/accepted'); })
-      .catch(e => { return next(e); });
+    db.any(`SELECT * FROM listings WHERE id = $1`, itemID)
+        .then(data => { 
+
+        if(data[0].posted_by === req.user.username){
+
+            req.flash('error', `You can't accept a listing you posted.`);
+            res.redirect('/browse');
+
+        } else {
+            
+            req.flash('success', 'You successfully accepted a listing. View it below.');
+            db.none(`UPDATE listings
+                     SET accepted = true, date_accepted = now(), who_accepted = $1
+                     WHERE id = $2`, [req.user.username, itemID])
+              .then(data => { res.redirect('/dashboard/accepted'); })
+              .catch(e => { return next(e); });
+        }}).catch(e => { return next(e); });
 }
 
 /*function acceptListing(id, req, res, next){
@@ -146,6 +159,34 @@ function updateProfile(req, res, next){
       .catch(e => { return next(e); });
 }
 
+// THIS FUNCTION WILL CANCEL A TRADE
+function cancelTrade(id, req, res, next){
+    let itemID = parseInt(id);
+
+    db.none('UPDATE listings SET accepted = false')
+      .then(data => {
+
+          req.flash('success', `Thanks for cancelling your trade.`); 
+          res.redirect('/dashboard/accepted'); 
+
+        })
+      .catch(e => { return next(e); });
+}
+
+// THIS FUNCTION WILL COMPLETE A TRADE
+function completedTrade(id, req, res, next){
+    let itemID = parseInt(id);
+
+    db.none('UPDATE listings SET completed = true')
+      .then(data => {
+
+          req.flash('success', `Thanks for completing your trade.`); 
+          res.redirect('/dashboard/accepted'); 
+
+        })
+      .catch(e => { return next(e); });
+}
+
 
 /*
 * DELETE ROUTES
@@ -163,5 +204,13 @@ function deleteAccount(req, res, next){
 
 
 module.exports = {
-    updateProfile, deleteAccount, createListing, getAllListings, getAListing, acceptListing, getAcceptedListings
+    updateProfile,
+    deleteAccount,
+    createListing,
+    getAllListings,
+    getAListing,
+    acceptListing,
+    getAcceptedListings,
+    cancelTrade,
+    completedTrade 
 };

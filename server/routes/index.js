@@ -31,8 +31,19 @@ router.get('/browse/:id', authHelpers.loginRequired, function (req, res, next) {
 // ACCEPT A LISTING
 router.get('/browse/accept/:id', authHelpers.loginRequired, function (req, res, next) {
   let id = req.params.id;
-  req.flash('success', 'You successfully accepted a listing. View it below.');
   db.acceptListing(id, req, res, next);
+});
+
+// CANCEL A TRADE
+router.get('/trade/cancel/:id', authHelpers.loginRequired, function (req, res, next) {
+  let id = req.params.id;
+  db.cancelTrade(id, req, res, next);
+});
+
+// COMPLETE A TRADE
+router.get('/trade/completed/:id', authHelpers.loginRequired, function (req, res, next) {
+  let id = req.params.id;
+  db.completedTrade(id, req, res, next);
 });
 
 module.exports = router;

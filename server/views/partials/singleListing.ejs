@@ -1,6 +1,6 @@
 <% data.forEach(function(d) { %>
 
-<p class="singleListingTitle"><%= d.title %><br>
+<p class="singleListingTitle"><%= d.title %> (<%= d.condition %>)<br>
 <span class="listingBy">Posted by <%= d.posted_by %>
 </p>
 <p>
@@ -22,8 +22,7 @@
 <% } %>
 </p>
 
-<p class="contactOwner"><b>Located in</b> <%= d.city %>, <%= d.state %><br>
-<p><b>Condition:</b> <%= d.condition %></p>
+<p class="contactOwner"><i class="fa fa-home" aria-hidden="true"></i> <b>Located in</b> <%= d.city %>, <%= d.state %><br>
 <p><b>Trading a</b> <%= d.size %></p>
 <p><b>Looking for a</b> <%= d.whatsize %></p>
 <p><b>Willing to ship?</b> <%= d.ship %></p>
