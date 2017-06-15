@@ -27,7 +27,7 @@ function getAListing(id, req, res, next){
 // GET ACCEPTED LISTINGS
 function getAcceptedListings(req, res, next){
 
-    db.any(`SELECT * FROM listings WHERE who_accepted = $1 AND accepted = true AND NOT completed = true ORDER BY date_accepted DESC`, req.user.username)
+    db.any(`SELECT * FROM listings WHERE who_accepted = $1 AND accepted = true ORDER BY date_accepted DESC`, req.user.username)
         .then(data => { 
             
             res.render('AcceptedListings', { data: data, title: "Accepted Listings" })
@@ -163,7 +163,7 @@ function updateProfile(req, res, next){
 function cancelTrade(id, req, res, next){
     let itemID = parseInt(id);
 
-    db.none('UPDATE listings SET accepted = false')
+    db.none(`UPDATE listings SET accepted = false WHERE id = ${itemID}`)
       .then(data => {
 
           req.flash('success', `Thanks for cancelling your trade.`); 
@@ -177,7 +177,7 @@ function cancelTrade(id, req, res, next){
 function completedTrade(id, req, res, next){
     let itemID = parseInt(id);
 
-    db.none('UPDATE listings SET completed = true')
+    db.none(`UPDATE listings SET completed = true WHERE id = ${itemID}`)
       .then(data => {
 
           req.flash('success', `Thanks for completing your trade.`); 
