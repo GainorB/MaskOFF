@@ -1,76 +1,75 @@
 <% data.forEach(function(d) { %>
     <% if(d.completed === true){ %>
-        <div class="container wrapAccepted overlay">
-            <span class="completed">completed</span>
-                <div class="row center-xs center-sm center-md start-lg middle-xs middle-sm middle-md middle-lg">
-                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
-                        <p>
-                        <p class="title"><%= d.title %> (<%= d.condition %>)</p>
-                        <img src="<%= d.image1 %>">
-                        </p>
-                    </div>
-
-                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
-                        <p>
-                        <b>Contact Information</b><br>
-                        Trade between <%= d.posted_by %> & <%= d.who_accepted %><br>
-                        <i class="fa fa-envelope-o" aria-hidden="true"></i> <%= d.email %><br>
-                        <i class="fa fa-home" aria-hidden="true"></i> <%= d.city %>, <%= d.state %>
-                        </p>
-                        <p>
-                        <b>Trade Information</b><br>
-                        <%= d.posted_by %> gets <%= d.what_size %> & <%= d.who_accepted %> gets <%= d.size %><br>
-                        Willing to ship? <b><%= d.ship %></b><br>
-                        Willing to meetup? <b><%= d.meetup %></b><br>
-                        Willing to throw cash?
-                        <% if(d.cash === 0) { %>
-                        No
-                        <% } else { %>
-                        $<%= d.cash %>
-                        <% } %>
-                        </p>
-                    </div>
+    <div class="container wrapAccepted overlay">
+        <span class="completed">completed</span>
+            <div class="row center-xs center-sm center-md start-lg middle-xs middle-sm middle-md middle-lg">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <p class="title"><%= d.title %> (<%= d.condition %>)</p>
                 </div>
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
+                    <img src="<%= d.image1 %>">
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
+                    <p>
+                    <b>Contact Information</b><br>
+                    <i class="fa fa-handshake-o" aria-hidden="true"></i> Trade between <%= d.posted_by %> & <%= d.who_accepted %><br>
+                    <i class="fa fa-envelope-o" aria-hidden="true"></i> <a class="inlineLinks" href="mailto:<%= d.email %>"><%= d.email %></a><br>
+                    <i class="fa fa-home" aria-hidden="true"></i> <%= d.city %>, <%= d.state %>
+                    </p>
+                    <p>
+                    <b>Trade Information</b><br>
+                    <%= d.posted_by %> gets a/n <%= d.whatsize %><br><%= d.who_accepted %> gets a/n <%= d.size %><br>
+                    Willing to ship? <b><%= d.ship %></b><br>
+                    Willing to meetup? <b><%= d.meetup %></b><br>
+                    Willing to throw cash?
+                    <% if(d.cash === 0) { %>
+                    No
+                    <% } else { %>
+                    $<%= d.cash %>
+                    <% } %>
+                    </p>
+                </div>
+            </div>
         </div>
     <% } else { %>
-        <div class="container wrapAccepted">
+    <div class="container wrapAccepted">
 
-                <div class="row center-xs center-sm center-md start-lg middle-xs middle-sm middle-md middle-lg">
-                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
-                        <p>
-                        <p class="title"><%= d.title %> (<%= d.condition %>)</p>
-                        <img src="<%= d.image1 %>">
-                        </p>
-                    </div>
-
-                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
-                        <p>
-                        <b>Contact Information</b><br>
-                        Trade between <%= d.posted_by %> & <%= d.who_accepted %><br>
-                        <i class="fa fa-envelope-o" aria-hidden="true"></i> <%= d.email %><br>
-                        <i class="fa fa-home" aria-hidden="true"></i> <%= d.city %>, <%= d.state %>
-                        </p>
-                        <p>
-                        <b>Trade Information</b><br>
-                        Willing to ship? <b><%= d.ship %></b><br>
-                        Willing to meetup? <b><%= d.meetup %></b><br>
-                        Willing to throw cash?
-                        <% if(d.cash === 0) { %>
-                        <span class="noMoney">No</span>
-                        <% } else { %>
-                        <span class="money">$<%= d.cash %></span>
-                        <% } %>
-                        </p>
-                    </div>
-                </div>
-
-                <div class="row center-xs center-sm center-md center-lg middle-xs middle-sm middle-md middle-lg">
-                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                        <a href="/trade/completed/<%= d.id %>"><button>Completed?</button></a>
-                        <a href="/trade/cancel/<%= d.id %>"><button>Cancel Trade</button></a>
-                        <button>Report Abuse</button>
-                    </div>
-                </div>
+        <div class="row center-xs center-sm center-md start-lg middle-xs middle-sm middle-md middle-lg">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <p class="title"><%= d.title %> (<%= d.condition %>)</p>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
+                <img src="<%= d.image1 %>">
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
+                <p>
+                <b>Contact Information</b><br>
+                <i class="fa fa-handshake-o" aria-hidden="true"></i> Trade between <%= d.posted_by %> & <%= d.who_accepted %><br>
+                <i class="fa fa-envelope-o" aria-hidden="true"></i> <a class="inlineLinks" href="mailto:<%= d.email %>"><%= d.email %></a><br>
+                <i class="fa fa-home" aria-hidden="true"></i> <%= d.city %>, <%= d.state %>
+                </p>
+                <p>
+                <b>Trade Information</b><br>
+                <%= d.posted_by %> gets a/n <%= d.whatsize %><br><%= d.who_accepted %> gets a/n <%= d.size %><br>
+                Willing to ship? <b><%= d.ship %></b><br>
+                Willing to meetup? <b><%= d.meetup %></b><br>
+                Willing to throw cash?
+                <% if(d.cash === 0) { %>
+                <span class="noMoney">No</span>
+                <% } else { %>
+                <span class="money">$<%= d.cash %></span>
+                <% } %>
+                </p>
+            </div>
         </div>
+
+        <div class="row center-xs center-sm center-md center-lg middle-xs middle-sm middle-md middle-lg">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <a href="/trade/completed/<%= d.id %>"><button>Completed?</button></a>
+                <a href="/trade/cancel/<%= d.id %>"><button>Cancel Trade</button></a>
+                <button>Report Abuse</button>
+            </div>
+        </div>
+    </div>
     <% } %>
 <% }) %>
