@@ -6,11 +6,9 @@ var db = require('../models/config');
 
 // FILTER CATEGORIES
 function filterCategory(category, brand, req, res, next){
-    console.log(category)
-    console.log(brand)
     db.any('SELECT * FROM listings WHERE accepted = FALSE AND category = $1 AND brand = $2 ORDER BY date_created DESC', [category, brand])
       .then(data => {
-        res.render('Browse', { data: data, title: `Browsing ${category}` })
+        res.render('Browse', { data: data, title: `Browsing` })
       }).catch(e => { return next(e); });
 }
 

@@ -1,4 +1,4 @@
-<% if(data.title != "") { %>
+<% if(data) { %>
     <h1>Listings currently available</h1>
 
     <% if(!user) { %>
@@ -26,6 +26,7 @@
 
     <h3>Click View Listing to see detailed information regarding that item.</h3>
     <% data.forEach(function(d) { %>
+    
     <div class="container aListing">
         <div class="row center-xs center-sm center-md start-lg middle-xs middle-sm middle-md middle-lg">
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
