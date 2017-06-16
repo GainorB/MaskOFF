@@ -1,9 +1,18 @@
 const express = require('express');
+const nodemailer = require('nodemailer');
 const router = express.Router();
 
 const passport = require('../services/auth/local');
 const authHelpers = require('../services/auth/auth-helpers');
 let errors;
+
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: process.env.EMAILUSER,
+    pass: process.env.EMAILPW
+  }
+});
 
 router.get('/login', authHelpers.loginRedirect, (req, res) => {
   res.render('auth/login', { title: "Login" });
@@ -40,6 +49,27 @@ router.post('/register', (req, res, next)  => {
         if(err) return next(err);
 
         res.redirect('/dashboard');
+
+        /*var mailOptions = {
+          from: process.env.EMAILUSER,
+          to: req.body.email,
+          subject: 'Welcome to MaskOFF',
+          html: `Hey, thanks for registering at MaskOFF, below is the information you need to login<br>
+                <b>Link:</b> http://maskoff.herokuapp.com/auth/login<br>
+                <b>Username:</b> ${req.body.username}<br>
+                <b>Password:</b> ${req.body.password}<br>
+                <br>
+                See you soon!`
+        };
+
+        transporter.sendMail(mailOptions, function(error, info){
+            if (error) {
+              console.log(error);
+            } else {
+              console.log('Email sent: ' + info.response);
+            }
+        });*/
+
       });
     }).catch((err) => { res.status(500).json({ status: 'Registration Error: Username or Email already in use.' }); });
   }

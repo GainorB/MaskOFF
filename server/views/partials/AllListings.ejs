@@ -6,21 +6,22 @@
     <% } %>
     <p>
     <b>Filter by</b><br>
+    <form method='POST' action='/browse/filter'>
     <select name="category">
-        <option value="Category" selected>Category</option>
-        <option value="Sneakers">Sneakers</option>
+        <option value="Sneakers" selected>Sneakers</option>
         <option value="Clothing">Clothing</option>
         <option value="Accessories">Accessories</option>
     </select>
 
     <select name="brand">
-        <option value="Brand" selected>Brand</option>
-        <option value="Adidas">Adidas</option>
+        <option value="Adidas" selected>Adidas</option>
         <option value="Nike">Nike</option>
         <option value="Supreme">Supreme</option>
         <option value="Palace">Palace</option>
         <option value="John Elliot">John Elliot</option>
     </select>
+    <button type="submit">Filter</button>
+    </form>
     </p>
 
     <h3>Click View Listing to see detailed information regarding that item.</h3>
@@ -33,8 +34,8 @@
                 <p class="listingBy">Posted by <%= d.posted_by %></p>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-5">
-                <p>Trading a <b><%= d.size %></b></p>
-                <p>Looking for a <b><%= d.whatsize %></b></p>
+                <p>Trading a/n <b><%= d.size %></b></p>
+                <p>Looking for a/n <b><%= d.whatsize %></b></p>
                 <p>Willing to throw cash?
                 <% if(d.cash === 0) { %>
                 <span class="noMoney"><b>No</b></span>

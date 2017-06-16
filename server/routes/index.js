@@ -1,4 +1,5 @@
 var express = require('express');
+var _ = require('lodash');
 var router = express.Router();
 var db = require('../models/queries');
 
@@ -19,7 +20,10 @@ router.get('/learnmore', function (req, res, next) {
 // RETURN ALL LISTINGS AND RENDER DATA ON BROWSE PAGE
 router.get('/browse', db.getAllListings);
 
+// UPDATE A USERS PROFILE
 router.put('/updateProfile', db.updateProfile);
+
+// DELETE A USERS ACCOUNT
 router.delete('/deleteAccount', db.deleteAccount);
 
 // A SINGLE ITEM
@@ -44,6 +48,13 @@ router.get('/trade/cancel/:id', authHelpers.loginRequired, function (req, res, n
 router.get('/trade/completed/:id', authHelpers.loginRequired, function (req, res, next) {
   let id = req.params.id;
   db.completedTrade(id, req, res, next);
+});
+
+// FILTER
+router.post('/browse/filter', function(req, res, next) {
+    let category = req.body.category;
+    let brand = req.body.brand;
+    db.filterCategory(category, brand, req, res, next);
 });
 
 module.exports = router;

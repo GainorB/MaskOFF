@@ -4,6 +4,16 @@ var db = require('../models/config');
 * GET ROUTES
 */
 
+// FILTER CATEGORIES
+function filterCategory(category, brand, req, res, next){
+    console.log(category)
+    console.log(brand)
+    db.any('SELECT * FROM listings WHERE accepted = FALSE AND category = $1 AND brand = $2 ORDER BY date_created DESC', [category, brand])
+      .then(data => {
+        res.render('Browse', { data: data, title: `Browsing ${category}` })
+      }).catch(e => { return next(e); });
+}
+
 // RETURN ALL LISTINGS
 function getAllListings(req, res, next){
     db.any(`SELECT * FROM listings WHERE accepted = FALSE
@@ -34,16 +44,6 @@ function getAcceptedListings(req, res, next){
 
         }).catch(e => { return next(e); });
 }
-
-/*function getAcceptedListings(req, res, next){
-
-    db.any(`SELECT * FROM acceptedListings WHERE who_accepted = $1 ORDER BY date_accepted DESC`, req.user.username)
-        .then(data => { 
-            
-            res.render('AcceptedListings', { data: data, title: "Accepted Listings" })
-
-        }).catch(e => { return next(e); });
-}*/
 
 
 /*
@@ -117,32 +117,6 @@ function acceptListing(id, req, res, next){
         }}).catch(e => { return next(e); });
 }
 
-/*function acceptListing(id, req, res, next){
-
-    let itemID = parseInt(id);
-
-    // 1. SELECT THE ITEM FROM THE LISTINGS TABLE
-    db.any(`SELECT * FROM listings WHERE id = ${itemID}`)
-      .then(data => {
-
-            // 2. INSERT ITEM INTO ACCEPTEDLISTINGS TABLE
-            db.none('INSERT into acceptedListings(who_accepted, trading_with, title, condition, state, city, email, image1, cash, ship, meetup)' +
-                    'VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)',
-                    [req.user.username, data[0].posted_by, data[0].title, data[0].condition, 
-                    data[0].state, data[0].city, data[0].email, data[0].image1, data[0].cash, data[0].ship, data[0].meetup])
-                    .then(data => {
-                         
-                         // 3. DELETE FROM LISTINGS TABLE
-                         db.none(`DELETE FROM listings WHERE id=$1`, itemID)
-                                .then(data => {
-                                      
-                                      res.redirect('/dashboard/accepted');
-
-                                }).catch(e => { return next(e); });
-                    }).catch(e => { return next(e); });
-      }).catch(e => { return next(e); });
-}*/
-
 
 /*
 * UPDATE ROUTES
@@ -212,5 +186,6 @@ module.exports = {
     acceptListing,
     getAcceptedListings,
     cancelTrade,
-    completedTrade 
+    completedTrade,
+    filterCategory 
 };
