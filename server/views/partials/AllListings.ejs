@@ -65,10 +65,12 @@
     <% }) %>
 
 <% } else { %>
-
+    <% if(!category && !brand) { %>
     <h1>No current listings <br>Be the first to <a class="inlineLinks" href="/dashboard/create">create one!</a></h1>
+    <% } %>
     <% if(category && brand) { %>
-        <h3>No current listings match <%= category %> and <%= brand %>.</h3>
+        <h2>No current listings match <%= category %> and <%= brand %>.
+        <br>Be the first to <a class="inlineLinks" href="/dashboard/create">create one!</a></h2>
     <% } %>
 
 <% } %>

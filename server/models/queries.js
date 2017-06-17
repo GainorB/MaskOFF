@@ -146,21 +146,18 @@ function updateProfile(req, res, next){
           if(data[0].posted_by === req.user.username){
 
             // 3. UPDATE LISTINGS TABLE WITH THE USERS NEW PROFILE INFORMATION
-            db.any('UPDATE listings SET posted_by=$1, email=$2, state=$3, city=$4 WHERE posted_by=$5', 
-                    [username, email, state, city, req.user.username])
+            db.any('UPDATE listings SET posted_by=$1, email=$2, state=$3, city=$4 WHERE posted_by=$5', [username, email, state, city, req.user.username])
               .then(() =>{ 
 
                     // 4. THEN UPDATE THE USERS TABLE WITH THE USERS PROFILE INFORMATION
-                    db.none('UPDATE users SET username=$1, email=$2, state=$3, city=$4 WHERE id=$5', 
-                            [username, email, state, city, userID])
+                    db.none('UPDATE users SET username=$1, email=$2, state=$3, city=$4 WHERE id=$5', [username, email, state, city, userID])
                       .catch(e => { console.log(e); });
 
                 }).catch(e => { console.log(e); });
 
           } else {
 
-            db.none('UPDATE users SET username=$1, email=$2, state=$3, city=$4 WHERE id=$5', 
-                    [username, email, state, city, userID])
+            db.none('UPDATE users SET username=$1, email=$2, state=$3, city=$4 WHERE id=$5', [username, email, state, city, userID])
               .catch(e => { console.log(e); });
 
           }
@@ -203,11 +200,35 @@ function completedTrade(id, req, res, next){
 
 // THIS FUNCTION WILL DELETE A USERS PROFILE
 function deleteAccount(req, res, next){
-    let userID = parseInt(req.user.id);
 
-    db.none(`DELETE FROM users WHERE id = ${userID}`)
-      .then(data => { res.status(200).json({ message: "Success" }); })
-      .catch(e => { console.log(e); });
+    const { id, username } = req.user;
+
+    // 1. CHECK LISTINGS TO SEE IF THIS USER HAS A LISTING
+    db.any('SELECT posted_by FROM listings')
+      .then(data => {
+
+          // 2. IF USER HAS A POST IN LISTINGS TABLE
+          if(data[0].posted_by === username){
+
+                // 3. DELETE USERS LISTINGS
+                db.none(`DELETE FROM listings WHERE posted_by = $1`, username)
+                  .then(data => { 
+                
+                        // 4. DELETE FROM USERS TABLE
+                        db.none(`DELETE FROM users WHERE id = $1`, id)
+                        .then(data => { res.status(200).json({ message: "Success" }); })
+                        .catch(e => { console.log(e); });
+
+                   }).catch(e => { console.log(e); });            
+
+          } else {
+
+                db.none(`DELETE FROM users WHERE id = $1`, id)
+                .then(data => { res.status(200).json({ message: "Success" }); })
+                .catch(e => { console.log(e); });
+          }
+
+      }).catch(e => { console.log(e); });
 }
 
 // DELETE A LISTING
