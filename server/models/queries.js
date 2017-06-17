@@ -7,9 +7,12 @@ var db = require('../models/config');
 // FILTER CATEGORIES
 function filterCategory(category, brand, req, res, next){
     db.any('SELECT * FROM listings WHERE accepted = FALSE AND category = $1 AND brand = $2 ORDER BY date_created DESC', [category, brand])
-      .then(data => {
-        res.render('Browse', { data: data, title: `Browsing` })
-      }).catch(e => { return next(e); });
+      .then(data => { 
+            let brands = data.map(function(item) { return item.brand }).filter((item, index, arr) => {
+                return arr.indexOf(item) === index;
+            });
+          res.render('Browse', { data: data, title: `Browsing`, category: category, brand: brand, brands })
+      }).catch(e => { console.log(e); });
 }
 
 // RETURN ALL LISTINGS
@@ -17,8 +20,11 @@ function getAllListings(req, res, next){
     db.any(`SELECT * FROM listings WHERE accepted = FALSE
             ORDER BY date_created DESC`)
       .then(data => {
-        res.render('Browse', { data: data, title: "Browse" })
-    }).catch(e => { return next(e); });
+            let brands = data.map(function(item) { return item.brand }).filter((item, index, arr) => {
+                return arr.indexOf(item) === index;
+            });
+        res.render('Browse', { data: data, title: "Browse", category: '', brand: '', brands })
+    }).catch(e => { console.log(e); });
 }
 
 // GET A SINGLE LISTING
@@ -29,7 +35,7 @@ function getAListing(id, req, res, next){
     db.any(`SELECT * FROM listings WHERE id = ${ID}`)
       .then(data => {
         res.render('aListing', { data: data, title: "Listing" })
-    }).catch(e => { return next(e); });
+    }).catch(e => { console.log(e); });
 }
 
 // GET ACCEPTED LISTINGS
@@ -40,7 +46,7 @@ function getAcceptedListings(req, res, next){
             
             res.render('AcceptedListings', { data: data, title: "Accepted Listings" })
 
-        }).catch(e => { return next(e); });
+        }).catch(e => { console.log(e); });
 }
 
 
@@ -48,10 +54,14 @@ function getAcceptedListings(req, res, next){
 * POST ROUTES
 */
 
+function capitalizeFirstLetter(brand) {
+    return brand.charAt(0).toUpperCase() + brand.slice(1);
+}
+
 // CREATE A LISTING
 function createListing(req, res, next){
 
-    res.setHeader('Content-Type', 'application/json');
+    //res.setHeader('Content-Type', 'application/json');
 
     let image2, image3, image4, image5;
     const { username, email, city, state } = req.user;
@@ -84,10 +94,10 @@ function createListing(req, res, next){
 
     db.none('INSERT into listings(posted_by, state, city, email, category, brand, title, size, whatsize, condition, image1, image2, image3, image4, image5, ship, meetup, cash)'
                 + 'VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18)', 
-                [username, state, city, email, category, brand, title, size[1], whatsize[1], condition, 
+                [username, state, city, email, category, capitalizeFirstLetter(brand), title, size[1], whatsize[1], condition, 
                 image1, image2, image3, image4, image5, ship, meetup, cash])
       .then(data => { res.redirect('/dashboard/create'); })
-      .catch(e => { return next(e); });
+      .catch(e => { console.log(e); });
 }
 
 
@@ -111,8 +121,8 @@ function acceptListing(id, req, res, next){
                      SET accepted = true, date_accepted = now(), who_accepted = $1
                      WHERE id = $2`, [req.user.username, itemID])
               .then(data => { res.redirect('/dashboard/accepted'); })
-              .catch(e => { return next(e); });
-        }}).catch(e => { return next(e); });
+              .catch(e => { console.log(e); });
+        }}).catch(e => { console.log(e); });
 }
 
 
@@ -122,13 +132,45 @@ function acceptListing(id, req, res, next){
 
 // THIS FUNCTION UPDATE A USERS PROFILE
 function updateProfile(req, res, next){
+
     const userID = parseInt(req.user.id);
     const { username, email, state, city, age } = req.body;
 
-    db.none('UPDATE users SET username=$1, email=$2, state=$3, city=$4, age=$5 WHERE id=$6', 
-            [username, email, state, city, age, userID])
-      .then(data => { res.status(200).json({ message: "Success" }); })
-      .catch(e => { return next(e); });
+    console.log(userID)
+    console.log(req.body)
+
+    // 1. CHECK LISTINGS TO SEE IF THIS USER HAS A LISTING
+    db.any('SELECT * FROM listings')
+      .then(data => {
+
+          console.log(data[0].posted_by)
+          console.log(req.user.username)
+
+          // 2. IF USER HAS A POST
+          if(data[0].posted_by === req.user.username){
+
+            // 3. UPDATE LISTINGS TABLE WITH THE USERS NEW PROFILE INFORMATION
+            db.none('UPDATE listings SET posted_by=$1, email=$2, state=$3, city=$4, WHERE posted_by=$5', 
+                    [username, email, state, city, data[0].posted_by])
+            .then(data => { 
+
+                // 4. THEN UPDATE THE USERS TABLE WITH THE USERS PROFILE INFORMATION
+                db.none('UPDATE users SET username=$1, email=$2, state=$3, city=$4, age=$5 WHERE id=$6', 
+                        [username, email, state, city, age, userID])
+                .then(data => { res.status(200).json({ message: "Success" }); })
+                .catch(e => { console.log(e); });
+
+             })
+            .catch(e => { console.log(e); });
+
+          } else {
+
+            db.none('UPDATE users SET username=$1, email=$2, state=$3, city=$4, age=$5 WHERE id=$6', 
+                    [username, email, state, city, age, userID])
+            .then(data => { res.status(200).json({ message: "Success" }); })
+            .catch(e => { console.log(e); });
+          }
+      })
 }
 
 // THIS FUNCTION WILL CANCEL A TRADE
@@ -142,7 +184,7 @@ function cancelTrade(id, req, res, next){
           res.redirect('/dashboard/accepted'); 
 
         })
-      .catch(e => { return next(e); });
+      .catch(e => { console.log(e); });
 }
 
 // THIS FUNCTION WILL COMPLETE A TRADE
@@ -156,7 +198,7 @@ function completedTrade(id, req, res, next){
           res.redirect('/dashboard/accepted'); 
 
         })
-      .catch(e => { return next(e); });
+      .catch(e => { console.log(e); });
 }
 
 
@@ -168,11 +210,23 @@ function completedTrade(id, req, res, next){
 function deleteAccount(req, res, next){
     let userID = parseInt(req.user.id);
 
-    db.none(`DELETE FROM users WHERE id=${userID}`)
+    db.none(`DELETE FROM users WHERE id = ${userID}`)
       .then(data => { res.status(200).json({ message: "Success" }); })
-      .catch(e => { return next(e); });
+      .catch(e => { console.log(e); });
 }
 
+// DELETE A LISTING
+function deleteListing(id, req, res, next){
+    let itemID = parseInt(id);
+
+    db.none(`DELETE FROM listings WHERE id = ${itemID}`)
+      .then(data => { 
+
+            req.flash('success', `Thanks for deleting your listing.`); 
+            res.redirect('/browse'); 
+       })
+      .catch(e => { console.log(e); });
+}
 
 
 module.exports = {
@@ -185,5 +239,6 @@ module.exports = {
     getAcceptedListings,
     cancelTrade,
     completedTrade,
-    filterCategory 
+    filterCategory,
+    deleteListing 
 };

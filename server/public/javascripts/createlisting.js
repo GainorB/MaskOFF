@@ -25,15 +25,24 @@ $('#tooltip').on('click', function () {
 function sneakerSelect(size){
     return `
                 <select name=${size} required>
-                <option value="Size 4" selected>Size 5</option>
+                <option value="Size 4" selected>Size 4</option>
+                <option value="Size 4.5">Size 4.5</option>
                 <option value="Size 5">Size 5</option>
+                <option value="Size 5.5">Size 5.5</option>
                 <option value="Size 6">Size 6</option>
+                <option value="Size 6.5">Size 6.5</option>
                 <option value="Size 7">Size 7</option>
+                <option value="Size 7.5">Size 7.5</option>
                 <option value="Size 8">Size 8</option>
+                <option value="Size 8.5">Size 8.5</option>
                 <option value="Size 9">Size 9</option>
+                <option value="Size 9.5">Size 9.5</option>
                 <option value="Size 10">Size 10</option>
+                <option value="Size 10.5">Size 10.5</option>
                 <option value="Size 11">Size 11</option>
+                <option value="Size 11.5">Size 11.5</option>
                 <option value="Size 12">Size 12</option>
+                <option value="Size 12.5">Size 12.5</option>
                 <option value="Size 13">Size 13</option>
                 </select>
             `;
@@ -54,7 +63,7 @@ function clothingSelect(size){
 
 // CATEGORIES AND SIZES
 $('#category').change(function(){
-    if($('#category').val() === "Sneakers"){
+    if($('#category').val() === "Footwear"){
         $('#size').hide();
         $('#whatsize').hide();
 

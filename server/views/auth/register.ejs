@@ -7,7 +7,6 @@
 
 <div id="boxbox">          
 <h1>Account Registration</h1>
-<p>Please take some time to register. A profile gives you access to accepting listings!</p>
     <p><%- messages('message', locals) %></p>
     <ul>
         <% if(errors){ %>
@@ -25,7 +24,7 @@
         <p><input type="text" name="state" placeholder="State"></p>
         <p><input type="text" name="city" placeholder="City"></p>
         <p><input id="number" type="number" name="age" placeholder="Age" min="18" max="100"></p>
-        <p>Already have an account? <a class="inlineLinks" href="/auth/login">Log In</a></p>
+        Already have an account? <a class="inlineLinks" href="/auth/login">Log In</a><br>
         <button type="submit">REGISTER</button> <button type="reset">RESET</button>
     </form>
 </div>

@@ -32,6 +32,12 @@ router.get('/browse/:id', authHelpers.loginRequired, function (req, res, next) {
   db.getAListing(id, req, res, next);
 });
 
+// DELETE A LISTING
+router.get('/browse/delete/:id', authHelpers.loginRequired, function (req, res, next) {
+  let id = req.params.id;
+  db.deleteListing(id, req, res, next);
+});
+
 // ACCEPT A LISTING
 router.get('/browse/accept/:id', authHelpers.loginRequired, function (req, res, next) {
   let id = req.params.id;

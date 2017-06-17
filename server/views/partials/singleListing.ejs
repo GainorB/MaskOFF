@@ -36,6 +36,9 @@
 </p>
 <p>
 <a href="/browse/accept/<%= d.id %>"><button>Accept Listing</button></a><br>
+<% if(user.username === d.posted_by) { %>
+    <a href="/browse/delete/<%= d.id %>"><button>Delete Listing</button></a><br>
+<% } %>
 <span class="acceptThisListing">Accept this listing, to view the owners contact information.</span>
 </p>
 

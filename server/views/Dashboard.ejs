@@ -7,9 +7,7 @@
 
 <div id="boxbox">
 <h1>Welcome to your profile <%= user.username %>!</h1>
-<h5><p>Below you will find a summary of your account information.<br>
-Keep in mind, if you're in the middle of a trade, the accepting user won't see your updated profile information.
-</p></h5>
+<h5>Below you will find a summary of your account information.</h5>
 
 <p><input class="username" type="text" name="username" value="<%= user.username %>" readonly> <i id="pencil_<%= user.id %>" class="fa fa-pencil" aria-hidden="true"></i></p>
 <p><input class="email" type="text" name="email" value="<%= user.email %>" readonly> <i id="pencil_<%= user.id %>" class="fa fa-pencil" aria-hidden="true"></i></p>

@@ -1,30 +1,36 @@
-<% if(data) { %>
+<% if(data.length != 0) { %>
     <h1>Listings currently available</h1>
+
+    <% if(category && brand) { %>
+        <h3>Current listings matching <%= category %> and <%= brand %>.</h3>
+    <% } %>
 
     <% if(!user) { %>
         <h3><a class="inlineLinks" href="/">Login</a> to view detailed information about each item.</h3>
     <% } %>
-    <p>
-    <b>Filter by</b><br>
-    <form method='POST' action='/browse/filter'>
-    <select name="category">
-        <option value="Sneakers" selected>Sneakers</option>
-        <option value="Clothing">Clothing</option>
-        <option value="Accessories">Accessories</option>
-    </select>
+    <div class="container filter">
+        <div class="row center-xs center-sm center-md center-lg middle-xs middle-sm middle-md middle-lg">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <p>
+                <form method='POST' action='/browse/filter'>
+                <b>Filter by</b> <select name="category">
+                    <option value="Footwear" selected>Footwear</option>
+                    <option value="Clothing">Clothing</option>
+                    <option value="Accessories">Accessories</option>
+                </select>
 
-    <select name="brand">
-        <option value="Adidas" selected>Adidas</option>
-        <option value="Nike">Nike</option>
-        <option value="Supreme">Supreme</option>
-        <option value="Palace">Palace</option>
-        <option value="John Elliot">John Elliot</option>
-    </select>
-    <button type="submit">Filter</button>
-    </form>
-    </p>
+                <select name="brand">
+                <% brands.map(function(brand) { %>
+                    <option value="<%= brand %>"><%= brand %></option>
+                <% }) %>
+                </select>
+                <button type="submit">Filter</button>
+                </form>
+                </p>
+            </div>
+        </div>
+    </div>
 
-    <h3>Click View Listing to see detailed information regarding that item.</h3>
     <% data.forEach(function(d) { %>
     
     <div class="container aListing">
@@ -32,7 +38,7 @@
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
                 <p class="listingTitle"><%= d.title %> (<%= d.condition %>)</p>
                 <p><a href="/browse/<%= d.id %>"><img src="<%= d.image1 %>"></a></p>
-                <p class="listingBy">Posted by <%= d.posted_by %></p>
+                <p class="listingBy">Posted by <%= d.posted_by %> on <%= d.date_created %></p>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-5">
                 <p>Trading a/n <b><%= d.size %></b></p>
@@ -46,7 +52,10 @@
                 </p>
                 <p>Located in <b><%= d.city %>, <%= d.state %></b></p>
                 <% if(user) { %>
-                <a href="/browse/<%= d.id %>"><button>View Listing</button></a>
+                <a href="/browse/<%= d.id %>"><button>View Listing</button></a><br>
+                    <% if(user.username === d.posted_by) { %>
+                        <a href="/browse/delete/<%= d.id %>"><button>Delete Listing</button></a>
+                    <% } %>
                 <% } else { %>
                 <a href="/browse/<%= d.id %>"><button>Login to view detailed information</button></a>
                 <% } %>
@@ -57,6 +66,9 @@
 
 <% } else { %>
 
-<h1>No current listings, be the first to <a class="inlineLinks" href="/dashboard/create">create one!</a></h1>
+    <h1>No current listings <br>Be the first to <a class="inlineLinks" href="/dashboard/create">create one!</a></h1>
+    <% if(category && brand) { %>
+        <h3>No current listings match <%= category %> and <%= brand %>.</h3>
+    <% } %>
 
 <% } %>

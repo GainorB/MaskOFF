@@ -14,30 +14,25 @@
 <p id="tooltip">Select a category for your listing.</p>
     <select id="category" name="category" required>
         <option value="change" selected>Change Me</option>
-        <option value="Sneakers">Sneakers</option>
+        <option value="Footwear">Footwear</option>
         <option value="Clothing">Clothing</option>
         <option value="Accessories">Accessories</option>
     </select>
 </p> 
 
 <p>
-<p id="tooltip">Select a brand to list your item under.</p>
-    <select name="brand" required>
-        <option value="Adidas" selected>Adidas</option>
-        <option value="Nike">Nike</option>
-        <option value="Supreme">Supreme</option>
-        <option value="Palace">Palace</option>
-        <option value="John Elliot">John Elliot</option>
-    </select>
+<p id="tooltip">Enter the brand most associated with your item.</p>
+<input type="text" name="brand" placeholder="Brand" required>
 </p>
 
 <p>
-<p id="tooltip">Create a title for your listing.</p> 
+<p id="tooltip">Create a title for your listing: Be descriptive, yet consise.</p> 
 <input type="text" name="title" placeholder="Title" required>
 </p>
 
 <p>
-<p id="tooltip">What size are you trading?</p>
+<p id="tooltip">What size are you trading?<br/>
+<span class="convertSize">Footwear sizing is unisex: A men's size 7 is roughly equivalent to a women's size 8.5.</span></p>
 <input type="text" id="size" name="size" placeholder="Please choose a category first" required readonly>
 <p class="changeSize"></p>
 </p>
@@ -49,7 +44,7 @@
 </p>
 
 <p>
-<p id="tooltip">What condition is your item in?</p>
+<p id="tooltip">What condition is your item in? Be honest.</p>
     <select name="condition" required>
     <option value="New" selected>New</option>
     <option value="Used">Used</option>
@@ -57,7 +52,7 @@
 </p>
  
 <p>
-<p id="tooltip">You must include 1 image. You can insert up to 5 images.</p>
+<p id="tooltip">You must include 1 image and can insert up to 5 images.</p>
 <p><input type="text" name="image1" placeholder="Image1" required>  <i class="fa fa-plus" aria-hidden="true"></i></p> 
 <p id="insertImages"></p>
 </p>

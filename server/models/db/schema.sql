@@ -27,8 +27,8 @@ CREATE TABLE IF NOT EXISTS listings(
     id BIGSERIAL PRIMARY KEY NOT NULL,
     completed BOOLEAN DEFAULT FALSE,
     accepted BOOLEAN DEFAULT FALSE,
-    date_created TEXT DEFAULT now(),
-    date_accepted TEXT DEFAULT now(),
+    date_created TEXT DEFAULT current_date,
+    date_accepted TEXT DEFAULT current_date,
     who_accepted VARCHAR(30) DEFAULT 'empty',
     posted_by VARCHAR(30) NOT NULL,
     state VARCHAR(20) NOT NULL,
@@ -51,6 +51,5 @@ CREATE TABLE IF NOT EXISTS listings(
     CHECK (ship = 'Yes' OR ship = 'No'),
     CHECK (meetup = 'Yes' OR meetup = 'No'),
     CHECK (condition = 'New' OR condition = 'Used'),
-    CHECK (brand = 'Adidas' OR brand = 'Nike' OR brand = 'Supreme' OR brand = 'Palace' OR brand = 'John Elliot'),
-    CHECK (category = 'Sneakers' OR category = 'Clothing' OR category = 'Accessories')
+    CHECK (category = 'Footwear' OR category = 'Clothing' OR category = 'Accessories')
 );

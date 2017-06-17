@@ -13,6 +13,7 @@ body {
 
 .container .inlineLinks {
     color: #222222;
+    font-weight: 700;
 }
 
 .container .inlineLinks:hover {
@@ -113,14 +114,15 @@ button {
     font-size: 12px;
     border: 0px;
     padding: 6px 30px;
-    background-color: #433d3d;
+    background-color: #132840;
     color: #fff;
     font-weight: 700;
     border-radius: 4px;
+    margin: 3px;
 }
 
 button:hover {
-    background-color: #490a0a;
+    text-decoration: underline;
 }
 
 input[type=text], input[type=password], input[type=email] {
@@ -210,7 +212,14 @@ FLASH MESSAGES
     font-size: 12px;
     letter-spacing: 1px;
     font-weight: 700;
+    margin: 0;
+    padding: 0;
 }
+
+.convertSize {
+    color: red;
+}
+
 
 /*
 * BROWSE
@@ -235,6 +244,12 @@ FLASH MESSAGES
     transition: .3s;
 }
 
+.filter {
+    padding: 15px;
+    margin: auto;
+    width: 80%;
+}
+
 .aListing:hover{
     transition: .3s;
     box-shadow: 0 8px 16px 0 rgba(0,0,0,.5);
@@ -254,7 +269,7 @@ FLASH MESSAGES
 }
 
 .aListing .listingBy {
-    font-size: 20px;
+    font-size: 13px;
     font-style: italic;
     text-align: center;
 }
@@ -419,6 +434,10 @@ footer {
         padding: 5px;
     }
 
+    .filter select {
+        margin: 5px;
+    }
+
     .browse img {
         max-width: 300px;
         max-height: 300px;
@@ -432,7 +451,8 @@ footer {
 
     input[type=text], 
     input[type=password],
-    input[type=number], select {
+    input[type=number],
+    input[type=email], select {
         width: 300px;
         font-size: 15px;
     }
