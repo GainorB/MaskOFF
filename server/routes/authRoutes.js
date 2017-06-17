@@ -7,11 +7,15 @@ const authHelpers = require('../services/auth/auth-helpers');
 let errors;
 
 const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: process.env.EMAILUSER,
-    pass: process.env.EMAILPW
-  }
+    service: 'gmail',
+    auth: {
+        type: 'OAuth2',
+        user: process.env.EMAIL,
+        clientId: process.env.CLIENTID,
+        clientSecret: process.env.CLIENTSECRET,
+        refreshToken: process.env.REFRESHTOKEN,
+        accessToken: process.env.ACCESS_TOKEN
+    },
 });
 
 router.get('/login', authHelpers.loginRedirect, (req, res) => {
@@ -49,16 +53,23 @@ router.post('/register', (req, res, next)  => {
 
         res.redirect('/dashboard');
 
-        /*var mailOptions = {
-          from: process.env.EMAILUSER,
-          to: req.body.email,
+        var mailOptions = {
+          from: 'MaskOFF <noresponse@gmail.com>',
+          to: req.user.email,
           subject: 'Welcome to MaskOFF',
-          html: `Hey, thanks for registering at MaskOFF, below is the information you need to login<br>
-                <b>Link:</b> http://maskoff.herokuapp.com/auth/login<br>
-                <b>Username:</b> ${req.body.username}<br>
+          html: `Hey, thanks for registering at MaskOFF, below is the information you need to login, along with links to get you started!<br>
+                <br>
+                <b>Login Here:</b> http://maskoff.herokuapp.com/auth/login<br>
+                <br><b>With this information:</b><br>
+                <b>Username:</b> ${req.user.username}<br>
                 <b>Password:</b> ${req.body.password}<br>
                 <br>
-                See you soon!`
+                <b>Quick Links to Get Started!</b><br>
+                Why MaskOFF? http://maskoff.herokuapp.com/learnmore<br>
+                Create your first listing: http://maskoff.herokuapp.com/dashboard/create<br>
+                Browse our listings: http://maskoff.herokuapp.com/browse<br>
+                <br>
+                See you soon! :)`
         };
 
         transporter.sendMail(mailOptions, function(error, info){
@@ -67,7 +78,7 @@ router.post('/register', (req, res, next)  => {
             } else {
               console.log('Email sent: ' + info.response);
             }
-        });*/
+        });
 
       });
     }).catch((err) => { res.status(500).json({ status: 'Registration Error: Username or Email already in use.' }); });
