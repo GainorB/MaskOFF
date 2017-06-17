@@ -16,7 +16,7 @@ router.get('/create', authHelpers.loginRequired, function(req, res, next) {
   res.render('CreateListing', { title: "Create A Listing" });
 });
 
-router.post('/create', authHelpers.loginRequired, function(req, res, next) {
+router.post('/create/listing', authHelpers.loginRequired, function(req, res, next) {
   db.createListing(req, res, next);
   req.flash('success', 'Your item has successfully been created.');
 });
