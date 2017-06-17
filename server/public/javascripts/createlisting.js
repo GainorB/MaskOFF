@@ -3,7 +3,7 @@ let i = 1;
 // ADDING IMAGE INPUTS
 $('.fa-plus').on('click', function(){
     i = i + 1;
-    $('#insertImages').append(`<p><input type="text" name="image${i}" placeholder="Image${i}"> <i class="fa fa-minus" aria-hidden="true"></i></p>`);
+    $('#insertImages').append(`<p><input type="text" name="image${i}" placeholder="Image${i} URL"> <i class="fa fa-minus" aria-hidden="true"></i></p>`);
     
     // DISABLE ONCLICK ONCE 5 IMAGE INPUTS ARE ADDED
     if ( i === 5) {
@@ -100,3 +100,41 @@ $('#number').keydown(function(e) {
         return false;
     }
 });
+
+$('#uploadImage').click(function(){
+    $('#imageUploader').toggle(()=>{});
+});
+
+// UPLOAD IMAGES
+const url = 'https://api.cloudinary.com/v1_1/dplvzflkc/upload';
+const preset = 'zpz2y0qy';
+
+var fileUpload = document.getElementById('file-upload');
+var imgPrev = document.getElementById('imgPrev');
+
+fileUpload.addEventListener("change", function(event){
+    var file = event.target.files[0];
+    
+    var formData = new FormData();
+    formData.append('file', file);
+    formData.append('upload_preset', preset);
+
+    axios({
+        url,
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        data: formData
+
+    }).then((res)=> {
+        //console.log(res);
+        imgPrev.innerHTML = `<img class="uploadPrev" src="${res.data.secure_url}">`;
+
+        /*axios.post('http://localhost:3000/dashboard/create', { uploadedImage: res.data.secure_url })
+             .catch((err) => { console.error(err) });*/
+
+    }).catch((err)=> {
+        console.error(err);
+    })
+})

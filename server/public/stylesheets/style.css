@@ -220,6 +220,51 @@ FLASH MESSAGES
     color: red;
 }
 
+.createlisting #uploadImage {
+    font-size: 15px; 
+    font-weight: 700;
+    border: 0px;
+    padding: 6px 30px;
+    background-color: #132840;
+    color: #fff;
+    border-radius: 4px;
+    margin: 3px;
+}
+
+.createlisting #uploadImage:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.createlisting #imageUploader {
+    font-size: 22px;
+    margin: 0;
+    padding: 0;
+}
+
+.createlisting .file-upload {
+    cursor: pointer;
+}
+
+.createlisting .uploadPrev {
+    max-width: 400px;
+    max-height: 400px;
+}
+
+.createlisting #imgPrev {
+    margin: 0 auto;
+}
+
+.createlisting .easier {
+    font-size: 13px;
+    font-weight: 700;
+    color: blue;
+}
+
+.createlisting input[type=file], .hide {
+    display: none;
+}
+
 
 /*
 * BROWSE

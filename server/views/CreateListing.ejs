@@ -53,7 +53,17 @@
  
 <p>
 <p id="tooltip">You must include 1 image and can insert up to 5 images.</p>
-<p><input type="text" name="image1" placeholder="Image1" required>  <i class="fa fa-plus" aria-hidden="true"></i></p> 
+<span id="uploadImage">Upload an image?</span>
+<p id="imageUploader" class="hide">
+    <span id="imgPrev"></span><br>
+    <label for="file-upload" class="file-upload">
+        <input id="file-upload" type="file" name="fileupload" accept="image/*">
+        <i class="fa fa-cloud-upload"></i> You better choose something nice :)
+        </label> <i class="fa fa-minus" aria-hidden="true"></i><br>
+        <span class="easier">or use an image url below, its easier.</span>
+</p>
+
+<p><input type="text" name="image1" placeholder="Image1 URL" required>  <i class="fa fa-plus" aria-hidden="true"></i></p> 
 <p id="insertImages"></p>
 </p>
 

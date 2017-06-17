@@ -63,6 +63,8 @@ function capitalizeFirstLetter(brand) {
 // CREATE A LISTING
 function createListing(req, res, next){
 
+    console.log(req.body.uploadedImage);
+
     //res.setHeader('Content-Type', 'application/json');
 
     let image2, image3, image4, image5;
