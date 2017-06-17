@@ -7,11 +7,12 @@ var db = require('../models/config');
 // FILTER CATEGORIES
 function filterCategory(category, brand, req, res, next){
     db.any('SELECT * FROM listings WHERE accepted = FALSE AND category = $1 AND brand = $2 ORDER BY date_created DESC', [category, brand])
-      .then(data => { 
-            let brands = data.map(function(item) { return item.brand }).filter((item, index, arr) => {
-                return arr.indexOf(item) === index;
-            });
-          res.render('Browse', { data: data, title: `Browsing`, category: category, brand: brand, brands })
+      .then(data => {
+
+        // FILTER OUT DUPLICATE BRAND NAMES SO THE DROP DOWN ONLY SHOWS ONE BRAND 
+        let brands = data.map(function(item) { return item.brand }).filter((item, index, arr) => { return arr.indexOf(item) === index; });
+        res.render('Browse', { title: `Browsing`, data, category, brand, brands })
+
       }).catch(e => { console.log(e); });
 }
 
@@ -20,10 +21,11 @@ function getAllListings(req, res, next){
     db.any(`SELECT * FROM listings WHERE accepted = FALSE
             ORDER BY date_created DESC`)
       .then(data => {
-            let brands = data.map(function(item) { return item.brand }).filter((item, index, arr) => {
-                return arr.indexOf(item) === index;
-            });
-        res.render('Browse', { data: data, title: "Browse", category: '', brand: '', brands })
+        
+        // FILTER OUT DUPLICATE BRAND NAMES SO THE DROP DOWN ONLY SHOWS ONE BRAND
+        let brands = data.map(function(item) { return item.brand }).filter((item, index, arr) => { return arr.indexOf(item) === index; });
+        res.render('Browse', { title: "Browse", category: '', brand: '', brands, data })
+
     }).catch(e => { console.log(e); });
 }
 
@@ -34,7 +36,7 @@ function getAListing(id, req, res, next){
 
     db.any(`SELECT * FROM listings WHERE id = ${ID}`)
       .then(data => {
-        res.render('aListing', { data: data, title: "Listing" })
+        res.render('aListing', { title: "Listing", data })
     }).catch(e => { console.log(e); });
 }
 
@@ -44,7 +46,7 @@ function getAcceptedListings(req, res, next){
     db.any(`SELECT * FROM listings WHERE who_accepted = $1 AND accepted = true ORDER BY date_accepted DESC`, req.user.username)
         .then(data => { 
             
-            res.render('AcceptedListings', { data: data, title: "Accepted Listings" })
+            res.render('AcceptedListings', { title: "Accepted Listings", data })
 
         }).catch(e => { console.log(e); });
 }
@@ -134,44 +136,37 @@ function acceptListing(id, req, res, next){
 function updateProfile(req, res, next){
 
     const userID = parseInt(req.user.id);
-    const { username, email, state, city, age } = req.body;
-
-    console.log(userID)
-    console.log(req.body)
+    const { username, email, state, city} = req.body;
 
     // 1. CHECK LISTINGS TO SEE IF THIS USER HAS A LISTING
-    db.any('SELECT * FROM listings')
+    db.any('SELECT posted_by FROM listings')
       .then(data => {
 
-          console.log(data[0].posted_by)
-          console.log(req.user.username)
-
-          // 2. IF USER HAS A POST
+          // 2. IF USER HAS A POST IN LISTINGS TABLE
           if(data[0].posted_by === req.user.username){
 
             // 3. UPDATE LISTINGS TABLE WITH THE USERS NEW PROFILE INFORMATION
-            db.none('UPDATE listings SET posted_by=$1, email=$2, state=$3, city=$4, WHERE posted_by=$5', 
-                    [username, email, state, city, data[0].posted_by])
-            .then(data => { 
+            db.any('UPDATE listings SET posted_by=$1, email=$2, state=$3, city=$4 WHERE posted_by=$5', 
+                    [username, email, state, city, req.user.username])
+              .then(() =>{ 
 
-                // 4. THEN UPDATE THE USERS TABLE WITH THE USERS PROFILE INFORMATION
-                db.none('UPDATE users SET username=$1, email=$2, state=$3, city=$4, age=$5 WHERE id=$6', 
-                        [username, email, state, city, age, userID])
-                .then(data => { res.status(200).json({ message: "Success" }); })
-                .catch(e => { console.log(e); });
+                    // 4. THEN UPDATE THE USERS TABLE WITH THE USERS PROFILE INFORMATION
+                    db.none('UPDATE users SET username=$1, email=$2, state=$3, city=$4 WHERE id=$5', 
+                            [username, email, state, city, userID])
+                      .catch(e => { console.log(e); });
 
-             })
-            .catch(e => { console.log(e); });
+                }).catch(e => { console.log(e); });
 
           } else {
 
-            db.none('UPDATE users SET username=$1, email=$2, state=$3, city=$4, age=$5 WHERE id=$6', 
-                    [username, email, state, city, age, userID])
-            .then(data => { res.status(200).json({ message: "Success" }); })
-            .catch(e => { console.log(e); });
+            db.none('UPDATE users SET username=$1, email=$2, state=$3, city=$4 WHERE id=$5', 
+                    [username, email, state, city, userID])
+              .catch(e => { console.log(e); });
+
           }
-      })
+      }).catch(e => { console.log(e); });
 }
+
 
 // THIS FUNCTION WILL CANCEL A TRADE
 function cancelTrade(id, req, res, next){

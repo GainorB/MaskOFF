@@ -19,8 +19,7 @@ function createNewUser(req, res) {
     password: hash,
     email: req.body.email,
     state: req.body.state,
-    city: req.body.city,
-    age: req.body.age
+    city: req.body.city
   });
 }
 

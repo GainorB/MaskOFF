@@ -3,7 +3,6 @@ CREATE DATABASE maskoff_app;
 
 \c maskoff_app;
 
-
 CREATE TABLE "session" (
   "sid" varchar NOT NULL COLLATE "default",
 	"sess" json NOT NULL,
@@ -18,9 +17,7 @@ CREATE TABLE IF NOT EXISTS users(
     password VARCHAR(100) NOT NULL,
     email VARCHAR(100) UNIQUE NOT NULL,
     state VARCHAR(20) NOT NULL,
-    city VARCHAR(20) NOT NULL,
-    age INTEGER NOT NULL,
-    CHECK (age>=18)
+    city VARCHAR(20) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS listings(
@@ -29,7 +26,7 @@ CREATE TABLE IF NOT EXISTS listings(
     accepted BOOLEAN DEFAULT FALSE,
     date_created TEXT DEFAULT current_date,
     date_accepted TEXT DEFAULT current_date,
-    who_accepted VARCHAR(30) DEFAULT 'empty',
+    who_accepted VARCHAR(30) DEFAULT 'no one',
     posted_by VARCHAR(30) NOT NULL,
     state VARCHAR(20) NOT NULL,
     city VARCHAR(20) NOT NULL,

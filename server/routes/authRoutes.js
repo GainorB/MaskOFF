@@ -24,7 +24,7 @@ router.get('/register', authHelpers.loginRedirect, (req, res) => {
 
 router.post('/register', (req, res, next)  => {
    
-  const { username, password, email, state, city, age } = req.body;
+  const { username, password, email, state, city } = req.body;
 
   // VALIDATION
   req.checkBody('username', 'User Name is required.').notEmpty();
@@ -33,7 +33,6 @@ router.post('/register', (req, res, next)  => {
   req.checkBody('email', 'Email is required.').isEmail();
   req.checkBody('state', 'State is required.').notEmpty();
   req.checkBody('city', 'City is required.').notEmpty();
-  req.checkBody('age', 'Age is required').isInt();
 
   // VALIDATION ERRORS
   let errors = req.validationErrors();

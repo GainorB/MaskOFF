@@ -8,11 +8,10 @@ $('.update_account').on('click', function () {
     let email = $('.email').val();
     let state = $('.state').val();
     let city = $('.city').val();
-    let age = $('.age').val();
 
     var x = window.confirm("Are you sure you want to update your account? You'll need to re login.");
     if (x) {
-        axios.put("http://localhost:3000/updateProfile", { username, email, state, city, age }).catch(e => { console.log(e); });
+        axios.put("http://localhost:3000/updateProfile", { username, email, state, city }).catch(e => { console.log(e); });
     }
     window.location.href = "/";
 });
