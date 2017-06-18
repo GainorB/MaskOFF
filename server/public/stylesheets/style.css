@@ -192,6 +192,11 @@ FLASH MESSAGES
     text-align: center;
 }
 
+.learnmore #maskoff-learn {
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,.2);
+    border: 1px black solid;
+}
+
 /*
 * DASHBOARD
 */
@@ -512,6 +517,10 @@ footer {
 @media (max-width: 800px){ 
     #maskoff {
         width: 400px;
+    }
+
+    #maskoff-learn {
+        width: 350px;
     }
 
     /* BROWSE PAGE */
