@@ -101,8 +101,8 @@ $('#number').keydown(function(e) {
     }
 });
 
-$('#uploadImage').click(function(){
-    $('#imageUploader').toggle(()=>{});
+$('#uploadImage').click(()=>{
+    $('#imageUploader').toggle();
 });
 
 // UPLOAD IMAGES

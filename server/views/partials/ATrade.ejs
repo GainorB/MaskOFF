@@ -1,7 +1,7 @@
 <% data.forEach(function(d) { %>
 
 <p class="singleListingTitle"><%= d.title %> (<%= d.condition %>)<br>
-<span class="listingBy">Posted by <%= d.posted_by %>
+<span class="listingBy">Posted by <%= d.posted_by %> on <%= d.date_created %>
 </p>
 <p>
 <img src="<%= d.image1 %>"><br>

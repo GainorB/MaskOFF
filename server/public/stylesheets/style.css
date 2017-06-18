@@ -11,6 +11,12 @@ body {
     padding: 0;
 }
 
+#maskoff {
+    margin-top: 30px;
+    cursor: pointer;
+    user-select: none;
+}
+
 .container .inlineLinks {
     color: #222222;
     font-weight: 700;
@@ -51,8 +57,7 @@ ul {
 */
 
 .navbar {
-    margin-top: 30px;
-    margin-bottom: 50px;
+    margin-bottom: 30px;
     text-transform: uppercase;
     font-size: 25px;
 }
@@ -84,7 +89,7 @@ ul {
     margin-top: 20px;
     margin-bottom: 50px;
     text-transform: uppercase;
-    font-size: 15px;
+    font-size: 12px;
 }
 
 .sub_navbar li {
@@ -183,7 +188,7 @@ FLASH MESSAGES
     padding: 0;
 }
 
-.learnmore h3 {
+.learnmore h4 {
     text-align: center;
 }
 
@@ -206,9 +211,9 @@ FLASH MESSAGES
 .createlisting input[type=text], 
 .createlisting input[type=number], 
 .createlisting select {
-    width: 500px;
-    height: 55px;
-    font-size: 30px;
+    width: 400px;
+    height: 50px;
+    font-size: 20px;
     font-weight: lighter;
 }
 
@@ -230,7 +235,7 @@ FLASH MESSAGES
 }
 
 .createlisting #tooltip {
-    font-size: 16px;
+    font-size: 14px;
     letter-spacing: 1px;
     margin: 0;
     padding: 0;
@@ -367,18 +372,19 @@ FLASH MESSAGES
     border: 1px solid #cdd2e0;
 }
 
-.singleListingTitle {
+.singleListing .singleListingTitle {
     font-size: 30px;
     font-weight: 700;
 }
 
 .singleListing p {
-    font-size: 30px;
+    font-size: 24px;
+    margin: 5px;
 }
 
 .singleListing .listingBy {
     font-style: italic;
-    font-size: 20px;
+    font-size: 17px;
     font-weight: 300;
 }
 
@@ -442,16 +448,25 @@ FLASH MESSAGES
 .wrapAccepted img {
     width: 100%;
     height: 100%;
-    /*border: 1px solid black;*/
 }
 
 .wrapAccepted .title {
     font-weight: 700;
-    font-size: 16px;
+    font-size: 17px;
     text-transform: uppercase;
     text-align: center;
     padding: 0;
     margin: 0;
+}
+
+.wrapAccepted .acceptedOn {
+    font-size: 14px;
+    text-transform: uppercase;
+    text-align: center;
+    padding: 0;
+    margin: 0;
+    font-weight: 300;
+    font-style: italic;
 }
 
 .wrapAccepted .money {
@@ -495,6 +510,9 @@ footer {
 */
 
 @media (max-width: 800px){ 
+    #maskoff {
+        width: 400px;
+    }
 
     /* BROWSE PAGE */
     .aListing button {
@@ -540,13 +558,22 @@ footer {
         font-size: 11px;
     }
 
-    body h4 {
-        font-size: 11px;
+    body h1 {
+        font-size: 30px;    
     }
 
-    body h1, .singleListingTitle {
-        font-size: 15px;    
+    body h2 {
+        font-size: 25px;
     }
+
+    body h3 {
+        font-size: 20px;
+    }
+
+    body h4 {
+        font-size: 20px;
+    }
+
 
     #boxbox {
         width: 100%;
@@ -556,6 +583,27 @@ footer {
     .singleListing img {
         max-width: 350px;
         max-height: 350px;
+    }
+
+    .singleListing .singleListingTitle {
+        font-size: 26px;
+    }
+
+    .singleListing p {
+        font-size: 17px;
+    }
+
+    .singleListing .contactOwner,
+    .singleListing .listingBy {
+        font-size: 16px;
+    }
+
+    .singleListing button,
+    .singleListing .acceptThisListing {
+        text-transform: uppercase;
+        font-size: 14px;
+        width: 300px;
+        height: 40px;
     }
 
     .navbar {
@@ -569,5 +617,17 @@ footer {
     .success, .error {
         font-size: 13px;
         padding: 0px;
+    }
+
+    .createlisting #uploadImage,
+    .createlisting #imageUploader,
+    .createlisting .file-upload,
+    .createlisting i {
+        font-size: 14px;
+    }
+
+    .createlisting .uploadPrev {
+        max-width: 350px;
+        max-height: 350px;
     }
 }

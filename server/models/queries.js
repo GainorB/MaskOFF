@@ -1,5 +1,12 @@
 var db = require('../models/config');
 
+function capitalizeFirstLetter(string){
+    return string
+        .split(' ')
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(' ');
+};
+
 /*
 * GET ROUTES
 */
@@ -56,13 +63,6 @@ function getAcceptedListings(req, res, next){
 * POST ROUTES
 */
 
-function capitalizeFirstLetter(string){
-    return string
-        .split(' ')
-        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-        .join(' ');
-};
-
 // CREATE A LISTING
 function createListing(req, res, next){
 
@@ -101,7 +101,7 @@ function createListing(req, res, next){
 
     db.none('INSERT into listings(posted_by, state, city, email, category, brand, title, size, whatsize, condition, image1, image2, image3, image4, image5, ship, meetup, cash)'
                 + 'VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18)', 
-                [username, state, city, email, category, capitalizeFirstLetter(brand), title, size[1], whatsize[1], condition, 
+                [username, state, city, email, category, capitalizeFirstLetter(brand), capitalizeFirstLetter(title), size[1], whatsize[1], condition, 
                 image1, image2, image3, image4, image5, ship, meetup, cash])
       .then(data => { res.redirect('/dashboard/create'); })
       .catch(e => { console.log(e); });
