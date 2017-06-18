@@ -62,11 +62,11 @@ app.all('/*', (req, res, next) => {
 
 // EXPRESS SESSION
 app.use(session({
-  store: new (require('connect-pg-simple')(session))(),
+  //store: new (require('connect-pg-simple')(session))(),
   secret: process.env.SECRET_KEY,
-  resave: true,
+  resave: false,
   saveUninitialized: true,
-  cookie: { maxAge: 7 * 24 * 60 * 60 * 1000 } // 7 days
+  //cookie: { maxAge: 7 * 24 * 60 * 60 * 1000 } // 7 days
 }));
 
 // PASSPORT

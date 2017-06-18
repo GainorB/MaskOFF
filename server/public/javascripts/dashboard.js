@@ -11,18 +11,18 @@ $('.update_account').on('click', function () {
 
     var x = window.confirm("Are you sure you want to update your account? You'll need to re login.");
     if (x) {
-        axios.put("http://maskoff.herokuapp.com/updateProfile", { username, email, state, city }).catch(e => { console.log(e); });
+        axios.put("https://maskoff.herokuapp.com/updateProfile", { username, email, state, city }).catch(e => { console.log(e); });
     }
-    window.location.href = "/";
+    window.location.href = "https://maskoff.herokuapp.com/";
 });
 
 $('.delete_account').on('click', function () {
 
     var x = window.confirm("Are you sure you want to delete your account?");
     if (x) {
-        axios.delete("http://maskoff.herokuapp.com/deleteAccount").catch(e => { console.log(e); });
+        axios.delete("https://maskoff.herokuapp.com/deleteAccount").catch(e => { console.log(e); });
     }
-    window.location.href = "/";
+    window.location.href = "https://maskoff.herokuapp.com/";
 });
 
 // PREVENT NEGATIVE NUMBERS IN THE NUMBER INPUT
