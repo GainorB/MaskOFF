@@ -1,9 +1,7 @@
-
-
 <% Object.keys(messages).forEach(function (type) { %>
   <div class="<%= type %>">
   <% messages[type].forEach(function (message) { %>
-    <p><%= message %></p>
+    <%= message %>
   <% }) %>
   </div>
 <% }) %>

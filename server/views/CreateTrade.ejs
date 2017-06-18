@@ -7,9 +7,8 @@
 
 <div id="boxbox">
 <h1>Tell us what you're trading</h1>
-<h4>Please take your time and fill out this form completely.</h4>
 <p><%- messages('message', locals) %></p>
-<form method='POST' action='/dashboard/create/listing'>
+<form method='POST' action='/dashboard/create/trade'>
 <p> 
 <p id="tooltip">Select a category for your listing.</p>
     <select id="category" name="category" required>
@@ -22,12 +21,12 @@
 
 <p>
 <p id="tooltip">Enter the brand most associated with your item.</p>
-<input type="text" name="brand" placeholder="Brand" required>
+<input type="text" name="brand" placeholder="Brand" maxlength="15" required>
 </p>
 
 <p>
 <p id="tooltip">Create a title for your listing: Be descriptive, yet consise.</p> 
-<input type="text" name="title" placeholder="Title" required>
+<input type="text" name="title" placeholder="Title" maxlength="50" required>
 </p>
 
 <p>
@@ -84,11 +83,11 @@
 </p>
 
 <p>
-<p id="tooltip">Throwing in cash sweetens up the deal, but isn't neccessary.<br/>How much you want to throw?</p>
+<p id="tooltip">Throwing in cash sweetens up the deal, but isn't neccessary.<br/><span class="money">How much you want to throw?</span></p>
     <input id="number" type="number" name="cash" value="0" min="0">
 </p>
 
-<button type="submit">Create Listing</button> <button type="reset">Reset Listing</button>
+<button type="submit">Create Trade</button> <button type="reset">Reset Trade</button>
 </form>
 
 </div>

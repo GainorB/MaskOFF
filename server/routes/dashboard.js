@@ -8,15 +8,15 @@ router.get('/', authHelpers.loginRequired, function(req, res, next) {
   res.render('Dashboard', { user_profile: req.user, title: "Dashboard" });
 });
 
-router.get('/accepted', authHelpers.loginRequired, db.getAcceptedListings, function(req, res, next) {
-  res.render('AcceptedListings', { title: "Accepted Listings" });
+router.get('/trades', authHelpers.loginRequired, db.getAcceptedListings, function(req, res, next) {
+  res.render('AcceptedTrades', { title: "My Trades" });
 });
 
 router.get('/create', authHelpers.loginRequired, function(req, res, next) {
-  res.render('CreateListing', { title: "Create A Listing" });
+  res.render('CreateTrade', { title: "Create a Trade" });
 });
 
-router.post('/create/listing', authHelpers.loginRequired, function(req, res, next) {
+router.post('/create/trade', authHelpers.loginRequired, function(req, res, next) {
   db.createListing(req, res, next);
   req.flash('success', 'Your item has successfully been created.');
 });

@@ -6,11 +6,10 @@
 <%- include('partials/navbar') %>
 
 <div id="boxbox">
-<h2><%= user.username %>, below you will find listings you accepted.</h2>
-<h3>Please remember by accepting a listing you agree to follow through with the trade.</h3>
-<h4>Not following through can result in bad feedback without a good explanation.</h4>
+<h2><%= user.username %>, below you will find trades you accepted.</h2>
+<h4>Please remember by accepting a trade you agree to follow through. No flaking.</h4>
 <p><%- messages('message', locals) %></p>
-<%- include('partials/Accepted') %>
+<%- include('partials/MyTrades') %>
 </div>
 
         </div>

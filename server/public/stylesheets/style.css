@@ -175,6 +175,19 @@ FLASH MESSAGES
 }
 
 /*
+* LEARN MORE
+*/
+
+.learnmore p {
+    margin: 20px;
+    padding: 0;
+}
+
+.learnmore h3 {
+    text-align: center;
+}
+
+/*
 * DASHBOARD
 */
 
@@ -190,6 +203,14 @@ FLASH MESSAGES
 /*
 * Create Listing
 */
+.createlisting input[type=text], 
+.createlisting input[type=number], 
+.createlisting select {
+    width: 500px;
+    height: 55px;
+    font-size: 30px;
+    font-weight: lighter;
+}
 
 .createlisting i {
     font-size: 23px;
@@ -209,11 +230,11 @@ FLASH MESSAGES
 }
 
 .createlisting #tooltip {
-    font-size: 12px;
+    font-size: 16px;
     letter-spacing: 1px;
-    font-weight: 700;
     margin: 0;
     padding: 0;
+    font-weight: 700;
 }
 
 .convertSize {
@@ -263,6 +284,10 @@ FLASH MESSAGES
 
 .createlisting input[type=file], .hide {
     display: none;
+}
+
+.createlisting .money {
+    color: green;
 }
 
 
@@ -491,7 +516,7 @@ footer {
     .aListing p,
     .aListing .listingBy,
     .aListing .listingTitle {
-        font-size: 17px;
+        font-size: 14px;
     }
 
     input[type=text], 
@@ -500,6 +525,15 @@ footer {
     input[type=email], select {
         width: 300px;
         font-size: 15px;
+    }
+
+    .createlisting input[type=text], 
+    .createlisting input[type=number], 
+    .createlisting select {
+        width: 300px;
+        font-size: 15px;
+        height: 60px;
+        font-weight: lighter;
     }
 
     .createlisting #tooltip {
@@ -525,10 +559,15 @@ footer {
     }
 
     .navbar {
-        font-size: 16px;
+        font-size: 20px;
     }
 
     .navbar li {
         padding: 5px 14px;
+    }
+
+    .success, .error {
+        font-size: 13px;
+        padding: 0px;
     }
 }

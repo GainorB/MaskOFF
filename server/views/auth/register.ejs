@@ -17,12 +17,12 @@
     </ul>
 
     <form method='POST' action='/auth/register'>
-        <p><input type="text" name="username" placeholder="Username"></p>
+        <p><input type="text" name="username" placeholder="Username" maxlength="20"></p>
         <p><input type="password" name="password" placeholder="Password"></p>
         <p><input type="password" name="password2" placeholder="Confirm Password"></p>
-        <p><input type="email" name="email" placeholder="Email"></p>
-        <p><input type="text" name="state" placeholder="State"></p>
-        <p><input type="text" name="city" placeholder="City"></p>
+        <p><input type="email" name="email" placeholder="Email" maxlength="30"></p>
+        <p><input type="text" name="state" placeholder="State" maxlength="15"></p>
+        <p><input type="text" name="city" placeholder="City" maxlength="15"></p>
         Already have an account? <a class="inlineLinks" href="/auth/login">Log In</a><br>
         <button type="submit">REGISTER</button> <button type="reset">RESET</button>
     </form>

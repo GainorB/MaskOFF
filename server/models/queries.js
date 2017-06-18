@@ -36,7 +36,7 @@ function getAListing(id, req, res, next){
 
     db.any(`SELECT * FROM listings WHERE id = ${ID}`)
       .then(data => {
-        res.render('aListing', { title: "Listing", data })
+        res.render('SingleTrade', { title: "Listing", data })
     }).catch(e => { console.log(e); });
 }
 
@@ -46,7 +46,7 @@ function getAcceptedListings(req, res, next){
     db.any(`SELECT * FROM listings WHERE who_accepted = $1 AND accepted = true ORDER BY date_accepted DESC`, req.user.username)
         .then(data => { 
             
-            res.render('AcceptedListings', { title: "Accepted Listings", data })
+            res.render('AcceptedTrades', { title: "My Trades", data })
 
         }).catch(e => { console.log(e); });
 }
@@ -56,9 +56,12 @@ function getAcceptedListings(req, res, next){
 * POST ROUTES
 */
 
-function capitalizeFirstLetter(brand) {
-    return brand.charAt(0).toUpperCase() + brand.slice(1);
-}
+function capitalizeFirstLetter(string){
+    return string
+        .split(' ')
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(' ');
+};
 
 // CREATE A LISTING
 function createListing(req, res, next){
@@ -115,16 +118,16 @@ function acceptListing(id, req, res, next){
 
         if(data[0].posted_by === req.user.username){
 
-            req.flash('error', `You can't accept a listing you posted.`);
+            req.flash('error', `You can't accept a trade you posted.`);
             res.redirect('/browse');
 
         } else {
             
-            req.flash('success', 'You successfully accepted a listing. View it below.');
+            req.flash('success', 'You successfully accepted a trade.');
             db.none(`UPDATE listings
-                     SET accepted = true, date_accepted = now(), who_accepted = $1
+                     SET accepted = true, date_accepted = current_date, who_accepted = $1
                      WHERE id = $2`, [req.user.username, itemID])
-              .then(data => { res.redirect('/dashboard/accepted'); })
+              .then(data => { res.redirect('/dashboard/trades'); })
               .catch(e => { console.log(e); });
         }}).catch(e => { console.log(e); });
 }
@@ -174,8 +177,8 @@ function cancelTrade(id, req, res, next){
     db.none(`UPDATE listings SET accepted = false WHERE id = ${itemID}`)
       .then(data => {
 
-          req.flash('success', `Thanks for cancelling your trade.`); 
-          res.redirect('/dashboard/accepted'); 
+          req.flash('success', `Thanks for cancelling your trade. Make sure to let the other user know.`); 
+          res.redirect('/dashboard/trades'); 
 
         })
       .catch(e => { console.log(e); });
@@ -188,8 +191,8 @@ function completedTrade(id, req, res, next){
     db.none(`UPDATE listings SET completed = true WHERE id = ${itemID}`)
       .then(data => {
 
-          req.flash('success', `Thanks for completing your trade.`); 
-          res.redirect('/dashboard/accepted'); 
+          req.flash('success', `Thanks for completing your trade. Hope it went well.`); 
+          res.redirect('/dashboard/trades'); 
 
         })
       .catch(e => { console.log(e); });
@@ -240,7 +243,7 @@ function deleteListing(id, req, res, next){
     db.none(`DELETE FROM listings WHERE id = ${itemID}`)
       .then(data => { 
 
-            req.flash('success', `Thanks for deleting your listing.`); 
+            req.flash('success', `Thanks for deleting your trade. You should post another.`); 
             res.redirect('/browse'); 
        })
       .catch(e => { console.log(e); });

@@ -1,8 +1,8 @@
 <% if(data.length != 0) { %>
-    <h1>Listings currently available</h1>
+    <h1>Trades currently available</h1>
 
     <% if(category && brand) { %>
-        <h3>Current listings matching <%= category %> and <%= brand %>.</h3>
+        <h3>Current trades matching <%= category %> and <%= brand %>.</h3>
     <% } %>
 
     <% if(!user) { %>
@@ -52,9 +52,9 @@
                 </p>
                 <p>Located in <b><%= d.city %>, <%= d.state %></b></p>
                 <% if(user) { %>
-                <a href="/browse/<%= d.id %>"><button>View Listing</button></a><br>
+                <a href="/browse/<%= d.id %>"><button>View Trade</button></a><br>
                     <% if(user.username === d.posted_by) { %>
-                        <a href="/browse/delete/<%= d.id %>"><button>Delete Listing</button></a>
+                        <a href="/browse/delete/<%= d.id %>"><button>Delete Trade</button></a>
                     <% } %>
                 <% } else { %>
                 <a href="/browse/<%= d.id %>"><button>Login to view detailed information</button></a>
@@ -66,10 +66,10 @@
 
 <% } else { %>
     <% if(!category && !brand) { %>
-    <h1>No current listings <br>Be the first to <a class="inlineLinks" href="/dashboard/create">create one!</a></h1>
+    <h1>No current trades <br>Be the first to <a class="inlineLinks" href="/dashboard/create">create one!</a></h1>
     <% } %>
     <% if(category && brand) { %>
-        <h2>No current listings match <%= category %> and <%= brand %>.
+        <h2>No current trades match <%= category %> and <%= brand %>.
         <br>Be the first to <a class="inlineLinks" href="/dashboard/create">create one!</a></h2>
     <% } %>
 

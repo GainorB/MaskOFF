@@ -81,20 +81,29 @@ router.post('/register', (req, res, next)  => {
         });
 
       });
-    }).catch((err) => { res.status(500).json({ status: 'Registration Error: Username or Email already in use.' }); });
+    }).catch((err) => { 
+      console.log(err)
+      if(err.detail.includes("email")) {
+        req.flash('error', `Registration Error: Email already in use.`); 
+        res.redirect('register'); 
+      } else if(err.detail.includes("username")){
+        req.flash('error', `Registration Error: Username already in use.`); 
+        res.redirect('register'); 
+      }
+    });
   }
 });
 
 router.post('/login', passport.authenticate('local', {
     successRedirect: '/dashboard',
     failureRedirect: '/auth/login',
-    failureFlash: 'Invalid username or password.'
+    failureFlash: 'Invalid Username or Password.'
   })
 );
 
 router.get('/logout', (req, res) => {
   req.logout();
-  req.flash('success', 'You are now logged out.');
+  req.flash('success', 'You are now logged out, see you soon.');
   res.redirect('/auth/login');
 });
 
