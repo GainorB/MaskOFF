@@ -6,7 +6,7 @@ var db = require('../models/queries');
 
 const authHelpers = require('../services/auth/auth-helpers');
 
-router.get('/', authHelpers.loginRequired, function(req, res, next) {
+router.get('/', authHelpers.loginRequired, db.getMyStats, function(req, res, next) {
   res.render('Dashboard', { user_profile: req.user, title: "Dashboard" });
 });
 

@@ -210,6 +210,14 @@ FLASH MESSAGES
     color: #490a0a;
 }
 
+#dashboard-stats {
+    border: 1px dashed black;
+    margin: 0 auto;
+    padding: 0;
+    width: 30%;
+    font-size: 15px;
+}
+
 /*
 * Create Listing
 */
@@ -296,7 +304,7 @@ FLASH MESSAGES
 }
 
 .createlisting .money {
-    color: green;
+    color: #007262;
 }
 
 
@@ -305,11 +313,11 @@ FLASH MESSAGES
 */
 
 .aListing .money {
-    color: green;
+    color: #007262;
 }
 
 .aListing .noMoney {
-    color: red;
+    color: #9b0a16;
 }
 
 .aListing {
@@ -324,7 +332,7 @@ FLASH MESSAGES
 }
 
 .brand {
-    color: red;
+    color: #9b0a16;
 }
 
 .filter {
@@ -405,12 +413,12 @@ FLASH MESSAGES
 }
 
 .singleListing .money {
-    color: green;
+    color: #007262;
     font-weight: 700;
 }
 
 .singleListing .noMoney {
-    color: red;
+    color: #9b0a16;
     font-weight: 700;
 }
 
@@ -492,12 +500,12 @@ FLASH MESSAGES
 }
 
 .wrapAccepted .money {
-    color: green;
+    color: #007262;
     font-weight: 700;
 }
 
 .wrapAccepted .noMoney {
-    color: red;
+    color: #9b0a16;
     font-weight: 700;
 }
 
@@ -532,6 +540,10 @@ footer {
 */
 
 @media (max-width: 800px){ 
+    #dashboard-stats { 
+        width: 60%;
+    }
+
     #maskoff {
         width: 350px;
     }
