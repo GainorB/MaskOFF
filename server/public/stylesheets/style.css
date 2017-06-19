@@ -357,6 +357,7 @@ FLASH MESSAGES
     font-size: 22px;
     font-weight: 700;
     text-align: center;
+    margin: 0;
 }
 
 .aListing .listingBy {
