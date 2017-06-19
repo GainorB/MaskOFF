@@ -9,12 +9,14 @@
 <h1>Welcome to your profile <%= user.username %>!</h1>
 <h4>Below you will find a summary of your account information and stats.</h4>
 
+<% if(total != 0 ){ %>
 <div id="dashboard-stats">
 Total Trades Posted: <strong><%= total %></strong><br>
 Total Active Trades: <strong><%= active %></strong><br>
 Total Trades Completed: <strong><%= completed %></strong><br>
 Total Trades Accepted: <strong><%= accepted %></strong>
 </div>
+<% } %>
 
 <p><input class="username" type="text" name="username" value="<%= user.username %>" readonly> <i id="pencil_<%= user.id %>" class="fa fa-pencil" aria-hidden="true"></i></p>
 <p><input class="email" type="text" name="email" value="<%= user.email %>" readonly> <i id="pencil_<%= user.id %>" class="fa fa-pencil" aria-hidden="true"></i></p>

@@ -103,6 +103,8 @@ $('#number').keydown(function(e) {
 
 $('#uploadImage').click(()=>{
     $('#imageUploader').toggle();
+    //$('#image1Upload').removeAttr('required');
+    //$('.insertImageLinks').hide();
 });
 
 // UPLOAD IMAGES
@@ -131,7 +133,7 @@ fileUpload.addEventListener("change", function(event){
         //console.log(res);
         imgPrev.innerHTML = `<img class="uploadPrev" src="${res.data.secure_url}">`;
 
-        /*axios.post('http://localhost:3000/dashboard/create', { uploadedImage: res.data.secure_url })
+        /*axios.post('http://localhost:3000/dashboard/create/trade', { uploadedImage: res.data.secure_url })
              .catch((err) => { console.error(err) });*/
 
     }).catch((err)=> {

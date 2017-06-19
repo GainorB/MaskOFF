@@ -70,9 +70,9 @@ function getMyStats(req, res, next){
                 // TOTAL ACTIVE LISTINGS
                 t.any(`SELECT COUNT(posted_by) AS active_listings FROM listings WHERE posted_by = $1 AND completed = false AND accepted = false`, username),
                 // TOTAL COMPLETED LISTINGS
-                t.any(`SELECT COUNT(posted_by) AS total_completed FROM listings WHERE posted_by = $1 AND completed = true`, username),
+                t.any(`SELECT COUNT(posted_by) AS total_completed FROM listings WHERE who_accepted = $1 AND completed = true`, username),
                 // TOTAL ACCEPTED LISTINGS
-                t.any(`SELECT COUNT(posted_by) AS total_accepted FROM listings WHERE posted_by = $1 AND accepted = true`, username),
+                t.any(`SELECT COUNT(posted_by) AS total_accepted FROM listings WHERE who_accepted = $1 AND accepted = true`, username),
             ]);
         })
         .then(data => {
