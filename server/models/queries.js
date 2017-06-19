@@ -141,28 +141,32 @@ function acceptListing(id, req, res, next){
 function updateProfile(req, res, next){
 
     const userID = parseInt(req.user.id);
-    const { username, email, state, city} = req.body;
+    const { username, email, state, city } = req.body;
 
     // 1. CHECK LISTINGS TO SEE IF THIS USER HAS A LISTING
     db.any('SELECT posted_by FROM listings')
       .then(data => {
 
+          let postedBy = data.map(function(element, index){
+              return element.posted_by;
+          });
+
           // 2. IF USER HAS A POST IN LISTINGS TABLE
-          if(data[0].posted_by === req.user.username){
+          if(postedBy.includes(req.user.username)){
 
             // 3. UPDATE LISTINGS TABLE WITH THE USERS NEW PROFILE INFORMATION
-            db.any('UPDATE listings SET posted_by=$1, email=$2, state=$3, city=$4 WHERE posted_by=$5', [username, email, state, city, req.user.username])
+            db.any('UPDATE listings SET posted_by=$1, email=$2, state=$3, city=$4 WHERE posted_by=$5', [username, email, capitalizeFirstLetter(state), capitalizeFirstLetter(city), req.user.username])
               .then(() =>{ 
 
                     // 4. THEN UPDATE THE USERS TABLE WITH THE USERS PROFILE INFORMATION
-                    db.none('UPDATE users SET username=$1, email=$2, state=$3, city=$4 WHERE id=$5', [username, email, state, city, userID])
+                    db.none('UPDATE users SET username=$1, email=$2, state=$3, city=$4 WHERE id=$5', [username, email, capitalizeFirstLetter(state), capitalizeFirstLetter(city), userID])
                       .catch(e => { console.log(e); });
 
                 }).catch(e => { console.log(e); });
 
           } else {
 
-            db.none('UPDATE users SET username=$1, email=$2, state=$3, city=$4 WHERE id=$5', [username, email, state, city, userID])
+            db.none('UPDATE users SET username=$1, email=$2, state=$3, city=$4 WHERE id=$5', [username, email, capitalizeFirstLetter(state), capitalizeFirstLetter(city), userID])
               .catch(e => { console.log(e); });
 
           }
@@ -212,8 +216,12 @@ function deleteAccount(req, res, next){
     db.any('SELECT posted_by FROM listings')
       .then(data => {
 
+          let postedBy = data.map(function(element, index){
+              return element.posted_by;
+          });
+
           // 2. IF USER HAS A POST IN LISTINGS TABLE
-          if(data[0].posted_by === username){
+          if(postedBy.includes(username)){
 
                 // 3. DELETE USERS LISTINGS
                 db.none(`DELETE FROM listings WHERE posted_by = $1`, username)

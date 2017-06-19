@@ -1,6 +1,6 @@
 <% data.forEach(function(d) { %>
 
-<p class="singleListingTitle"><%= d.title %> (<%= d.condition %>)<br>
+<p class="singleListingTitle"><span class="brand"><%= d.brand %></span> <%= d.title %> (<%= d.condition %>)<br>
 <span class="listingBy">Posted by <%= d.posted_by %> on <%= d.date_created %>
 </p>
 <p>
@@ -23,11 +23,12 @@
 </p>
 
 <p class="contactOwner"><i class="fa fa-home" aria-hidden="true"></i> <b>Located in</b> <%= d.city %>, <%= d.state %><br>
-<p><b>Trading a/n</b> <%= d.size %></p>
-<p><b>Looking for a/n</b> <%= d.whatsize %></p>
-<p><b>Willing to ship?</b> <%= d.ship %></p>
-<p><b>Willing to meetup?</b> <%= d.meetup %></p>
-<p><b>Willing to throw cash?</b> 
+<span class="tradeInfo">Trade Information</span>
+<p>Trading a/n <strong><%= d.size %></strong></p>
+<p>Looking for a/n <strong><%= d.whatsize %></strong></p>
+<p>Willing to ship? <strong><%= d.ship %></strong></p>
+<p>Willing to meetup? <strong><%= d.meetup %></strong></p>
+<p>Willing to throw cash?
 <% if(d.cash === 0) { %>
 <span class="noMoney">No</span>
 <% } else { %>

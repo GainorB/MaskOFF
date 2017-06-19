@@ -36,7 +36,7 @@
     <div class="container aListing">
         <div class="row center-xs center-sm center-md start-lg middle-xs middle-sm middle-md middle-lg">
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
-                <p class="listingTitle"><%= d.title %> (<%= d.condition %>)</p>
+                <p class="listingTitle"><span class="brand"><%= d.brand %></span> <%= d.title %> (<%= d.condition %>)</p>
                 <p><a href="/browse/<%= d.id %>"><img src="<%= d.image1 %>"></a></p>
                 <p class="listingBy">Posted by <%= d.posted_by %> on <%= d.date_created %></p>
             </div>
