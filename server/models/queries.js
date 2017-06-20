@@ -113,15 +113,28 @@ function getBrowseStats(category, brand, req, res, next){
 
 // SEARCH DATABASE
 function searchDatabase(query, req, res, next){
-    let newQ = capitalizeFirstLetter(query.toLowerCase());
-
-    db.any(`SELECT * FROM listings WHERE title LIKE '%${newQ}%' AND accepted = false ORDER BY date_created DESC`)
+    db.any(`SELECT * FROM listings WHERE title ILIKE '%${query}%' AND accepted = false ORDER BY date_created DESC`)
       .then(data => {
           
           // FILTER OUT DUPLICATE BRAND NAMES SO THE DROP DOWN ONLY SHOWS ONE BRAND
           let brands = data.map(function(item) { return item.brand }).filter((item, index, arr) => { return arr.indexOf(item) === index; });
           
           res.render('Browse', { title: `Browsing`, data, query, brands, browseStats: 0, filterStats: 0, category: '', brand: '' })
+      })
+      .catch(e => { console.log(e); });
+}
+
+// GET MY LISTINGS TO SHARE WITH THE WORLD
+function getMyListings (username, req, res, next){
+    db.any(`SELECT * FROM listings where posted_by ILIKE '%${username}%' AND completed = false AND accepted = false`)
+      .then(data => {
+          if(data.length === 0){
+            req.flash('error', `User doesn't exist. Browse other trades below.`);
+            res.redirect('/browse');
+          } else {
+            req.flash('info', `You're viewing ${data[0].posted_by}'s trades, you'll need an account to see more information or to accept a trade.`);
+            res.render('ViewMyTrades', { title: `${username}'s Trades`, data });
+          }
       })
       .catch(e => { console.log(e); });
 }
@@ -340,5 +353,6 @@ module.exports = {
     deleteListing,
     getMyStats,
     getBrowseStats,
-    searchDatabase
+    searchDatabase,
+    getMyListings
 };

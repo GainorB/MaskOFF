@@ -19,6 +19,12 @@ router.get('/learnmore', function (req, res, next) {
 // RETURN ALL LISTINGS AND RENDER DATA ON BROWSE PAGE
 router.get('/browse', db.getAllListings);
 
+// RETURN ALL LISTINGS FROM A PARTICULAR USER
+router.get('/my/:username', function(req, res, next){
+  let username = req.params.username;
+  db.getMyListings(username, req, res, next)
+});
+
 // UPDATE A USERS PROFILE
 router.put('/updateProfile', db.updateProfile);
 
@@ -56,19 +62,19 @@ router.get('/trade/completed/:id', authHelpers.loginRequired, function (req, res
 });
 
 // FILTER
-router.post('/browse/filter', function(req, res, next) {
-    let category = req.body.category;
-    let brand = req.body.brand;
-    db.filterCategory(category, brand, req, res, next);
+router.post('/browse/filter', function (req, res, next) {
+  let category = req.body.category;
+  let brand = req.body.brand;
+  db.filterCategory(category, brand, req, res, next);
 
-    // TESTING
-    db.getBrowseStats(category, brand, req, res, next);
+  // TESTING
+  db.getBrowseStats(category, brand, req, res, next);
 });
 
 // SEARCH
-router.post('/browse/search', function(req, res, next){
-    let query = req.body.query;
-    db.searchDatabase(query, req, res, next);
+router.post('/browse/search', function (req, res, next) {
+  let query = req.body.query;
+  db.searchDatabase(query, req, res, next);
 })
 
 module.exports = router;

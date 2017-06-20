@@ -7,17 +7,21 @@
 
 <div id="boxbox">
 <h1>Welcome to your profile <%= user.username %>!</h1>
-<h4>Below you will find a summary of your account information and stats.</h4>
+<h4>Below you will find a summary of your account information.</h4>
 
-<% if(total != 0 ){ %>
+<% if(active != 0 ){ %>
 <div id="dashboard-stats">
-Total Trades Posted: <strong><%= total %></strong><br>
-Total Active Trades: <strong><%= active %></strong><br>
-Total Trades Completed: <strong><%= completed %></strong><br>
-Total Trades Accepted: <strong><%= accepted %></strong>
+<h3>Totals</h3>
+<p>Trades Posted: <strong><%= total %></strong><br>
+Active Trades: <strong><%= active %></strong><br>
+Trades Completed: <strong><%= completed %></strong><br>
+Trades Accepted: <strong><%= accepted %></strong></p>
+</div>
+
+<div id="share">
+Share your trades with friends: <a class="inlineLinks" target="_blank" href="https://maskoff.herokuapp.com/my/<%= user.username %>">https://maskoff.herokuapp.com/my/<%= user.username %></a>
 </div>
 <% } %>
-
 <p><input class="username" type="text" name="username" value="<%= user.username %>" readonly> <i id="pencil_<%= user.id %>" class="fa fa-pencil" aria-hidden="true"></i></p>
 <p><input class="email" type="text" name="email" value="<%= user.email %>" readonly> <i id="pencil_<%= user.id %>" class="fa fa-pencil" aria-hidden="true"></i></p>
 <p><input class="state" type="text" name="state" value="<%= user.state %>" readonly> <i id="pencil_<%= user.id %>" class="fa fa-pencil" aria-hidden="true"></i></p>

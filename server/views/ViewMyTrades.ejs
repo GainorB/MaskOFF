@@ -1,0 +1,49 @@
+<%- include('partials/header') %>
+<div class="container myTrades">
+    <div class="row center-xs center-sm center-md center-lg middle-xs middle-sm middle-md middle-lg">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+
+<%- include('partials/navbar') %>
+
+<p><%- messages('message', locals) %></p>
+<!-- DISPLAY LISTINGS -->
+<% data.forEach(function(d) { %>
+    
+    <div class="container aListing">
+        <div class="row center-xs center-sm center-md start-lg top-xs top-sm top-md top-lg">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <p class="listingTitle"><span class="brand"><%= d.brand %></span> <%= d.title %> (<%= d.condition %>)</p>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
+                <p><a href="/browse/<%= d.id %>"><img src="<%= d.image1 %>"></a></p>
+                <p class="listingBy">Posted by <%= d.posted_by %> on <%= d.date_created %></p>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-5">
+                <p>Trading a/n <b><%= d.size %></b></p>
+                <p>Looking for a/n <b><%= d.whatsize %></b></p>
+                <p>Willing to throw cash?
+                <% if(d.cash === 0) { %>
+                <span class="noMoney"><b>No</b></span>
+                <% } else { %>
+                <span class="money"><b>$<%= d.cash %></b></span>
+                <% } %>
+                </p>
+                <p>Located in <b><%= d.city %>, <%= d.state %></b></p>
+                <% if(user) { %>
+                <a href="/browse/<%= d.id %>"><button>View Trade</button></a><br>
+                    <% if(user.username === d.posted_by) { %>
+                        <a href="/browse/delete/<%= d.id %>"><button>Delete Trade</button></a>
+                    <% } %>
+                <% } else { %>
+                <a href="/browse/<%= d.id %>"><button>Login to view detailed information</button></a>
+                <% } %>
+            </div>
+        </div>
+    </div>
+    <% }) %>
+<!-- END DISPLAY LISTINGS -->
+
+        </div>
+    </div>
+</div>
+<%- include('partials/footer') %>
