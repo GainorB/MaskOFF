@@ -1,30 +1,46 @@
 <% if(data.length != 0) { %>
     <h1>Trades currently available</h1>
 
+    <% if(query) { %>
+        <h4>Current trades matching '<%= query %>'</h4>
+    <% } %>
+
     <% if(category && brand) { %>
-        <h3>Current trades matching <%= category %> and <%= brand %>.</h3>
+        <h3>Current trades matching <%= brand %> and <%= category %>.</h3>
+
+        <% if(filterStats != 0){ %>
+        <h4>You are viewing <%= filterStats %> result(s)</h4>
+        <% } %>
     <% } %>
 
     <% if(!user) { %>
         <h3><a class="inlineLinks" href="/">Login</a> to view detailed information about each item.</h3>
     <% } %>
+
     <div class="container filter">
         <div class="row center-xs center-sm center-md center-lg middle-xs middle-sm middle-md middle-lg">
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <p>
                 <form method='POST' action='/browse/filter'>
-                <b>Filter by</b> <select name="category">
-                    <option value="Footwear" selected>Footwear</option>
-                    <option value="Clothing">Clothing</option>
-                    <option value="Accessories">Accessories</option>
-                </select>
-
+                <b>Filter by</b>
                 <select name="brand">
                 <% brands.map(function(brand) { %>
                     <option value="<%= brand %>"><%= brand %></option>
                 <% }) %>
                 </select>
+                <b>in</b>
+                <select name="category">
+                    <option value="Footwear" selected>Footwear</option>
+                    <option value="Clothing">Clothing</option>
+                    <option value="Accessories">Accessories</option>
+                </select>
                 <button type="submit">Filter</button>
+                </form>
+                </p>
+                <p>
+                <form method='POST' action='/browse/search'>
+                <input type="text" id="search" name="query" placeholder="Search..">
+                <button type="submit">Search</button>
                 </form>
                 </p>
             </div>
@@ -67,11 +83,19 @@
     <% }) %>
 
 <% } else { %>
-    <% if(!category && !brand) { %>
-    <h1>No current trades <br>Be the first to <a class="inlineLinks" href="/dashboard/create">create one!</a></h1>
+
+    <% if(!category && !brand && !query) { %>
+        <h1>No current trades
+        <br>Be the first to <a class="inlineLinks" href="/dashboard/create">create one!</a></h1>
     <% } %>
+
+    <% if(query) { %>
+    <h2>No current trades matching '<%= query %>'
+    <br>Be the first to <a class="inlineLinks" href="/dashboard/create">create one!</a></h2>
+    <% } %>
+
     <% if(category && brand) { %>
-        <h2>No current trades match <%= category %> and <%= brand %>.
+        <h2>No current trades match <%= brand %> and <%= category %>.
         <br>Be the first to <a class="inlineLinks" href="/dashboard/create">create one!</a></h2>
     <% } %>
 

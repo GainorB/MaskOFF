@@ -160,23 +160,33 @@ input[type=number], select {
 FLASH MESSAGES
 */
 .error {
-  padding: 5px;
-  width: 95%;
-  border: 1px solid red;
-  background-color: #ffa5a5;
-  margin: auto;
-  font-weight: 700;
-  font-size: 20px;
+    padding: 5px;
+    width: 95%;
+    background-color: #ffdddd;
+    border-left: 6px solid #f44336;
+    margin: auto;
+    font-weight: 700;
+    font-size: 17px;
 }
 
 .success {
-  padding: 5px;
-  width: 95%;
-  border: 1px solid green;
-  background-color: #93e099;
-  margin: auto;
-  font-weight: 700;
-  font-size: 20px;
+    padding: 5px;
+    width: 95%;
+    background-color: #ddffdd;
+    border-left: 6px solid #4CAF50;
+    margin: auto;
+    font-weight: 700;
+    font-size: 17px;
+}
+
+.info {
+    padding: 5px;
+    width: 95%;
+    background-color: #e7f3fe;
+    border-left: 6px solid #2196F3;
+    margin: auto;
+    font-weight: 700;
+    font-size: 17px;
 }
 
 /*
@@ -311,6 +321,23 @@ FLASH MESSAGES
 /*
 * BROWSE
 */
+
+#search {
+    width: 300px;
+    -webkit-transition: width 0.4s ease-in-out;
+    transition: width 0.4s ease-in-out;
+}
+
+/*#search:focus {
+    width: 70%;
+}*/
+
+.browse select,
+.browse input[type=text] {
+    width: 220px;
+    height: 40px;
+    font-size: 20px;
+}
 
 .aListing .money {
     color: #007262;
@@ -655,7 +682,7 @@ footer {
         padding: 5px 14px;
     }
 
-    .success, .error {
+    .success, .error, .info {
         font-size: 13px;
         padding: 0px;
     }

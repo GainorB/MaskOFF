@@ -18,7 +18,7 @@ function filterCategory(category, brand, req, res, next){
 
         // FILTER OUT DUPLICATE BRAND NAMES SO THE DROP DOWN ONLY SHOWS ONE BRAND 
         let brands = data.map(function(item) { return item.brand }).filter((item, index, arr) => { return arr.indexOf(item) === index; });
-        res.render('Browse', { title: `Browsing`, data, category, brand, brands })
+        res.render('Browse', { title: `Browsing`, query: '', browseStats: 0, filterStats: 0, data, category, brand, brands })
 
       }).catch(e => { console.log(e); });
 }
@@ -31,7 +31,7 @@ function getAllListings(req, res, next){
         
         // FILTER OUT DUPLICATE BRAND NAMES SO THE DROP DOWN ONLY SHOWS ONE BRAND
         let brands = data.map(function(item) { return item.brand }).filter((item, index, arr) => { return arr.indexOf(item) === index; });
-        res.render('Browse', { title: "Browse", category: '', brand: '', brands, data })
+        res.render('Browse', { title: "Browse", category: '', brand: '', query: '', browseStats: 0, filterStats: 0, brands, data })
 
     }).catch(e => { console.log(e); });
 }
@@ -81,9 +81,49 @@ function getMyStats(req, res, next){
             let completed = data[2][0].total_completed;
             let accepted = data[3][0].total_accepted;
 
-            res.render('Dashboard', { total, active, completed, accepted, title: `${username}'s Stats` });
+            res.render('Dashboard', { total, active, completed, accepted, title: `${username}'s Profile` });
         })
         .catch(e => { console.log(e); });
+}
+
+// GET CATEGORY STATS
+function getBrowseStats(category, brand, req, res, next){
+
+    console.log('yo');
+
+    db.tx(t => {
+
+            return t.batch([
+                // TOTAL LISTINGS IN DATABASE PER CATEGORY
+                t.any('SELECT COUNT(*) AS browse_filter FROM listings WHERE accepted = false AND completed = false AND category = $1 AND brand = $2', [category, brand]),
+                // TOTAL LISTINGS IN DATABASE
+                t.any('SELECT COUNT(*) AS browse_stats FROM listings WHERE completed = false AND accepted = false'),
+            ]);
+        })
+        .then(data => {
+            console.log(data[1][0]);
+
+            let filterStats = data[0][0].browse_filter;
+            let browseStats = data[1][0].browse_stats;
+
+            res.render('Browse', { browseStats, filterStats, category, brand, query: '', title: `Browsing` });
+
+        }).catch(e => { console.log(e); });
+}
+
+// SEARCH DATABASE
+function searchDatabase(query, req, res, next){
+    let newQ = capitalizeFirstLetter(query.toLowerCase());
+
+    db.any(`SELECT * FROM listings WHERE title LIKE '%${newQ}%' AND accepted = false ORDER BY date_created DESC`)
+      .then(data => {
+          
+          // FILTER OUT DUPLICATE BRAND NAMES SO THE DROP DOWN ONLY SHOWS ONE BRAND
+          let brands = data.map(function(item) { return item.brand }).filter((item, index, arr) => { return arr.indexOf(item) === index; });
+          
+          res.render('Browse', { title: `Browsing`, data, query, brands, browseStats: 0, filterStats: 0, category: '', brand: '' })
+      })
+      .catch(e => { console.log(e); });
 }
 
 
@@ -209,7 +249,7 @@ function cancelTrade(id, req, res, next){
     db.none(`UPDATE listings SET accepted = false WHERE id = ${itemID}`)
       .then(data => {
 
-          req.flash('success', `Thanks for cancelling your trade. Make sure to let the other user know.`); 
+          req.flash('info', `Thanks for cancelling your trade. Make sure to let the other user know.`); 
           res.redirect('/dashboard/trades'); 
 
         })
@@ -223,7 +263,7 @@ function completedTrade(id, req, res, next){
     db.none(`UPDATE listings SET completed = true WHERE id = ${itemID}`)
       .then(data => {
 
-          req.flash('success', `Thanks for completing your trade. Hope it went well.`); 
+          req.flash('info', `Thanks for completing your trade. Hope it went well.`); 
           res.redirect('/dashboard/trades'); 
 
         })
@@ -279,7 +319,7 @@ function deleteListing(id, req, res, next){
     db.none(`DELETE FROM listings WHERE id = ${itemID}`)
       .then(data => { 
 
-            req.flash('success', `Thanks for deleting your trade. You should post another.`); 
+            req.flash('info', `Thanks for deleting your trade. You should post another.`); 
             res.redirect('/browse'); 
        })
       .catch(e => { console.log(e); });
@@ -298,5 +338,7 @@ module.exports = {
     completedTrade,
     filterCategory,
     deleteListing,
-    getMyStats 
+    getMyStats,
+    getBrowseStats,
+    searchDatabase
 };
