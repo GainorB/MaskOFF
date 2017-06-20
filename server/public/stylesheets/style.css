@@ -334,7 +334,7 @@ FLASH MESSAGES
 
 .browse select,
 .browse input[type=text] {
-    width: 220px;
+    width: 280px;
     height: 40px;
     font-size: 20px;
 }
