@@ -136,15 +136,35 @@ function getMyStats(req, res, next){
 
 // SEARCH DATABASE
 function searchDatabase(query, req, res, next){
-    db.any(`SELECT * FROM listings WHERE title ILIKE '%${query}%' AND accepted = false ORDER BY date_created DESC`)
-      .then(data => {
-          
-          // FILTER OUT DUPLICATE BRAND NAMES SO THE DROP DOWN ONLY SHOWS ONE BRAND
-          let brands = data.map(function(item) { return item.brand }).filter((item, index, arr) => { return arr.indexOf(item) === index; });
-          
-          res.render('Browse', { title: `Browsing`, data, query, brands, category: '', brand: '' })
-      })
-      .catch(e => { console.log(e); });
+
+    db.tx(t => {
+
+            return t.batch([
+                // SEARCH RESULTS
+                t.any(`SELECT * FROM listings WHERE title ILIKE '%${query}%' AND accepted = false ORDER BY date_created DESC`),
+                // TOTAL AMOUNT OF SEARCH RESULTS
+                t.any(`SELECT COUNT(*) AS searchStats FROM listings WHERE title ILIKE '%${query}%' AND accepted = false AND completed = false`),
+                // TOTAL LISTINGS IN DATABASE
+                t.any('SELECT COUNT(*) AS browse_stats FROM listings WHERE completed = false AND accepted = false'),
+            ]);
+        })
+        .then(data => {
+
+            // FILTER OUT DUPLICATE BRAND NAMES SO THE DROP DOWN ONLY SHOWS ONE BRAND
+            let brands = data[0].map((item) => { return item.brand }).filter((item, index, arr) => 
+            { return arr.indexOf(item) === index; });
+
+            let trades = data[0];
+            let searchStats = data[1][0].searchstats;
+            let browseStats = data[2][0].browse_stats;
+
+            res.render('Browse', { 
+              title: `Browsing`, 
+              category: '', 
+              brand: '',
+              trades, query, brands, searchStats, browseStats })
+        })
+        .catch(e => { console.log(e); });
 }
 
 // GET MY LISTINGS TO SHARE WITH THE WORLD
