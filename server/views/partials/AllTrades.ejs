@@ -1,12 +1,12 @@
-<% if(data.length != 0) { %>
-    <h1>Trades currently available</h1>
+<% if(trades.length != 0) { %>
+    <h2>Currently <%= browseStats %> trade(s) available.</h2>
 
     <% if(query) { %>
         <h3>Current trades matching '<%= query %>'</h3>
     <% } %>
 
     <% if(category && brand) { %>
-        <h3>Current trades matching <%= brand %> and <%= category %>.</h3>
+        <h3>Currently <%= filterStats %> trade(s) matching <%= brand %> and <%= category %>.</h3>
     <% } %>
 
     <% if(!user) { %>
@@ -43,7 +43,7 @@
         </div>
     </div>
 
-    <% data.forEach(function(d) { %>
+    <% trades.forEach(function(d) { %>
     
     <div class="container aListing">
         <div class="row center-xs center-sm center-md start-lg top-xs top-sm top-md top-lg">

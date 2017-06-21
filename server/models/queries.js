@@ -13,26 +13,75 @@ function capitalizeFirstLetter(string){
 
 // FILTER CATEGORIES
 function filterCategory(category, brand, req, res, next){
-    db.any('SELECT * FROM listings WHERE accepted = FALSE AND category = $1 AND brand = $2 ORDER BY date_created DESC', [category, brand])
-      .then(data => {
 
-        // FILTER OUT DUPLICATE BRAND NAMES SO THE DROP DOWN ONLY SHOWS ONE BRAND 
-        let brands = data.map(function(item) { return item.brand }).filter((item, index, arr) => { return arr.indexOf(item) === index; });
-        res.render('Browse', { title: `Browsing`, query: '', data, category, brand, brands })
+    db.tx(t => {
 
-      }).catch(e => { console.log(e); });
+            return t.batch([
+                // TOTAL LISTINGS IN DATABASE PER BRAND/CATEGORY
+                t.any('SELECT COUNT(*) AS browse_filter FROM listings WHERE accepted = false AND completed = false AND category = $1 AND brand = $2', [category, brand]),
+                // FILTER PER BRAND/CATEGORY
+                t.any('SELECT * FROM listings WHERE accepted = FALSE AND category = $1 AND brand = $2 ORDER BY date_created DESC', [category, brand]),
+                // TOTAL LISTINGS IN DATABASE
+                t.any('SELECT COUNT(*) AS browse_stats FROM listings WHERE completed = false AND accepted = false'),
+            ]);
+        })
+        .then(data => {
+
+            // FILTER OUT DUPLICATE BRAND NAMES SO THE DROP DOWN ONLY SHOWS ONE BRAND
+            let brands = data[1].map((item) => { return item.brand }).filter((item, index, arr) => 
+            { return arr.indexOf(item) === index; });
+
+            // FILTERED DATA
+            let trades = data[1];
+
+            // TOTAL LISTINGS PER BRAND/CATEGORY
+            let filterStats = data[0][0].browse_filter;
+
+            // TOTAL LISTINGS
+            let browseStats = data[2][0].browse_stats;
+
+            res.render('Browse', { 
+                title: `Browsing`, 
+                query: '', 
+                trades, category, brand, brands, browseStats, filterStats })
+
+        })
+        .catch(e => { console.log(e); });
 }
 
 // RETURN ALL LISTINGS
 function getAllListings(req, res, next){
-    db.any(`SELECT * FROM listings WHERE accepted = FALSE AND completed = FALSE ORDER BY date_created DESC`)
-      .then(data => {
-        
-        // FILTER OUT DUPLICATE BRAND NAMES SO THE DROP DOWN ONLY SHOWS ONE BRAND
-        let brands = data.map(function(item) { return item.brand }).filter((item, index, arr) => { return arr.indexOf(item) === index; });
-        res.render('Browse', { title: "Browse", category: '', brand: '', query: '', brands, data })
 
-    }).catch(e => { console.log(e); });
+    db.tx(t => {
+
+            return t.batch([
+                // TOTAL LISTINGS IN DATABASE
+                t.any('SELECT COUNT(*) AS browse_stats FROM listings WHERE completed = false AND accepted = false'),
+                // SELECT ALL LISTINGS
+                t.any('SELECT * FROM listings WHERE accepted = FALSE AND completed = FALSE ORDER BY date_created DESC'),
+            ]);
+        })
+        .then(data => {
+
+            // FILTER OUT DUPLICATE BRAND NAMES SO THE DROP DOWN ONLY SHOWS ONE BRAND
+            let brands = data[1].map((item) => { return item.brand }).filter((item, index, arr) => 
+            { return arr.indexOf(item) === index; });
+
+            // TOTAL LISTINGS
+            let browseStats = data[0][0].browse_stats;
+
+            // ARRAY WITH DATA data[2]
+            let trades = data[1];
+
+            res.render('Browse', { 
+                title: "Browse", 
+                category: '', 
+                brand: '', 
+                query: '',
+                filterStats: 0, 
+                browseStats, trades, brands });
+
+        }).catch(e => { console.log(e); });
 }
 
 // GET A SINGLE LISTING
@@ -83,31 +132,6 @@ function getMyStats(req, res, next){
             res.render('Dashboard', { total, active, completed, accepted, title: `${username}'s Profile` });
         })
         .catch(e => { console.log(e); });
-}
-
-// GET CATEGORY STATS
-function getBrowseStats(category, brand, req, res, next){
-
-    console.log('yo');
-
-    db.tx(t => {
-
-            return t.batch([
-                // TOTAL LISTINGS IN DATABASE PER CATEGORY
-                t.any('SELECT COUNT(*) AS browse_filter FROM listings WHERE accepted = false AND completed = false AND category = $1 AND brand = $2', [category, brand]),
-                // TOTAL LISTINGS IN DATABASE
-                t.any('SELECT COUNT(*) AS browse_stats FROM listings WHERE completed = false AND accepted = false'),
-            ]);
-        })
-        .then(data => {
-            console.log(data[1][0]);
-
-            let filterStats = data[0][0].browse_filter;
-            let browseStats = data[1][0].browse_stats;
-
-            res.render('Browse', { browseStats, filterStats, category, brand, query: '', title: `Browsing` });
-
-        }).catch(e => { console.log(e); });
 }
 
 // SEARCH DATABASE
@@ -351,7 +375,6 @@ module.exports = {
     filterCategory,
     deleteListing,
     getMyStats,
-    getBrowseStats,
     searchDatabase,
     getMyListings
 };

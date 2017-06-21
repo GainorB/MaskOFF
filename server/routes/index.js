@@ -26,10 +26,10 @@ router.get('/my/:username', function(req, res, next){
 });
 
 // UPDATE A USERS PROFILE
-router.put('/updateProfile', db.updateProfile);
+router.put('/updateProfile', authHelpers.loginRequired, db.updateProfile);
 
 // DELETE A USERS ACCOUNT
-router.delete('/deleteAccount', db.deleteAccount);
+router.delete('/deleteAccount', authHelpers.loginRequired, db.deleteAccount);
 
 // A SINGLE ITEM
 router.get('/browse/:id', authHelpers.loginRequired, function (req, res, next) {
