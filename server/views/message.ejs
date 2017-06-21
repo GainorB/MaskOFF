@@ -1,5 +1,6 @@
 <% Object.keys(messages).forEach(function (type) { %>
   <div class="<%= type %>">
+  <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
   <% messages[type].forEach(function (message) { %>
     <%= message %>
   <% }) %>

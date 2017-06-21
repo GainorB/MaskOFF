@@ -11,6 +11,21 @@ body {
     line-height: 40px;
 }
 
+.closebtn {
+    margin-left: 15px;
+    color: #222222;
+    font-weight: bold;
+    float: right;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.closebtn:hover {
+    color: #490a0a;
+}
+
 #maskoff {
     margin-top: 30px;
     cursor: pointer;

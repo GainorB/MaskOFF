@@ -271,7 +271,7 @@ function updateProfile(req, res, next){
     db.any('SELECT posted_by FROM listings')
       .then(data => {
 
-          let postedBy = data.map(function(element, index){
+          let postedBy = data.map((element) => {
               return element.posted_by;
           });
 
@@ -340,7 +340,7 @@ function deleteAccount(req, res, next){
     db.any('SELECT posted_by FROM listings')
       .then(data => {
 
-          let postedBy = data.map(function(element, index){
+          let postedBy = data.map((element) => {
               return element.posted_by;
           });
 
@@ -375,7 +375,7 @@ function deleteListing(id, req, res, next){
     db.none(`DELETE FROM listings WHERE id = ${itemID}`)
       .then(data => { 
 
-            req.flash('info', `Thanks for deleting your trade. You should post another.`); 
+            req.flash('info', `Thanks for deleting your trade.`); 
             res.redirect('/browse'); 
        })
       .catch(e => { console.log(e); });
