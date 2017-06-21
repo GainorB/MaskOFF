@@ -18,20 +18,19 @@ function filterCategory(category, brand, req, res, next){
 
         // FILTER OUT DUPLICATE BRAND NAMES SO THE DROP DOWN ONLY SHOWS ONE BRAND 
         let brands = data.map(function(item) { return item.brand }).filter((item, index, arr) => { return arr.indexOf(item) === index; });
-        res.render('Browse', { title: `Browsing`, query: '', browseStats: 0, filterStats: 0, data, category, brand, brands })
+        res.render('Browse', { title: `Browsing`, query: '', data, category, brand, brands })
 
       }).catch(e => { console.log(e); });
 }
 
 // RETURN ALL LISTINGS
 function getAllListings(req, res, next){
-    db.any(`SELECT * FROM listings WHERE accepted = FALSE
-            ORDER BY date_created DESC`)
+    db.any(`SELECT * FROM listings WHERE accepted = FALSE AND completed = FALSE ORDER BY date_created DESC`)
       .then(data => {
         
         // FILTER OUT DUPLICATE BRAND NAMES SO THE DROP DOWN ONLY SHOWS ONE BRAND
         let brands = data.map(function(item) { return item.brand }).filter((item, index, arr) => { return arr.indexOf(item) === index; });
-        res.render('Browse', { title: "Browse", category: '', brand: '', query: '', browseStats: 0, filterStats: 0, brands, data })
+        res.render('Browse', { title: "Browse", category: '', brand: '', query: '', brands, data })
 
     }).catch(e => { console.log(e); });
 }
@@ -119,7 +118,7 @@ function searchDatabase(query, req, res, next){
           // FILTER OUT DUPLICATE BRAND NAMES SO THE DROP DOWN ONLY SHOWS ONE BRAND
           let brands = data.map(function(item) { return item.brand }).filter((item, index, arr) => { return arr.indexOf(item) === index; });
           
-          res.render('Browse', { title: `Browsing`, data, query, brands, browseStats: 0, filterStats: 0, category: '', brand: '' })
+          res.render('Browse', { title: `Browsing`, data, query, brands, category: '', brand: '' })
       })
       .catch(e => { console.log(e); });
 }

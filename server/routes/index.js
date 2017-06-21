@@ -66,9 +66,6 @@ router.post('/browse/filter', function (req, res, next) {
   let category = req.body.category;
   let brand = req.body.brand;
   db.filterCategory(category, brand, req, res, next);
-
-  // TESTING
-  db.getBrowseStats(category, brand, req, res, next);
 });
 
 // SEARCH

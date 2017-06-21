@@ -2,15 +2,11 @@
     <h1>Trades currently available</h1>
 
     <% if(query) { %>
-        <h4>Current trades matching '<%= query %>'</h4>
+        <h3>Current trades matching '<%= query %>'</h3>
     <% } %>
 
     <% if(category && brand) { %>
         <h3>Current trades matching <%= brand %> and <%= category %>.</h3>
-
-        <% if(filterStats != 0){ %>
-        <h4>You are viewing <%= filterStats %> result(s)</h4>
-        <% } %>
     <% } %>
 
     <% if(!user) { %>
