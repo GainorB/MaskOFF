@@ -1,7 +1,7 @@
 <% data.forEach(function(d) { %>
 
 <p class="singleListingTitle"><span class="brand"><%= d.brand %></span> <%= d.title %> (<%= d.condition %>)<br>
-<span class="listingBy">Posted by <%= d.posted_by %> on <%= d.date_created %>
+<span class="listingBy">Posted by <%= d.username %> on <%= d.date_created %>
 </p>
 <p>
 <img src="<%= d.image1 %>"><br>
@@ -37,7 +37,7 @@
 </p>
 <p>
 <a href="/browse/accept/<%= d.id %>"><button>Accept Trade</button></a><br>
-<% if(user.username === d.posted_by) { %>
+<% if(user.username === d.username) { %>
     <a href="/browse/delete/<%= d.id %>"><button>Delete Trade</button></a><br>
 <% } %>
 <span class="acceptThisListing">Accept this trade, to view the owners contact information.</span>

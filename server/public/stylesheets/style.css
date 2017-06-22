@@ -11,21 +11,6 @@ body {
     line-height: 40px;
 }
 
-.closebtn {
-    margin-left: 15px;
-    color: #222222;
-    font-weight: bold;
-    float: right;
-    font-size: 22px;
-    line-height: 20px;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-.closebtn:hover {
-    color: #490a0a;
-}
-
 #maskoff {
     margin-top: 30px;
     cursor: pointer;
@@ -145,7 +130,10 @@ button:hover {
     text-decoration: underline;
 }
 
-input[type=text], input[type=password], input[type=email] {
+input[type=text],
+input[type=password],
+input[type=email],
+input[type=url] {
     width: 450px;
     height: 50px;
     font-size: 20px;
@@ -258,6 +246,7 @@ FLASH MESSAGES
 */
 .createlisting input[type=text], 
 .createlisting input[type=number], 
+.createlisting input[type=url], 
 .createlisting select {
     width: 400px;
     height: 50px;
@@ -282,11 +271,10 @@ FLASH MESSAGES
 }
 
 .createlisting #tooltip {
-    font-size: 14px;
+    font-size: 17px;
     letter-spacing: 1px;
     margin: 0;
     padding: 0;
-    font-weight: 700;
 }
 
 .convertSize {
@@ -637,6 +625,7 @@ footer {
     input[type=text], 
     input[type=password],
     input[type=number],
+    input[type=url],
     input[type=email], select {
         width: 300px;
         font-size: 15px;
@@ -644,6 +633,7 @@ footer {
 
     .createlisting input[type=text], 
     .createlisting input[type=number], 
+    .createlisting input[type=url], 
     .createlisting select {
         width: 300px;
         font-size: 15px;
@@ -652,7 +642,8 @@ footer {
     }
 
     .createlisting #tooltip {
-        font-size: 11px;
+        font-size: 12px;
+        font-weight: 700;
     }
 
     body h1 {

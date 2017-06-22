@@ -7,17 +7,20 @@
 
 <div id="boxbox">
 <h1>Welcome to your profile <%= user.username %>!</h1>
-<h4>Below you will find a summary of your account information.</h4>
+Below you will find a summary of your account information.
 
-<% if(active != 0 ){ %>
+<% if(active != 0 || completed != 0 || accepted != 0){ %>
 <div id="dashboard-stats">
-<h3>Totals</h3>
-<p>Trades Posted: <strong><%= total %></strong><br>
-Active Trades: <strong><%= active %></strong><br>
-Trades Completed: <strong><%= completed %></strong><br>
-Trades Accepted: <strong><%= accepted %></strong></p>
+<h3>My Totals</h3>
+<p>Trades Posted (lifetime): <strong><%= total %></strong><br>
+Active Trades (aren't accepted): <strong><a class="inlineLinks" href="/my/<%= user.username %>"><%= active %></a></strong><br><br>
+<strong>What I've done</strong><br>
+Completed Trades: <strong><a class="inlineLinks" href="/dashboard/trades"><%= completed %></a></strong><br>
+Currently Accepted: <strong><a class="inlineLinks" href="/dashboard/trades"><%= accepted %></a></strong></p>
 </div>
+<% } %>
 
+<% if(active != 0 || total != 0){ %>
 <div id="share">
 Share your trades with friends: <a class="inlineLinks" target="_blank" href="https://maskoff.herokuapp.com/my/<%= user.username %>">https://maskoff.herokuapp.com/my/<%= user.username %></a>
 </div>
@@ -26,7 +29,7 @@ Share your trades with friends: <a class="inlineLinks" target="_blank" href="htt
 <p><input class="email" type="text" name="email" value="<%= user.email %>" readonly> <i id="pencil_<%= user.id %>" class="fa fa-pencil" aria-hidden="true"></i></p>
 <p><input class="state" type="text" name="state" value="<%= user.state %>" readonly> <i id="pencil_<%= user.id %>" class="fa fa-pencil" aria-hidden="true"></i></p>
 <p><input class="city" type="text" name="city" value="<%= user.city %>" readonly> <i id="pencil_<%= user.id %>" class="fa fa-pencil" aria-hidden="true"></i></p>
-<button class="update_account">Update Account</button> <button class="delete_account">Delete Account</button>
+<button class="update_account">Update Account</button> <a href="/deleteAccount/"><button class="delete_account">Delete Account</button></a>
 
 </div>
         </div>

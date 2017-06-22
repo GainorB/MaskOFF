@@ -29,7 +29,7 @@ router.get('/my/:username', function(req, res, next){
 router.put('/updateProfile', authHelpers.loginRequired, db.updateProfile);
 
 // DELETE A USERS ACCOUNT
-router.delete('/deleteAccount', authHelpers.loginRequired, db.deleteAccount);
+router.get('/deleteAccount/', authHelpers.loginRequired, db.deleteAccount);
 
 // A SINGLE ITEM
 router.get('/browse/:id', authHelpers.loginRequired, function (req, res, next) {
