@@ -16,15 +16,6 @@ $('.update_account').on('click', function () {
     window.location.href = "https://maskoff.herokuapp.com/";
 });
 
-$('.delete_account').on('click', function () {
-
-    var x = window.confirm("Are you sure you want to delete your account?");
-    if (x) {
-        axios.delete("https://maskoff.herokuapp.com/deleteAccount").catch(e => { console.log(e); });
-    }
-    window.location.href = "https://maskoff.herokuapp.com/";
-});
-
 // PREVENT NEGATIVE NUMBERS IN THE NUMBER INPUT
 $('#number').keydown(function(e) {
     if(!((e.keyCode > 95 && e.keyCode < 106)

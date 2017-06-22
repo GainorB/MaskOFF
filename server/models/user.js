@@ -10,7 +10,7 @@ function capitalizeFirstLetter(string){
 };
 
 User.findByUserName = userName => {
-  return db.oneOrNone('SELECT * FROM users WHERE username = $1', [userName]);
+  return db.oneOrNone('SELECT * FROM users WHERE username = $1', userName);
 };
 
 User.create = user => {

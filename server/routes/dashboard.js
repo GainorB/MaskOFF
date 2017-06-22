@@ -18,9 +18,6 @@ router.get('/create', authHelpers.loginRequired, function(req, res, next) {
   res.render('CreateTrade', { title: "Create a Trade" });
 });
 
-router.post('/create/trade', authHelpers.loginRequired, function(req, res, next) {
-  db.createListing(req, res, next);
-  req.flash('success', 'Your item has successfully been created.');
-});
+router.post('/create/trade', authHelpers.loginRequired, db.createListing);
 
 module.exports = router;

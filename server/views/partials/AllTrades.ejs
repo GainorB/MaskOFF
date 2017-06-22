@@ -52,7 +52,7 @@
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
                 <p><a href="/browse/<%= d.id %>"><img src="<%= d.image1 %>"></a></p>
-                <p class="listingBy">Posted by <%= d.posted_by %> on <%= d.date_created %></p>
+                <p class="listingBy">Posted by <%= d.username %> on <%= d.date_created %></p>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-5">
                 <p>Trading a/n <b><%= d.size %></b></p>
@@ -67,7 +67,7 @@
                 <p>Located in <b><%= d.city %>, <%= d.state %></b></p>
                 <% if(user) { %>
                 <a href="/browse/<%= d.id %>"><button>View Trade</button></a><br>
-                    <% if(user.username === d.posted_by) { %>
+                    <% if(user.username === d.username) { %>
                         <a href="/browse/delete/<%= d.id %>"><button>Delete Trade</button></a>
                     <% } %>
                 <% } else { %>

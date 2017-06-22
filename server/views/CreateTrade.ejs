@@ -7,8 +7,10 @@
 
 <div id="boxbox">
 <h1>Tell us what you're trading</h1>
+<p class="info">Take your time and fill everything out accurately.</p>
 <p><%- messages('message', locals) %></p>
 <form method='POST' action='/dashboard/create/trade'>
+<h2>Details</h2>
 <p> 
 <p id="tooltip">Select a category for your listing.</p>
     <select id="category" name="category" required>
@@ -30,8 +32,17 @@
 </p>
 
 <p>
+<p id="tooltip">What condition is your item in? Be honest.</p>
+    <select name="condition" required>
+    <option value="New" selected>New</option>
+    <option value="Used">Used</option>
+    </select>
+</p>
+
+<h2>Sizing</h2>
+<p>
 <p id="tooltip">What size are you trading?<br/>
-<span class="convertSize">Footwear sizing is unisex: A men's size 7 is roughly equivalent to a women's size 8.5.</span></p>
+<span class="convertSize"><strong>Footwear sizing is unisex: A men's size 7 is roughly equivalent to a women's size 8.5.</strong></span></p>
 <input type="text" id="size" name="size" placeholder="Please choose a category first" required readonly>
 <p class="changeSize"></p>
 </p>
@@ -42,13 +53,7 @@
 <p class="changeWhatSize"></p>
 </p>
 
-<p>
-<p id="tooltip">What condition is your item in? Be honest.</p>
-    <select name="condition" required>
-    <option value="New" selected>New</option>
-    <option value="Used">Used</option>
-    </select>
-</p>
+<h2>Images</h2>
  
 <p>
 <p id="tooltip">You must include 1 image and can insert up to 5 images.</p>
@@ -62,10 +67,11 @@
         <span class="easier">or use an image url below, its easier.</span>
 </p>
 
-<p class="insertImageLinks"><input type="text" id="image1Upload" name="image1" placeholder="Image1 URL" required>  <i class="fa fa-plus" aria-hidden="true"></i></p> 
+<p class="insertImageLinks"><input type="url" id="image1Upload" name="image1" placeholder="Image1 URL" required>  <i class="fa fa-plus" aria-hidden="true"></i></p> 
 <p id="insertImages"></p>
 </p>
 
+<h2>Other</h2>
 <p>
 <p id="tooltip">Are you willing to ship your item?</p>
     <select name="ship" required>
@@ -83,7 +89,7 @@
 </p>
 
 <p>
-<p id="tooltip">Throwing in cash sweetens up the deal, but isn't neccessary.<br/><span class="money">How much you want to throw?</span></p>
+<p id="tooltip">Throwing in cash sweetens up the deal, but isn't neccessary.<br/><span class="money"><strong>How much you want to throw?</strong></span></p>
     <input id="number" type="number" name="cash" value="0" min="0">
 </p>
 
