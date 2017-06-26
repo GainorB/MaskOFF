@@ -21,7 +21,7 @@ function filterCategory(category, brand, req, res, next){
                 // TOTAL LISTINGS IN DATABASE PER BRAND/CATEGORY
                 t.any('SELECT COUNT(*) AS filter_stats FROM listings WHERE accepted = false AND completed = false AND category = $1 AND brand = $2', [category, brand]),
                 // FILTER PER BRAND/CATEGORY
-                t.any(`SELECT listings.title, COALESCE(to_char(date_created, 'Dy Mon DD at HH12:MI:SSam'), '') AS date_created, listings.brand, listings.size, listings.whatsize, listings.condition, listings.cash, users.city, users.state, users.username, images.image1 FROM listings
+                t.any(`SELECT listings.title, COALESCE(to_char(date_created, 'Dy Mon DD at HH12:MI:SSam'), '') AS date_created, listings.brand, listings.size, listings.whatsize, listings.category, listings.condition, listings.cash, users.city, users.state, users.username, images.image1 FROM listings
                        INNER JOIN images ON listings.id = images.id 
                        INNER JOIN users ON listings.userid = users.userid 
                        WHERE accepted = FALSE AND category = $1 AND brand = $2 ORDER BY listings.date_created DESC`, [category, brand]),
@@ -33,6 +33,9 @@ function filterCategory(category, brand, req, res, next){
 
             // FILTER OUT DUPLICATE BRAND NAMES SO THE DROP DOWN ONLY SHOWS ONE BRAND
             let brands = data[1].map((item) => { return item.brand }).filter((item, index, arr) => 
+            { return arr.indexOf(item) === index; });
+
+            let categories = data[1].map((item) => { return item.category }).filter((item, index, arr) => 
             { return arr.indexOf(item) === index; });
 
             // FILTERED DATA
@@ -47,7 +50,7 @@ function filterCategory(category, brand, req, res, next){
             res.render('Browse', { 
                 title: `Browsing`, 
                 query: '', 
-                trades, category, brand, brands, browseStats, filterStats })
+                trades, category, brand, brands, browseStats, filterStats, categories })
 
         })
         .catch(e => { console.log(e); });
@@ -63,7 +66,7 @@ function getAllListings(req, res, next){
                 // TOTAL LISTINGS IN DATABASE
                 t.any('SELECT COUNT(*) AS browse_stats FROM listings WHERE completed = FALSE AND accepted = FALSE'),
                 // SELECT ALL LISTINGS
-                t.any(`SELECT listings.title, listings.id, COALESCE(to_char(date_created, 'Dy Mon DD at HH12:MI:SSam'), '') AS date_created, listings.brand, listings.size, listings.whatsize, listings.condition, listings.cash, users.city, users.state, users.username, images.image1 FROM listings
+                t.any(`SELECT listings.title, listings.id, COALESCE(to_char(date_created, 'Dy Mon DD at HH12:MI:SSam'), '') AS date_created, listings.brand, listings.category, listings.size, listings.whatsize, listings.condition, listings.cash, users.city, users.state, users.username, images.image1 FROM listings
                        INNER JOIN images ON listings.id = images.id 
                        INNER JOIN users ON listings.userid = users.userid 
                        WHERE accepted = FALSE AND completed = FALSE ORDER BY listings.date_created DESC`),
@@ -73,6 +76,9 @@ function getAllListings(req, res, next){
 
             // FILTER OUT DUPLICATE BRAND NAMES SO THE DROP DOWN ONLY SHOWS ONE BRAND
             let brands = data[1].map((item) => { return item.brand }).filter((item, index, arr) => 
+            { return arr.indexOf(item) === index; });
+
+            let categories = data[1].map((item) => { return item.category }).filter((item, index, arr) => 
             { return arr.indexOf(item) === index; });
 
             // TOTAL LISTINGS
@@ -87,7 +93,7 @@ function getAllListings(req, res, next){
                 brand: '', 
                 query: '',
                 filterStats: 0, 
-                browseStats, trades, brands });
+                browseStats, trades, brands, categories });
 
         }).catch(e => { console.log(e); });
 }
@@ -165,7 +171,7 @@ function searchDatabase(query, req, res, next){
             return t.batch([
                 // SEARCH RESULTS
                 t.any(`SELECT listings.title, listings.id, COALESCE(to_char(date_created, 'Dy Mon DD at HH12:MI:SSam'), '') AS date_created, listings.brand, listings.size, 
-                       listings.whatsize, listings.condition, listings.cash, users.city, users.state, 
+                       listings.whatsize, listings.condition, listings.category, listings.cash, users.city, users.state, 
                        users.username, images.image1 FROM listings
                        INNER JOIN images ON listings.id = images.id 
                        INNER JOIN users ON listings.userid = users.userid 
@@ -182,6 +188,9 @@ function searchDatabase(query, req, res, next){
             let brands = data[0].map((item) => { return item.brand }).filter((item, index, arr) => 
             { return arr.indexOf(item) === index; });
 
+            let categories = data[0].map((item) => { return item.category }).filter((item, index, arr) => 
+            { return arr.indexOf(item) === index; });
+
             let trades = data[0];
             let searchStats = data[1][0].search_stats;
             let browseStats = data[2][0].browse_stats;
@@ -190,7 +199,7 @@ function searchDatabase(query, req, res, next){
               title: `Browsing`, 
               category: '', 
               brand: '',
-              trades, query, brands, searchStats, browseStats })
+              trades, query, brands, searchStats, browseStats, categories })
         })
         .catch(e => { console.log(e); });
 }

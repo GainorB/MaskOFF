@@ -26,9 +26,9 @@
                 </select>
                 <b>in</b>
                 <select name="category">
-                    <option value="Footwear" selected>Footwear</option>
-                    <option value="Clothing">Clothing</option>
-                    <option value="Accessories">Accessories</option>
+                <% categories.map(function(category) { %>
+                    <option value="<%= category %>"><%= category %></option>
+                <% }) %>
                 </select>
                 <button type="submit">Filter</button>
                 </form>
