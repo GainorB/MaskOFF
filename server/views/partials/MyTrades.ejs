@@ -11,7 +11,7 @@
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
                     <p>
-                    <b>Contact Information</b><br>
+                    <b>Contact <%= d.posted_by %></b><br>
                     <i class="fa fa-handshake-o" aria-hidden="true"></i> Trade between <%= d.posted_by %> & <%= d.who_accepted %><br>
                     <i class="fa fa-envelope-o" aria-hidden="true"></i> <%= d.email %><br>
                     <i class="fa fa-home" aria-hidden="true"></i> <%= d.city %>, <%= d.state %>
@@ -43,7 +43,7 @@
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
                 <p>
-                <b>Contact Information</b><br>
+                <b>Contact <%= d.posted_by %></b><br>
                 <i class="fa fa-handshake-o" aria-hidden="true"></i> Trade between <%= d.username %> & <%= d.who_accepted %><br>
                 <i class="fa fa-envelope-o" aria-hidden="true"></i> <a class="inlineLinks" href="mailto:<%= d.email %>"><%= d.email %></a><br>
                 <i class="fa fa-home" aria-hidden="true"></i> <%= d.city %>, <%= d.state %>
