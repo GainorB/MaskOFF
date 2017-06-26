@@ -212,7 +212,7 @@ function getMyListings (username, req, res, next){
             users.username, images.image1 FROM listings
             INNER JOIN images ON listings.id = images.id 
             INNER JOIN users ON listings.userid = users.userid 
-            WHERE users.username = ${username}
+            WHERE users.username = '${username}'
             AND completed = FALSE AND accepted = FALSE`)
       .then(data => {
           if(data.length === 0){
