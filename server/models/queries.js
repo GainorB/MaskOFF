@@ -1,5 +1,12 @@
 var db = require('../models/config');
 
+/*
+* HELPER FUNCTIONS
+*/
+
+/*
+* CAPITALIZES THE FIRST LETTER OF EVERY WORD IN A STRING
+*/
 function capitalizeFirstLetter(string){
     return string
         .split(' ')
@@ -7,12 +14,15 @@ function capitalizeFirstLetter(string){
         .join(' ');
 };
 
+
 /*
 * GET ROUTES
 */
 
-// FILTER CATEGORIES
-// ***************************** CONVERTED! GOOD!
+/*
+* RESPONSIBLE FOR FILTERING PER CATEGORY AND BRAND
+* CATEGORY AND BRAND COMES FROM THE FORM SUBMISSION THROUGH THE ROUTE
+*/
 function filterCategory(category, brand, req, res, next){
 
     db.tx(t => {
@@ -31,41 +41,42 @@ function filterCategory(category, brand, req, res, next){
         })
         .then(data => {
 
-            // FILTER OUT DUPLICATE BRAND NAMES SO THE DROP DOWN ONLY SHOWS ONE BRAND
-            let brands = data[1].map((item) => { return item.brand }).filter((item, index, arr) => 
-            { return arr.indexOf(item) === index; });
+            // FILTER OUT DUPLICATE BRAND NAMES SO THE DROP DOWN ONLY SHOWS THE BRAND NAME ONCE
+            let brands = data[1].map((item) => { return item.brand })
+                                .filter((item, index, arr) => { return arr.indexOf(item) === index; });
 
-            let categories = data[1].map((item) => { return item.category }).filter((item, index, arr) => 
-            { return arr.indexOf(item) === index; });
+            // FILTER OUT DUPLICATE CATEGORY NAMES SO THE DROP DOWN ONLY SHOWS THE CATEGORY NAME ONCE
+            let categories = data[1].map((item) => { return item.category })
+                                    .filter((item, index, arr) => { return arr.indexOf(item) === index; });
 
             // FILTERED DATA
             let trades = data[1];
 
-            // TOTAL LISTINGS PER BRAND/CATEGORY
+            // TOTAL NUMBER OF LISTINGS PER BRAND/CATEGORY
             let filterStats = data[0][0].filter_stats;
 
-            // TOTAL LISTINGS
+            // TOTAL NUMBER OF LISTINGS
             let browseStats = data[2][0].browse_stats;
 
             res.render('Browse', { 
                 title: `Browsing`, 
                 query: '', 
-                trades, category, brand, brands, browseStats, filterStats, categories })
+                trades, category, brand, brands, browseStats, filterStats, categories });
 
-        })
-        .catch(e => { console.log(e); });
+        }).catch(e => { console.log(e); });
 }
 
-// RETURN ALL LISTINGS
-// ***************************** CONVERTED! GOOD!
+/*
+* GET ALL TRADES FROM DATABASE
+*/
 function getAllListings(req, res, next){
 
     db.tx(t => {
 
             return t.batch([
-                // TOTAL LISTINGS IN DATABASE
+                // TOTAL TRADES IN DATABASE
                 t.any('SELECT COUNT(*) AS browse_stats FROM listings WHERE completed = FALSE AND accepted = FALSE'),
-                // SELECT ALL LISTINGS
+                // SELECT ALL TRADES
                 t.any(`SELECT listings.title, listings.id, COALESCE(to_char(date_created, 'Dy Mon DD at HH12:MI:SSam'), '') AS date_created, listings.brand, listings.category, listings.size, listings.whatsize, listings.condition, listings.cash, users.city, users.state, users.username, images.image1 FROM listings
                        INNER JOIN images ON listings.id = images.id 
                        INNER JOIN users ON listings.userid = users.userid 
@@ -74,17 +85,18 @@ function getAllListings(req, res, next){
         })
         .then(data => {
 
-            // FILTER OUT DUPLICATE BRAND NAMES SO THE DROP DOWN ONLY SHOWS ONE BRAND
-            let brands = data[1].map((item) => { return item.brand }).filter((item, index, arr) => 
-            { return arr.indexOf(item) === index; });
+            // FILTER OUT DUPLICATE BRAND NAMES SO THE DROP DOWN ONLY SHOWS THE BRAND NAME ONCE
+            let brands = data[1].map((item) => { return item.brand })
+                                .filter((item, index, arr) => { return arr.indexOf(item) === index; });
 
-            let categories = data[1].map((item) => { return item.category }).filter((item, index, arr) => 
-            { return arr.indexOf(item) === index; });
+            // FILTER OUT DUPLICATE CATEGORY NAMES SO THE DROP DOWN ONLY SHOWS THE CATEGORY NAME ONCE
+            let categories = data[1].map((item) => { return item.category })
+                                    .filter((item, index, arr) => { return arr.indexOf(item) === index; });
 
-            // TOTAL LISTINGS
+            // TOTAL NUMBER OF TRADES
             let browseStats = data[0][0].browse_stats;
 
-            // ARRAY WITH DATA data[2]
+            // ALL TRADES
             let trades = data[1];
 
             res.render('Browse', { 
@@ -98,12 +110,14 @@ function getAllListings(req, res, next){
         }).catch(e => { console.log(e); });
 }
 
-// GET A SINGLE LISTING
-// ***************************** CONVERTED! GOOD!
+/*
+* GET A SINGLE TRADE FROM THE DATABASE
+*/
 function getAListing(id, req, res, next){
     
     let ID = parseInt(id);
 
+    // GRAB A SINGLE TRADE BY ID
     db.any(`SELECT listings.title, listings.id, COALESCE(to_char(date_created, 'Dy Mon DD at HH12:MI:SSam'), '') AS date_created, listings.brand, listings.size, 
             listings.whatsize, listings.condition, listings.cash, users.city, users.state, listings.ship, listings.meetup,
             users.username, images.image1, images.image2, images.image3, images.image4, images.image5 FROM listings
@@ -115,10 +129,12 @@ function getAListing(id, req, res, next){
     }).catch(e => { console.log(e); });
 }
 
-// GET ACCEPTED LISTINGS
-// ***************************** CONVERTED! GOOD!
+/*
+* GET ALL ACCEPTED TRADES FOR THE USER THAT IS LOGGED IN
+*/
 function getAcceptedListings(req, res, next){
 
+    // GRAB ALL TRADES BY LOGGED IN USERS USERNAME
     db.any(`SELECT listings.title, listings.completed, listings.id, listings.who_accepted, COALESCE(to_char(date_created, 'Dy Mon DD at HH12:MI:SSam'), '') AS date_created, COALESCE(to_char(date_accepted, 'Dy Mon DD at HH12:MI:SSam'), '') AS date_accepted, listings.brand, listings.size, 
             listings.whatsize, listings.condition, listings.ship, listings.meetup, listings.cash, users.city, users.state, 
             users.username, users.email, images.image1 FROM listings
@@ -126,32 +142,33 @@ function getAcceptedListings(req, res, next){
             INNER JOIN users ON listings.userid = users.userid 
             WHERE listings.who_accepted = $1 ORDER BY listings.date_accepted DESC`, req.user.username)
         .then(data => { 
-            
             res.render('AcceptedTrades', { title: "My Trades", data })
-
         }).catch(e => { console.log(e); });
 }
 
-// GET MY STATS
-// ***************************** CONVERTED! GOOD!
+/*
+* GET MY STATS
+* RENDERS THE TOTAL STATS IN THE DASHBOARD
+*/
 function getMyStats(req, res, next){
     const { userid, username } = req.user;
 
     db.tx(t => {
 
             return t.batch([
-                // TOTAL LISTINGS
+                // TOTAL NUMBER OF TRADES
                 t.any(`SELECT COUNT(*) AS total_listings FROM listings WHERE userid = ${userid}`),
-                // TOTAL ACTIVE LISTINGS
+                // TOTAL NUMBER OF ACTIVE TRADES
                 t.any(`SELECT COUNT(*) AS active_listings FROM listings WHERE userid = ${userid} AND accepted = false AND completed = false`),
-                // TOTAL COMPLETED LISTINGS
+                // TOTAL NUMBER OF COMPLETED TRADES
                 t.any(`SELECT COUNT(*) AS total_completed FROM listings WHERE who_accepted = $1 AND completed = true`, username),
-                // TOTAL ACCEPTED LISTINGS
+                // TOTAL NUMBER OF ACCEPTED TRADES
                 t.any(`SELECT COUNT(*) AS total_accepted FROM listings WHERE who_accepted = $1 AND accepted = true`, username)
             ]);
         })
         .then(data => {
 
+            // STORE DATA IN VARIABLES BEFORE PASSING TO VIEW
             let total = data[0][0].total_listings;
             let active = data[1][0].active_listings;
             let completed = data[2][0].total_completed;
@@ -162,8 +179,9 @@ function getMyStats(req, res, next){
         .catch(e => { console.log(e); });
 }
 
-// SEARCH DATABASE
-// ***************************** CONVERTED! GOOD!
+/*
+* SEARCH THE DATABASE FOR A TRADE
+*/
 function searchDatabase(query, req, res, next){
 
     db.tx(t => {
@@ -176,23 +194,29 @@ function searchDatabase(query, req, res, next){
                        INNER JOIN images ON listings.id = images.id 
                        INNER JOIN users ON listings.userid = users.userid 
                        WHERE listings.title ILIKE '%${query}%' AND accepted = FALSE AND completed = FALSE ORDER BY listings.date_created DESC`),
-                // TOTAL AMOUNT OF SEARCH RESULTS
+                // TOTAL NUMBER OF SEARCH RESULTS
                 t.any(`SELECT COUNT(*) AS search_stats FROM listings WHERE title ILIKE '%${query}%' AND accepted = FALSE AND completed = FALSE`),
-                // TOTAL LISTINGS IN DATABASE
+                // TOTAL NUMBER OF TRADES
                 t.any('SELECT COUNT(*) AS browse_stats FROM listings WHERE completed = FALSE AND accepted = FALSE'),
             ]);
         })
         .then(data => {
 
-            // FILTER OUT DUPLICATE BRAND NAMES SO THE DROP DOWN ONLY SHOWS ONE BRAND
-            let brands = data[0].map((item) => { return item.brand }).filter((item, index, arr) => 
-            { return arr.indexOf(item) === index; });
+            // FILTER OUT DUPLICATE BRAND NAMES SO THE DROP DOWN ONLY SHOWS THE BRAND NAME ONCE
+            let brands = data[0].map((item) => { return item.brand })
+                                .filter((item, index, arr) => { return arr.indexOf(item) === index; });
 
-            let categories = data[0].map((item) => { return item.category }).filter((item, index, arr) => 
-            { return arr.indexOf(item) === index; });
+            // FILTER OUT DUPLICATE CATEGORY NAMES SO THE DROP DOWN ONLY SHOWS THE CATEGORY NAME ONCE
+            let categories = data[0].map((item) => { return item.category })
+                                    .filter((item, index, arr) => { return arr.indexOf(item) === index; });
 
+            // CONTAINS ALL TRADES
             let trades = data[0];
+
+            // TOTAL NUMBER OF SEARCH RESULTS
             let searchStats = data[1][0].search_stats;
+
+            // TOTAL NUMBER OF BROWSE STATS
             let browseStats = data[2][0].browse_stats;
 
             res.render('Browse', { 
@@ -204,26 +228,39 @@ function searchDatabase(query, req, res, next){
         .catch(e => { console.log(e); });
 }
 
-// GET MY LISTINGS TO SHARE WITH THE WORLD
-// ***************************** CONVERTED! GOOD!
+/*
+* GET MY LISTINGS TO SHARE MY PROFILE
+*/
 function getMyListings (username, req, res, next){
-    db.any(`SELECT listings.title, listings.id, COALESCE(to_char(date_created, 'Dy Mon DD at HH12:MI:SSam'), '') AS date_created, listings.brand, listings.size, 
-            listings.whatsize, listings.condition, listings.cash, users.city, users.state, 
-            users.username, images.image1 FROM listings
-            INNER JOIN images ON listings.id = images.id 
-            INNER JOIN users ON listings.userid = users.userid 
-            WHERE users.username = '${username}'
-            AND completed = FALSE AND accepted = FALSE`)
-      .then(data => {
-          if(data.length === 0){
-            req.flash('error', `User doesn't exist. Browse other trades below.`);
-            res.redirect('/browse');
-          } else {
-            req.flash('info', `You're viewing ${data[0].username}'s trades, you'll need an account to see more information or to accept a trade.`);
-            res.render('ViewMyTrades', { title: `${data[0].username}'s Trades`, data });
-          }
-      })
-      .catch(e => { console.log(e); });
+    db.tx(t => {
+
+            return t.batch([
+                // SELECT ALL ACTIVE TRADES USING USERNAME
+                t.any(`SELECT listings.title, listings.id, COALESCE(to_char(date_created, 'Dy Mon DD at HH12:MI:SSam'), '') AS date_created, listings.brand, listings.size, 
+                       listings.whatsize, listings.condition, listings.cash, users.city, users.state, 
+                       users.username, images.image1 FROM listings
+                       INNER JOIN images ON listings.id = images.id 
+                       INNER JOIN users ON listings.userid = users.userid 
+                       WHERE users.username = '${username}'
+                       AND completed = FALSE AND accepted = FALSE`),
+                
+                // RETURNS USERNAME
+                t.any(`SELECT users.username FROM users WHERE users.username = '${username}'`),
+            ]);
+        })
+        .then(data => {
+
+            // IF DATA[1][0] IS UNDEFINED THE USER DOESN'T EXIST
+            if(data[1][0] === undefined){
+                req.flash('error', `User doesn't exist. Browse other trades below.`);
+                res.redirect('/browse');
+            } else {
+                req.flash('info', `You're viewing ${data[0][0].username}'s trades, you'll need an account to see more information or to accept a trade.`);
+                res.render('ViewMyTrades', { title: `${data[0][0].username}'s Trades`, data: data[0] });
+            }
+        })
+        .catch(e => { console.log(e); });
+
 }
 
 
@@ -231,15 +268,17 @@ function getMyListings (username, req, res, next){
 * POST ROUTES
 */
 
-// CREATE A LISTING
-// ***************************** CONVERTED! GOOD!
+/*
+* CREATE A LISTING
+*/
 function createListing(req, res, next){
 
     let image2, image3, image4, image5;
     const { userid, username, email, city, state } = req.user;
     const { category, brand, title, size, whatsize, condition, image1, ship, meetup, cash } = req.body;
 
-    // IF THESE IMAGES ARE LEFT OUT
+    // IF THE USER DOESN'T INCLUDE THESE IMAGES
+    // THE DATABASE DOESN'T ALLOW NULL VALUES
     if(req.body.image2 === undefined){
         image2 = "http://via.placeholder.com/400x400";
     } else {
@@ -269,6 +308,7 @@ function createListing(req, res, next){
            [userid, category, capitalizeFirstLetter(brand), capitalizeFirstLetter(title), size[1], whatsize[1], condition, ship, meetup, cash])
       .then(data => {
 
+          // INSERT IMAGES AFTER LISTINGS IS INSERTED SINCE THE ID IS NEEDED BECAUSE OF THE FOREIGN KEY CONSTRAINT
           db.one('INSERT INTO images(id, image1, image2, image3, image4, image5)' 
                + 'VALUES($1, $2, $3, $4, $5, $6)',
                  [data.id, image1, image2, image3, image4, image5])
@@ -289,8 +329,9 @@ function createListing(req, res, next){
 }
 
 
-// ACCEPT A LISTING
-// ***************************** CONVERTED! GOOD!
+/*
+* ACCEPT A TRADE
+*/
 function acceptListing(id, req, res, next){
 
     let itemID = parseInt(id);
@@ -303,6 +344,7 @@ function acceptListing(id, req, res, next){
             WHERE listings.id = ${itemID}`)
         .then(data => { 
 
+        // CANT ACCEPT YOUR OWN TRADE
         if(data[0].username === req.user.username){
 
             req.flash('error', `You can't accept a trade you posted.`);
@@ -326,7 +368,6 @@ function acceptListing(id, req, res, next){
 */
 
 // THIS FUNCTION UPDATE A USERS PROFILE
-// ***************************** CONVERTED! GOOD!
 function updateProfile(req, res, next){
 
     const userID = parseInt(req.user.userid);
@@ -361,7 +402,6 @@ function updateProfile(req, res, next){
 
 
 // THIS FUNCTION WILL CANCEL A TRADE
-// ***************************** CONVERTED! GOOD!
 function cancelTrade(id, req, res, next){
     let itemID = parseInt(id);
 
@@ -376,7 +416,6 @@ function cancelTrade(id, req, res, next){
 }
 
 // THIS FUNCTION WILL COMPLETE A TRADE
-// ***************************** CONVERTED! GOOD!
 function completedTrade(id, req, res, next){
     let itemID = parseInt(id);
 
@@ -396,7 +435,6 @@ function completedTrade(id, req, res, next){
 */
 
 // THIS FUNCTION WILL DELETE A USERS PROFILE
-// ***************************** CONVERTED! GOOD!
 function deleteAccount(req, res, next){
 
     const { userid, username } = req.user;
@@ -452,7 +490,6 @@ function deleteAccount(req, res, next){
 
 
 // DELETE A LISTING
-// ***************************** CONVERTED! GOOD!
 function deleteListing(id, req, res, next){
     let itemID = parseInt(id);
 
